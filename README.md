@@ -1,58 +1,292 @@
-# Módulo: Gerenciamento de Estoque – Lanchonete (Itens Alimentícios)
+# Inventory Control API
 
-## 1. Objetivo
+A RESTful API for snack bar inventory management, built with Clean Architecture principles, SOLID design, and modern C# patterns.
 
-O módulo de **Controle de Estoque** tem como objetivo gerenciar produtos alimentícios disponíveis na lanchonete, permitindo o acompanhamento de quantidades, status de disponibilidade, histórico e regras específicas para o ciclo de vida dos itens.
+## 📋 Project Overview
 
-## 2. Escopo
+[TBD] - Add project description and business context
 
-O sistema abrangerá **somente produtos alimentícios**, excluindo qualquer outro tipo de insumo ou item não comestível.
+**Related Documentation:**
 
-## 3. Funcionalidades
+- [REQUISITOS.md](REQUISITOS.md) - Business requirements (Portuguese)
+- [REQUIREMENTS.md](REQUIREMENTS.md) - Business requirements (English)
+- [PLANO_DESENVOLVIMENTO.md](PLANO_DESENVOLVIMENTO.md) - Development plan for learning (Portuguese)
 
-### 3.1 Listagens
+---
 
-- **Listar produtos ativos:** Exibir todos os itens disponíveis em estoque.
-- **Buscar item específico:** Retornar a quantidade atual de um produto conforme consulta por nome, SKU ou identificador equivalente.
-- **Listar produtos inativos:** Exibir itens descontinuados, com filtro específico por status “inativo”.
+## ✨ Features
 
-### 3.2 Criação
+[TBD] - Feature list to be completed
 
-- **Cadastro de item:** Permitir o registro de novos produtos com os seguintes dados obrigatórios:
-  - Nome do produto.
-  - SKU (ou identificador equivalente).
-  - Quantidade inicial.
-  - Data de validade (quando aplicável).
-  - Categoria (ex: frios, bebidas, ingredientes, etc.).
-  - Status inicial (ativo/disponível).
+---
 
-### 3.3 Atualização
+## 🏗️ Architecture
 
-- **Atualizar quantidade:** Permitir a modificação da quantidade em estoque (entrada ou saída).
-- **Atualizar status:**
-  - **Ativo:** Produto disponível para uso/consumo.
-  - **Inativo:** Produto descontinuado, não exibido na listagem principal.
-  - **Disponível:** Estoque acima do nível mínimo.
-  - **Esgotado:** Estoque zerado.
-  - **Alerta:** Estoque abaixo do limite mínimo configurado.
+This project follows **Clean Architecture** with clear separation of concerns across four layers:
 
-### 3.4 Remoção
+```
+src/
+├── Domain/              # Business logic and domain rules
+│   ├── Entities/       # Domain entities (BaseEntity, Produto, Categoria)
+│   └── Interfaces/     # Repository contracts
+├── Application/         # Application use cases and orchestration
+│   ├── DTOs/           # Data Transfer Objects
+│   ├── Interfaces/     # Service contracts
+│   ├── Strategies/     # Strategy pattern implementations
+│   └── UseCases/       # Business use cases (ProdutoService)
+├── Infrastructure/      # Technical implementations
+│   ├── Data/           # Entity Framework DbContext
+│   ├── Repositories/   # Repository implementations
+│   └── Services/       # Infrastructure services (Logger)
+└── API/                # Presentation layer
+    └── Controllers/    # REST API endpoints
+```
 
-- **Exclusão automática:** Produtos armazenados há mais de _X anos_ podem ser removidos definitivamente do sistema, desde que não estejam marcados como inativos.
+### Architecture Benefits
 
-## 4. Regras de Negócio
+- **Independence**: Framework and database agnostic domain logic
+- **Testability**: Each layer can be tested independently
+- **Flexibility**: Easy to swap implementations (e.g., different databases)
+- **Scalability**: Clear responsibility boundaries
 
-1. **Identificação obrigatória:** Todo produto deve possuir um SKU único ou código equivalente.
-2. **Inativação de produtos:**
-   - Um produto inativado não pode ser removido manualmente.
-   - Seus dados permanecem registrados apenas como “inativo” e não sofrem alterações adicionais.
-   - Itens inativos não aparecem em listagens de produtos disponíveis.
-3. **Histórico de movimentações:**
-   - O sistema deve manter o histórico completo de movimentações (entradas, saídas, alterações de status) por um período mínimo de _X anos_.
-4. **Notificações de estoque baixo:**
-   - Quando a quantidade de um produto atingir o nível configurado como “alerta”, o sistema deve gerar um aviso automático.
+---
 
-## 5. Considerações Técnicas (Opcional)
+## 🎯 Design Patterns Implemented
 
-- O sistema deve permitir integração futura com módulos de **vendas** e **compras** para atualização automática de estoque.
-- Campos de auditoria devem registrar: usuário responsável, data e hora das alterações.
+### 1. Strategy Pattern
+
+- `IValidacaoStrategy<T>` - Interface for validation strategies
+- `ValidacaoProdutoStrategy` - Concrete validation implementation
+
+### 2. Repository Pattern
+
+- `IRepository<T>` - Generic repository interface
+- `Repository<T>` - Generic repository base implementation
+- `ProdutoRepository`, `CategoriaRepository` - Specific repositories
+
+### 3. Singleton Pattern
+
+- `LoggerService` - Thread-safe singleton logging service
+
+### 4. Factory Method Pattern
+
+- `Create()` methods in entities control object instantiation
+
+### 5. Dependency Injection
+
+- Configured in `Program.cs` following DIP (Dependency Inversion Principle)
+
+---
+
+## ✅ SOLID Principles Applied
+
+| Principle                     | Implementation                                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **S** - Single Responsibility | Each class has one reason to change. Services, repositories, and entities have distinct responsibilities.          |
+| **O** - Open/Closed           | Classes are open for extension via inheritance and interfaces, closed for modification.                            |
+| **L** - Liskov Substitution   | `Produto` and `Categoria` properly substitute `BaseEntity`. `ProdutoRepository` substitutes `Repository<Produto>`. |
+| **I** - Interface Segregation | Specific, focused interfaces. Clients don't depend on methods they don't use.                                      |
+| **D** - Dependency Inversion  | Dependencies injected as abstractions (interfaces), not concrete implementations.                                  |
+
+---
+
+## 🔄 OOP Concepts
+
+- **Inheritance**: `Produto` and `Categoria` inherit from `BaseEntity`
+- **Polymorphism**: Repositories override base methods; `IValidacaoStrategy<T>` allows different implementations
+- **Encapsulation**: Private setters on entity properties; business logic validation inside domain
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology            | Version | Purpose             |
+| --------------------- | ------- | ------------------- |
+| .NET                  | 8.0     | Runtime framework   |
+| ASP.NET Core          | 8.0     | Web API framework   |
+| Entity Framework Core | 8.0     | ORM                 |
+| MySQL                 | 8.0+    | Relational database |
+| Swagger/OpenAPI       | -       | API documentation   |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- .NET 8.0 SDK installed
+- IDE: Visual Studio Code, Visual Studio, or JetBrains Rider
+
+### Installation
+
+```bash
+# Clone repository
+git clone [repository-url]
+cd controle_estoque_cshap
+
+# Restore dependencies
+dotnet restore
+
+# Build project
+dotnet build
+```
+
+### Running the Application
+
+```bash
+# Run the API
+dotnet run
+
+# API will be available at
+https://localhost:5001
+
+# Swagger UI
+https://localhost:5001/swagger
+```
+
+---
+
+## 📡 API Endpoints
+
+### Products (`/api/produtos`)
+
+| Method | Endpoint                               | Description        | Status                         |
+| ------ | -------------------------------------- | ------------------ | ------------------------------ |
+| GET    | `/api/produtos`                        | List all products  | 200 OK                         |
+| GET    | `/api/produtos/{id}`                   | Get product by ID  | 200 OK / 404 Not Found         |
+| POST   | `/api/produtos`                        | Create new product | 201 Created / 400 Bad Request  |
+| PUT    | `/api/produtos/{id}`                   | Update product     | 200 OK / 404 Not Found         |
+| DELETE | `/api/produtos/{id}`                   | Deactivate product | 204 No Content / 404 Not Found |
+| POST   | `/api/produtos/{id}/estoque/adicionar` | Add to stock       | 200 OK / 400 Bad Request       |
+| POST   | `/api/produtos/{id}/estoque/remover`   | Remove from stock  | 200 OK / 400 Bad Request       |
+
+### Request Example - Create Product
+
+```json
+POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Hambúrguer Premium",
+  "descricao": "Hambúrguer 250g com queijo cheddar",
+  "preco": 25.90,
+  "quantidadeEstoque": 50,
+  "categoria": "Lanches",
+  "codigoBarras": "7891234567890"
+}
+```
+
+---
+
+## 🗃️ Database
+
+**Database**: MySQL 8.0+
+
+### Setup Instructions
+
+1. **Install MySQL** if not already installed
+
+2. **Create database**:
+
+   ```sql
+   CREATE DATABASE estoque_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+3. **Update `appsettings.json`**:
+
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost;Database=estoque_db;User=root;Password=your_password;"
+     }
+   }
+   ```
+
+4. **Install MySQL NuGet package** (if not already installed):
+
+   ```bash
+   dotnet add package Pomelo.EntityFrameworkCore.MySql
+   ```
+
+5. **Update `Program.cs`**:
+
+   ```csharp
+   builder.Services.AddDbContext<AppDbContext>(options =>
+       options.UseMySql(
+           builder.Configuration.GetConnectionString("DefaultConnection"),
+           new MySqlServerVersion(new Version(8, 0, 0))
+       )
+   );
+   ```
+
+6. **Create migrations and update database**:
+   ```bash
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
+
+---
+
+## 📚 Documentation
+
+| Document                                             | Purpose                                     |
+| ---------------------------------------------------- | ------------------------------------------- |
+| [REQUISITOS.md](REQUISITOS.md)                       | Business requirements (Portuguese)          |
+| [REQUIREMENTS.md](REQUIREMENTS.md)                   | Business requirements (English)             |
+| [PLANO_DESENVOLVIMENTO.md](PLANO_DESENVOLVIMENTO.md) | Step-by-step development guide for learning |
+
+---
+
+## 🧪 Testing
+
+[TBD] - Testing information to be added:
+
+- Unit tests
+- Integration tests
+- Test coverage
+
+---
+
+## 📝 Code Standards
+
+- Clean Code practices: meaningful names, small methods, DRY principle
+- XML documentation for public methods
+- Async/await for all I/O operations
+- Proper exception handling
+
+---
+
+## 🔄 Future Enhancements
+
+- [ ] Unit and integration tests (xUnit, Moq)
+- [ ] Authentication/Authorization (JWT)
+- [ ] Input validation (FluentValidation)
+- [ ] Structured logging (Serilog)
+- [ ] Pagination support
+- [ ] API versioning
+- [ ] Caching (Redis)
+- [ ] CI/CD pipeline
+- [ ] Database migrations (SQL Server)
+- [ ] Performance optimization
+
+---
+
+## 🤝 Contributing
+
+[TBD] - Add contribution guidelines
+
+---
+
+## 📄 License
+
+[TBD] - Add license information
+
+---
+
+## 📞 Contact & Support
+
+[TBD] - Add contact information
+
+---
+
+**Built with Clean Architecture and SOLID principles** ✨
