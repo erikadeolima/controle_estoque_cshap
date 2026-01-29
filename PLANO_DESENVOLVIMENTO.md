@@ -1,961 +1,1517 @@
-# 📋 Plano de Desenvolvimento - Sistema de Controle de Estoque
+# 📋 Plano de Desenvolvimento - Sistema de Controle de Estoque (MVC)
 
 ## 🎯 Objetivo
 
-Construir uma API de controle de estoque seguindo Clean Architecture, aplicando SOLID, Design Patterns e Clean Code.
+Desenvolver uma API REST para gerenciamento de estoque de lanchonete com **controle de lotes, datas de validade, histórico de movimentações e auditoria**.
+
+O sistema deve permitir rastreabilidade completa de produtos alimentícios, desde cadastro até consumo.
 
 ---
 
-## 📚 Conceitos Importantes (Entenda Antes de Começar)
+## 📊 Modelo de Dados (High Level)
 
-### Clean Architecture
+```
+CATEGORIA
+├── Cadastro mestre de categorias de produtos
 
-- **Domain**: Regras de negócio puras, sem dependências externas
-- **Application**: Casos de uso da aplicação, coordena as operações
-- **Infrastructure**: Implementações técnicas (banco de dados, serviços externos)
-- **API**: Camada de apresentação (recebe requisições HTTP)
+PRODUTO
+├── Cadastro mestre (SKU único, quantidade mínima, status)
+├── Associado a CATEGORIA
 
-### SOLID (5 Princípios)
+ITEM (Lote)
+├── Instância específica de um PRODUTO
+├── Controla: batch, data validade, quantidade, localização, status
 
-1. **Single Responsibility**: Cada classe tem apenas uma responsabilidade
-2. **Open/Closed**: Aberto para extensão, fechado para modificação
-3. **Liskov Substitution**: Subclasses podem substituir suas classes base
-4. **Interface Segregation**: Interfaces pequenas e específicas
-5. **Dependency Inversion**: Dependa de abstrações, não de implementações concretas
+MOVIMENTAÇÃO
+├── Histórico de entrada/saída/ajuste de ITEM
+├── Rastreia: tipo, quantidade, estoque anterior/novo, usuário, data
 
-### Design Patterns que você vai usar
-
-- **Repository**: Abstrai acesso aos dados
-- **Strategy**: Permite trocar algoritmos em tempo de execução
-- **Singleton**: Garante uma única instância de uma classe
-- **Factory Method**: Centraliza criação de objetos
-- **Dependency Injection**: Injeta dependências via construtor
+USUÁRIO
+├── Auditoria de quem fez cada operação
+```
 
 ---
 
-## 🗂️ FASE 1: Estrutura de Pastas
+## 🏗️ Arquitetura (Padrão MVC/MSC)
 
-### Passos:
+```
+Controllers (API REST)
+    ↓ (dependem de)
+Services (Lógica e validações)
+    ↓ (dependem de)
+Repositories (Acesso a dados)
+    ↓ (dependem de)
+Models (Entidades) + DTOs + Data (DbContext)
+```
 
-1. Dentro do projeto, crie a pasta `src`
-2. Dentro de `src`, crie 4 pastas principais:
-   - `Domain`
-   - `Application`
-   - `Infrastructure`
-   - `API`
-
-3. Dentro de `Domain`, crie:
-   - `Entities`
-   - `Interfaces`
-
-4. Dentro de `Application`, crie:
-   - `DTOs`
-   - `Interfaces`
-   - `UseCases`
-   - `Strategies`
-
-5. Dentro de `Infrastructure`, crie:
-   - `Data`
-   - `Repositories`
-   - `Services`
-
-6. Dentro de `API`, crie:
-   - `Controllers`
-
-### ✅ Checklist:
-
-- [ ] Todas as 4 pastas principais criadas
-- [ ] Subpastas do Domain criadas
-- [ ] Subpastas do Application criadas
-- [ ] Subpastas do Infrastructure criadas
-- [ ] Subpastas do API criadas
+**Regra principal:** Controllers NÃO conhecem Repositories. Services orquestram tudo.
 
 ---
 
-## 🏗️ FASE 2: Camada Domain (Entidades)
+## 📅 Timeline Sugerida
 
-### O que fazer:
-
-#### 2.1 - Criar BaseEntity
-
-**Onde**: `src/Domain/Entities/BaseEntity.cs`
-
-**O que incluir**:
-
-- Marque a classe como `abstract` (não pode ser instanciada diretamente)
-- Adicione propriedades comuns a todas as entidades:
-  - Id (tipo Guid)
-  - DataCriacao (tipo DateTime)
-  - DataAtualizacao (tipo DateTime nullable)
-  - Ativo (tipo bool)
-- Todas as propriedades devem ter `protected set` (só podem ser alteradas pela própria classe ou herdeiras)
-- Crie um construtor sem parâmetros que:
-  - Gera um novo Guid para o Id
-  - Define DataCriacao como a data/hora atual UTC
-  - Define Ativo como true
-- Crie métodos públicos:
-  - `Atualizar()`: atualiza DataAtualizacao
-  - `Desativar()`: marca Ativo como false e atualiza DataAtualizacao
-  - `Ativar()`: marca Ativo como true e atualiza DataAtualizacao
-
-**Conceito aplicado**: Herança e DRY (Don't Repeat Yourself)
+| Semana       | Foco                                          |
+| ------------ | --------------------------------------------- |
+| **Semana 1** | Setup + Models + Database + Repositories CRUD |
+| **Semana 2** | Services + Validações + Controllers básicos   |
+| **Semana 3** | Features avançadas + Documentação             |
 
 ---
 
-#### 2.2 - Criar Entidade Produto
-
-**Onde**: `src/Domain/Entities/Produto.cs`
-
-**O que incluir**:
-
-- Herda de BaseEntity (use `: BaseEntity`)
-- Adicione propriedades específicas (todas com `private set`):
-  - Nome (string)
-  - Descricao (string)
-  - Preco (decimal)
-  - QuantidadeEstoque (int)
-  - Categoria (string)
-  - CodigoBarras (string)
-- Construtor privado (para forçar uso do Factory Method)
-- Método estático público `Criar()` que:
-  - Recebe todos os parâmetros necessários
-  - Cria a instância do produto
-  - Chama o método de validação
-  - Retorna o produto criado
-- Método público `AtualizarDados()` que:
-  - Recebe os dados que podem ser alterados
-  - Atualiza as propriedades
-  - Chama o método Atualizar() herdado
-  - Valida os dados
-- Método público `AdicionarEstoque(int quantidade)` que:
-  - Valida se quantidade é positiva
-  - Adiciona à QuantidadeEstoque
-  - Atualiza a DataAtualizacao
-- Método público `RemoverEstoque(int quantidade)` que:
-  - Valida se quantidade é positiva
-  - Valida se há estoque suficiente
-  - Remove da QuantidadeEstoque
-  - Atualiza a DataAtualizacao
-- Método privado `Validar()` que:
-  - Lança exceção se Nome estiver vazio
-  - Lança exceção se Preco for negativo
-  - Lança exceção se QuantidadeEstoque for negativa
-
-**Conceitos aplicados**: Herança, Encapsulamento, Factory Method, Validação no Domínio
+## 📦 Entregáveis por Fase
 
 ---
 
-#### 2.3 - Criar Entidade Categoria
+### **FASE 1: Fundação** ⏱️ 30-45min
 
-**Onde**: `src/Domain/Entities/Categoria.cs`
+**O que fazer:**
 
-**O que incluir**:
+- Setup de projeto e dependências
+- Criar estrutura de pastas (Models, DTOs, Data, Repositories, Services, Controllers)
+- Compilar sem erros
 
-- Herda de BaseEntity
-- Propriedades (com `private set`):
-  - Nome (string)
-  - Descricao (string)
-- Construtor privado
-- Método estático `Criar()` (Factory Method)
-- Método `AtualizarDados()`
-- Método privado `Validar()` que valida se Nome não está vazio
+#### ✅ Checklist de Validação
 
-**Conceitos aplicados**: Mesmos da entidade Produto
+**Setup Inicial:**
 
----
+- [ ] Projeto .NET criado (webapi template)
+- [ ] Pacotes NuGet instalados:
+  - [ ] Microsoft.EntityFrameworkCore.Sqlite (ou provider escolhido)
+  - [ ] Microsoft.EntityFrameworkCore.Design
+  - [ ] Microsoft.EntityFrameworkCore.Tools
+- [ ] `dotnet restore` executado com sucesso
 
-### ✅ Checklist Fase 2:
+**Estrutura de Pastas:**
 
-- [ ] BaseEntity criada com propriedades comuns
-- [ ] BaseEntity tem métodos Atualizar, Ativar e Desativar
-- [ ] Produto herda de BaseEntity
-- [ ] Produto tem construtor privado
-- [ ] Produto tem método estático Criar (Factory Method)
-- [ ] Produto valida suas regras de negócio
-- [ ] Produto tem métodos para gerenciar estoque
-- [ ] Categoria criada seguindo mesmo padrão
+- [ ] Pasta `Models/` criada na raiz
+- [ ] Pasta `DTOs/` criada na raiz
+- [ ] Pasta `Data/` criada na raiz
+- [ ] Pasta `Repositories/` criada na raiz
+- [ ] Pasta `Services/` criada na raiz
+- [ ] Pasta `Controllers/` existe (já vem no template)
 
----
+**Limpeza:**
 
-## 🔌 FASE 3: Camada Domain (Interfaces)
+- [ ] `WeatherForecast.cs` removido
+- [ ] `WeatherForecastController.cs` removido
 
-### O que fazer:
+**Compilação:**
 
-#### 3.1 - Criar Interface Genérica de Repositório
-
-**Onde**: `src/Domain/Interfaces/IRepository.cs`
-
-**O que incluir**:
-
-- Interface genérica `IRepository<T>` com restrição `where T : BaseEntity`
-- Defina métodos assíncronos (retornam Task):
-  - `ObterPorIdAsync(Guid id)` - retorna Task com T nullable
-  - `ObterTodosAsync()` - retorna Task com coleção de T
-  - `ObterAtivosAsync()` - retorna Task com coleção de T
-  - `AdicionarAsync(T entity)` - retorna Task
-  - `AtualizarAsync(T entity)` - retorna Task
-  - `RemoverAsync(Guid id)` - retorna Task
-  - `ExisteAsync(Guid id)` - retorna Task com bool
-
-**Conceito aplicado**: SOLID (Interface Segregation), Generics
+- [ ] `dotnet build` executa sem erros
+- [ ] `dotnet run` inicia aplicação
+- [ ] Swagger acessível em `/swagger`
 
 ---
 
-#### 3.2 - Criar Interface Específica de Produto
+### **FASE 2: Models (Entidades)** ⏱️ 3-4h
 
-**Onde**: `src/Domain/Interfaces/IProdutoRepository.cs`
+**Criar 5 entidades:**
 
-**O que incluir**:
+#### ✅ Checklist: Category
 
-- Interface `IProdutoRepository` que herda de `IRepository<Produto>`
-- Adicione métodos específicos de produtos:
-  - `BuscarPorCategoriaAsync(string categoria)` - retorna coleção de Produto
-  - `BuscarPorCodigoBarrasAsync(string codigoBarras)` - retorna Produto nullable
-  - `BuscarPorNomeAsync(string nome)` - retorna coleção de Produto
-  - `BuscarEstoqueBaixoAsync(int quantidadeMinima)` - retorna coleção de Produto
+**Arquivo:**
 
-**Conceito aplicado**: SOLID (Interface Segregation + Open/Closed), Herança de Interface
+- [ ] `Models/Category.cs` criado
 
----
+**Propriedades obrigatórias:**
 
-#### 3.3 - Criar Interface Específica de Categoria
+- [ ] `Id` (Guid, chave primária)
+- [ ] `Nome` (string, obrigatório, máx 255 caracteres)
+- [ ] `Descricao` (string, nullable, máx 200 caracteres)
+- [ ] `DataCriacao` (DateTime)
 
-**Onde**: `src/Domain/Interfaces/ICategoriaRepository.cs`
+**Comportamento:**
 
-**O que incluir**:
-
-- Interface `ICategoriaRepository` que herda de `IRepository<Categoria>`
-- Adicione método específico:
-  - `BuscarPorNomeAsync(string nome)` - retorna Categoria nullable
-
-### ✅ Checklist Fase 3:
-
-- [ ] IRepository genérico criado com métodos CRUD
-- [ ] IProdutoRepository herda de IRepository e adiciona métodos específicos
-- [ ] ICategoriaRepository herda de IRepository e adiciona métodos específicos
-- [ ] Todos os métodos retornam Task (assíncronos)
+- [ ] Construtor inicializa `Id` com novo Guid
+- [ ] Construtor define `DataCriacao` como UTC agora
+- [ ] Classe compila sem erros
 
 ---
 
-## 📦 FASE 4: Camada Application (DTOs)
+#### ✅ Checklist: Product
 
-### O que fazer:
+**Arquivo:**
 
-#### 4.1 - Criar DTOs (Data Transfer Objects)
+- [ ] `Models/Product.cs` criado
 
-**Importante**: DTOs são objetos simples para transferir dados. NÃO têm lógica de negócio.
+**Propriedades obrigatórias:**
 
-**Onde e O que**:
+- [ ] `Id` (Guid)
+- [ ] `SKU` (string, obrigatório, máx 45, ÚNICO)
+- [ ] `Nome` (string, obrigatório, máx 200)
+- [ ] `Status` (enum ou int: 0=Inativo, 1=Ativo)
+- [ ] `QuantidadeMinima` (int, padrão >= 0)
+- [ ] `DataCriacao` (DateTime)
+- [ ] `CategoryId` (Guid, FK)
+- [ ] `Category` (navigation property)
 
-1. **ProdutoDto** (`src/Application/DTOs/ProdutoDto.cs`)
-   - Propriedades públicas com get e set
-   - Mesmas propriedades da entidade Produto
-   - Adicione as propriedades herdadas (Id, DataCriacao, Ativo)
-   - Inicialize strings vazias para evitar valores nulos
+**Métodos obrigatórios:**
 
-2. **CriarProdutoDto** (`src/Application/DTOs/CriarProdutoDto.cs`)
-   - Apenas os campos necessários para CRIAR um produto
-   - NÃO inclua Id, DataCriacao (são gerados automaticamente)
-   - Inclua: Nome, Descricao, Preco, QuantidadeEstoque, Categoria, CodigoBarras
+- [ ] `Ativar()` - marca Status como Ativo
+- [ ] `Desativar()` - marca Status como Inativo
+- [ ] Validação: `QuantidadeMinima` não pode ser negativa
 
-3. **AtualizarProdutoDto** (`src/Application/DTOs/AtualizarProdutoDto.cs`)
-   - Apenas os campos que podem ser ATUALIZADOS
-   - NÃO inclua QuantidadeEstoque (tem métodos específicos)
-   - Inclua: Nome, Descricao, Preco, Categoria
+**Regras de negócio:**
 
-4. **CategoriaDto** (`src/Application/DTOs/CategoriaDto.cs`)
-   - Propriedades: Id, Nome, Descricao, Ativo
-
-**Conceito aplicado**: Separação de Responsabilidades, Clean Code
-
-### ✅ Checklist Fase 4:
-
-- [ ] ProdutoDto criado com todas as propriedades
-- [ ] CriarProdutoDto criado apenas com dados de criação
-- [ ] AtualizarProdutoDto criado apenas com dados editáveis
-- [ ] CategoriaDto criado
-- [ ] Todos os DTOs têm apenas propriedades, sem métodos
+- [ ] SKU é imutável após criação (só get público)
+- [ ] Status começa como Ativo
+- [ ] Classe compila sem erros
 
 ---
 
-## 🎯 FASE 5: Camada Application (Strategies e Interfaces)
+#### ✅ Checklist: Item (Lote)
 
-### O que fazer:
+**Arquivo:**
 
-#### 5.1 - Criar Interface de Strategy
+- [ ] `Models/Item.cs` criado
 
-**Onde**: `src/Application/Interfaces/IValidacaoStrategy.cs`
+**Propriedades obrigatórias:**
 
-**O que incluir**:
+- [ ] `Id` (Guid)
+- [ ] `Batch` (string, máx 55, representa número do lote)
+- [ ] `DataValidade` (DateTime nullable)
+- [ ] `Quantidade` (int, não pode ser negativo)
+- [ ] `Localizacao` (string, máx 100, ex: "Geladeira A")
+- [ ] `Status` (enum ou string: Disponivel, Esgotado, Alerta)
+- [ ] `ProductId` (Guid, FK)
+- [ ] `Product` (navigation property)
+- [ ] `DataCriacao` (DateTime)
 
-- Interface genérica `IValidacaoStrategy<T>`
-- Um único método: `ValidarAsync(T dto)`
-- Retorno: Task contendo uma tupla (bool IsValid, string[] Errors)
+**Métodos obrigatórios:**
 
-**Conceito aplicado**: Strategy Pattern, SOLID (Open/Closed)
+- [ ] `AdicionarQuantidade(int qtd)` - valida qtd > 0, atualiza Quantidade
+- [ ] `RemoverQuantidade(int qtd)` - valida qtd > 0, valida estoque suficiente
+- [ ] `AtualizarStatus()` - calcula status baseado em Quantidade vs Product.QuantidadeMinima
 
----
+**Regras de negócio:**
 
-#### 5.2 - Criar Strategy de Validação de Produto
-
-**Onde**: `src/Application/Strategies/ValidacaoProdutoStrategy.cs`
-
-**O que incluir**:
-
-- Classe que implementa `IValidacaoStrategy<CriarProdutoDto>`
-- Implemente o método `ValidarAsync`:
-  - Crie uma lista de erros
-  - Valide cada campo do DTO (Nome vazio, Preço negativo, etc)
-  - Para cada erro, adicione mensagem descritiva na lista
-  - Retorne tupla (se não há erros, array de erros)
-
-**Conceito aplicado**: Strategy Pattern, Validação na Camada de Aplicação
-
----
-
-#### 5.3 - Criar Interface de Serviço
-
-**Onde**: `src/Application/Interfaces/IProdutoService.cs`
-
-**O que incluir**:
-
-- Interface `IProdutoService`
-- Métodos que representam os casos de uso:
-  - `ObterPorIdAsync(Guid id)` - retorna ProdutoDto nullable
-  - `ObterTodosAsync()` - retorna coleção de ProdutoDto
-  - `CriarAsync(CriarProdutoDto dto)` - retorna ProdutoDto
-  - `AtualizarAsync(Guid id, AtualizarProdutoDto dto)` - retorna ProdutoDto
-  - `RemoverAsync(Guid id)` - retorna Task
-  - `AdicionarEstoqueAsync(Guid id, int quantidade)` - retorna Task
-  - `RemoverEstoqueAsync(Guid id, int quantidade)` - retorna Task
-
-**Conceito aplicado**: SOLID (Dependency Inversion)
-
-### ✅ Checklist Fase 5:
-
-- [ ] IValidacaoStrategy criado
-- [ ] ValidacaoProdutoStrategy implementado
-- [ ] IProdutoService criado com todos os casos de uso
-- [ ] Não esqueça dos `using` necessários no topo dos arquivos
-
----
-
-## 💼 FASE 6: Camada Application (Use Cases)
-
-### O que fazer:
-
-#### 6.1 - Criar ProdutoService
-
-**Onde**: `src/Application/UseCases/ProdutoService.cs`
-
-**O que incluir**:
-
-- Classe que implementa `IProdutoService`
-- Campos privados readonly:
-  - `_repository` do tipo IProdutoRepository
-  - `_validacaoStrategy` do tipo IValidacaoStrategy<CriarProdutoDto>
-- Construtor que recebe esses dois parâmetros e os atribui aos campos (Dependency Injection)
-- Implemente cada método da interface:
-
-**Método ObterPorIdAsync**:
-
-- Chame o repository para buscar o produto
-- Se encontrou, converta para DTO
-- Retorne o DTO ou null
-
-**Método ObterTodosAsync**:
-
-- Busque todos os produtos do repository
-- Para cada produto, converta para DTO
-- Retorne a coleção de DTOs
-
-**Método CriarAsync**:
-
-- Chame a strategy para validar o DTO
-- Se inválido, lance exceção com as mensagens de erro
-- Chame o método Criar da entidade Produto passando os dados do DTO
-- Chame o repository para adicionar
-- Converta para DTO e retorne
-
-**Método AtualizarAsync**:
-
-- Busque o produto pelo Id no repository
-- Se não encontrou, lance KeyNotFoundException
-- Chame o método AtualizarDados da entidade
-- Chame o repository para atualizar
-- Converta para DTO e retorne
-
-**Método RemoverAsync**:
-
-- Busque o produto pelo Id
-- Se não encontrou, lance exceção
-- Chame o método Desativar da entidade
-- Atualize no repository
-
-**Método AdicionarEstoqueAsync**:
-
-- Busque o produto
-- Se não encontrou, lance exceção
-- Chame o método AdicionarEstoque da entidade
-- Atualize no repository
-
-**Método RemoverEstoqueAsync**:
-
-- Busque o produto
-- Se não encontrou, lance exceção
-- Chame o método RemoverEstoque da entidade (pode lançar exceção se estoque insuficiente)
-- Atualize no repository
-
-**Método privado MapearParaDto**:
-
-- Crie um método privado estático
-- Recebe Produto, retorna ProdutoDto
-- Crie novo ProdutoDto e preencha todas as propriedades
-- Use esse método em todos os lugares que precisar converter
-
-**Conceitos aplicados**: SOLID (Single Responsibility, Dependency Inversion), Use Case Pattern, Dependency Injection
-
-### ✅ Checklist Fase 6:
-
-- [ ] ProdutoService criado e implementa IProdutoService
-- [ ] Dependências injetadas via construtor
-- [ ] Todos os métodos implementados
-- [ ] Validação aplicada antes de criar
-- [ ] Conversões entre Entidade e DTO funcionando
+- [ ] Quantidade nunca fica negativa
+- [ ] DataValidade, se informada, deve ser futura (validação)
+- [ ] Status atualiza automaticamente após add/remove
 - [ ] Exceções lançadas em casos de erro
 
 ---
 
-## 🏢 FASE 7: Camada Infrastructure (Dados)
+#### ✅ Checklist: Movement (Histórico)
 
-### O que fazer:
+**Arquivo:**
 
-#### 7.1 - Criar DbContext
+- [ ] `Models/Movement.cs` criado
 
-**Onde**: `src/Infrastructure/Data/AppDbContext.cs`
+**Propriedades obrigatórias:**
 
-**O que incluir**:
+- [ ] `Id` (Guid)
+- [ ] `Data` (DateTime, UTC)
+- [ ] `Tipo` (enum ou string: Entrada, Saida, Ajuste)
+- [ ] `QuantidadeMovimentada` (int)
+- [ ] `QuantidadeAnterior` (int, snapshot antes da operação)
+- [ ] `QuantidadeNova` (int, snapshot depois da operação)
+- [ ] `ItemId` (Guid, FK)
+- [ ] `Item` (navigation property)
+- [ ] `UserId` (Guid, FK)
+- [ ] `User` (navigation property)
 
-- Classe que herda de `DbContext` (do Entity Framework Core)
-- Construtor que:
-  - Recebe `DbContextOptions<AppDbContext>`
-  - Passa para o construtor base
-- Propriedades DbSet:
-  - `DbSet<Produto> Produtos`
-  - `DbSet<Categoria> Categorias`
-- Override do método `OnModelCreating(ModelBuilder modelBuilder)`:
-  - Chame o base antes
-  - Configure a entidade Produto:
-    - Defina chave primária (Id)
-    - Configure Nome como obrigatório e com tamanho máximo (200 caracteres)
-    - Configure Descricao com tamanho máximo (500 caracteres)
-    - Configure Preco como decimal(18,2)
-    - Configure CodigoBarras como obrigatório, tamanho máximo 50
-    - Crie índice único para CodigoBarras
-  - Configure a entidade Categoria:
-    - Defina chave primária
-    - Configure Nome como obrigatório, máximo 100 caracteres
-    - Configure Descricao máximo 300 caracteres
-    - Crie índice único para Nome
+**Comportamento:**
 
-**Conceito aplicado**: Entity Framework Core, Configuração de Banco de Dados
+- [ ] TODAS as propriedades são somente leitura após criação
+- [ ] Construtor recebe todos os parâmetros necessários
+- [ ] Data é definida automaticamente no construtor
 
-### ✅ Checklist Fase 7:
+**Regras de negócio:**
 
-- [ ] AppDbContext criado herdando de DbContext
-- [ ] DbSets configurados
-- [ ] Configurações de entidades implementadas
-- [ ] Índices únicos criados
+- [ ] Registro é imutável (não pode ser editado/deletado)
+- [ ] Classe compila sem erros
 
 ---
 
-## 📂 FASE 8: Camada Infrastructure (Repositories)
+#### ✅ Checklist: User (Auditoria)
 
-### O que fazer:
+**Arquivo:**
 
-#### 8.1 - Criar Repository Genérico
+- [ ] `Models/User.cs` criado
 
-**Onde**: `src/Infrastructure/Repositories/Repository.cs`
+**Propriedades obrigatórias:**
 
-**O que incluir**:
+- [ ] `Id` (Guid)
+- [ ] `Nome` (string, máx 200)
+- [ ] `Email` (string, máx 100)
+- [ ] `Perfil` (string, máx 50, ex: "Gerente", "Operador")
 
-- Classe genérica `Repository<T>` com restrição `where T : BaseEntity`
-- Implementa `IRepository<T>`
-- Campos protected:
-  - `_context` do tipo AppDbContext
-  - `_dbSet` do tipo DbSet<T>
-- Construtor que recebe AppDbContext:
-  - Atribui ao campo \_context
-  - Inicializa \_dbSet usando `context.Set<T>()`
-- Implemente cada método da interface usando Entity Framework:
+**Comportamento:**
 
-**ObterPorIdAsync**: Use `_dbSet.FindAsync(id)`
-**ObterTodosAsync**: Use `_dbSet.ToListAsync()`
-**ObterAtivosAsync**: Use `_dbSet.Where(e => e.Ativo).ToListAsync()`
-**AdicionarAsync**: Use `_dbSet.AddAsync`, depois `_context.SaveChangesAsync()`
-**AtualizarAsync**: Use `_dbSet.Update`, depois `SaveChangesAsync`
-**RemoverAsync**: Busque a entidade, chame Desativar(), atualize
-**ExisteAsync**: Use `_dbSet.AnyAsync(e => e.Id == id)`
-
-Marque todos os métodos como `virtual` (para permitir override)
-
-**Conceito aplicado**: Repository Pattern, Generics, SOLID (DRY)
+- [ ] Entidade simples sem métodos especiais
+- [ ] Classe compila sem erros
 
 ---
 
-#### 8.2 - Criar ProdutoRepository
+#### ✅ Checklist Final da Fase 2
 
-**Onde**: `src/Infrastructure/Repositories/ProdutoRepository.cs`
+**Relacionamentos:**
 
-**O que incluir**:
+- [ ] Product tem FK para Category
+- [ ] Item tem FK para Product
+- [ ] Movement tem FK para Item e User
+- [ ] Navigation properties bidirecionais configuradas
 
-- Classe que herda `Repository<Produto>`
-- Implementa `IProdutoRepository`
-- Construtor que recebe AppDbContext e passa para o base
-- Implemente os métodos específicos:
+**Validações:**
 
-**BuscarPorCategoriaAsync**: Filtre \_dbSet por categoria e ativo
-**BuscarPorCodigoBarrasAsync**: Use FirstOrDefaultAsync para buscar por código
-**BuscarPorNomeAsync**: Use Where com Contains para buscar por nome
-**BuscarEstoqueBaixoAsync**: Filtre onde QuantidadeEstoque <= quantidadeMinima e ativo
-
-**Conceito aplicado**: Herança, Polimorfismo, SOLID (Open/Closed)
+- [ ] Todas as 5 classes compilam
+- [ ] Enums/constantes definidas para Status e Tipo
+- [ ] Nenhuma lógica de acesso a dados nas entidades
+- [ ] Métodos de negócio funcionam isoladamente (teste unitário manual)
 
 ---
 
-#### 8.3 - Criar CategoriaRepository
+### **FASE 3: Database (DbContext + Migrations)** ⏱️ 1-2h
 
-**Onde**: `src/Infrastructure/Repositories/CategoriaRepository.cs`
+**O que fazer:**
 
-**O que incluir**:
+- Configurar AppDbContext com todas as 5 entidades
+- Mapear índices únicos (SKU)
+- Configurar relacionamentos
+- Criar migration inicial
+- Aplicar ao banco
 
-- Herda `Repository<Categoria>`
-- Implementa `ICategoriaRepository`
-- Construtor passa AppDbContext para base
-- Implemente `BuscarPorNomeAsync`
+#### ✅ Checklist: AppDbContext
 
-### ✅ Checklist Fase 8:
+**Arquivo:**
 
-- [ ] Repository genérico criado com métodos CRUD
-- [ ] ProdutoRepository herda e adiciona métodos específicos
-- [ ] CategoriaRepository criado
-- [ ] Todos os métodos são assíncronos
+- [ ] `Data/AppDbContext.cs` criado
+
+**Configuração básica:**
+
+- [ ] Classe herda de `DbContext`
+- [ ] Construtor recebe `DbContextOptions<AppDbContext>`
+- [ ] Construtor passa options para base
+
+**DbSets:**
+
+- [ ] `DbSet<Category> Categories` declarado
+- [ ] `DbSet<Product> Products` declarado
+- [ ] `DbSet<Item> Items` declarado
+- [ ] `DbSet<Movement> Movements` declarado
+- [ ] `DbSet<User> Users` declarado
+
+**OnModelCreating - Category:**
+
+- [ ] Chave primária configurada (Id)
+- [ ] Nome: obrigatório, máx 255
+- [ ] Descricao: nullable, máx 200
+- [ ] DataCriacao: obrigatório
+
+**OnModelCreating - Product:**
+
+- [ ] Chave primária configurada
+- [ ] SKU: obrigatório, máx 45
+- [ ] Índice único em SKU configurado
+- [ ] Nome: obrigatório, máx 200
+- [ ] Status: configurado como int/tinyint
+- [ ] QuantidadeMinima: default 0
+- [ ] FK para Category configurada
+- [ ] Relacionamento Category→Products configurado
+
+**OnModelCreating - Item:**
+
+- [ ] Chave primária configurada
+- [ ] Batch: máx 55
+- [ ] DataValidade: nullable
+- [ ] Quantidade: obrigatório
+- [ ] Localizacao: máx 100
+- [ ] Status: string ou enum
+- [ ] FK para Product configurada
+- [ ] Relacionamento Product→Items configurado
+
+**OnModelCreating - Movement:**
+
+- [ ] Chave primária configurada
+- [ ] Data: obrigatório
+- [ ] Tipo: string máx 45
+- [ ] Campos de quantidade configurados
+- [ ] FK para Item configurada
+- [ ] FK para User configurada
+- [ ] Relacionamentos configurados
+
+**OnModelCreating - User:**
+
+- [ ] Chave primária configurada
+- [ ] Nome: máx 200
+- [ ] Email: máx 100
+- [ ] Perfil: máx 50
 
 ---
 
-## 🔧 FASE 9: Camada Infrastructure (Services)
+#### ✅ Checklist: Migrations
 
-### O que fazer:
+**Comandos executados:**
 
-#### 9.1 - Criar LoggerService (Singleton)
+- [ ] `dotnet ef migrations add Initial` executado sem erros
+- [ ] Pasta `Migrations/` criada
+- [ ] Arquivo de migration contém CreateTable para todas as 5 tabelas
+- [ ] `dotnet ef database update` executado com sucesso
 
-**Onde**: `src/Infrastructure/Services/LoggerService.cs`
+**Validação do banco:**
 
-**O que incluir**:
-
-- Classe marcada como `sealed` (não pode ser herdada)
-- Campo privado estático nullable: `_instance` do tipo LoggerService
-- Campo privado estático readonly: `_lock` (objeto para sincronização)
-- Construtor PRIVADO vazio (impede criação externa)
-- Propriedade estática pública `Instance`:
-  - Tipo: LoggerService
-  - Getter que implementa Double-Check Locking:
-    - Se \_instance é null
-    - Faça lock no \_lock
-    - Verifique novamente se \_instance é null
-    - Se ainda for, crie nova instância
-    - Retorne \_instance
-- Método público `Log(string message)`:
-  - Escreva no console com timestamp
-- Método público `LogError(string message, Exception ex)`:
-  - Escreva erro no console com timestamp
-  - Se exceção não for nula, imprima mensagem e stacktrace
-
-**Conceito aplicado**: Singleton Pattern, Thread Safety
-
-### ✅ Checklist Fase 9:
-
-- [ ] LoggerService criado como Singleton
-- [ ] Construtor privado
-- [ ] Thread-safe (Double-Check Locking)
-- [ ] Métodos Log e LogError implementados
+- [ ] Arquivo de database criado (SQLite: arquivo .db existe)
+- [ ] Tabela `Categories` existe
+- [ ] Tabela `Products` existe
+- [ ] Tabela `Items` existe
+- [ ] Tabela `Movements` existe
+- [ ] Tabela `Users` existe
+- [ ] Índice único em `Products.SKU` existe
+- [ ] FKs criadas corretamente
 
 ---
 
-## 🌐 FASE 10: Camada API (Controllers)
+### **FASE 4: DTOs** ⏱️ 1-2h
 
-### O que fazer:
+**Criar DTOs para transferência de dados**
 
-#### 10.1 - Criar ProdutosController
+#### ✅ Checklist: Category DTOs
 
-**Onde**: `src/API/Controllers/ProdutosController.cs`
+**Arquivos criados:**
 
-**O que incluir**:
+- [ ] `DTOs/CategoryDto.cs` (leitura)
+- [ ] `DTOs/CreateCategoryDto.cs` (criação)
+- [ ] `DTOs/UpdateCategoryDto.cs` (atualização)
 
-- Atributos da classe:
-  - `[ApiController]`
-  - `[Route("api/[controller]")]`
-- Herda de `ControllerBase`
-- Campo privado readonly: `_produtoService` do tipo IProdutoService
-- Construtor que recebe IProdutoService e atribui ao campo
+**CategoryDto:**
 
-**Crie os seguintes endpoints**:
+- [ ] Id (Guid)
+- [ ] Nome (string)
+- [ ] Descricao (string)
+- [ ] DataCriacao (DateTime)
+- [ ] Apenas propriedades com get/set, sem lógica
 
-1. **GET /api/produtos** - ObterTodos
-   - Atributo `[HttpGet]`
-   - Atributos de documentação para status 200
-   - Chame \_produtoService.ObterTodosAsync()
-   - Retorne Ok(produtos)
+**CreateCategoryDto:**
 
-2. **GET /api/produtos/{id}** - ObterPorId
-   - Atributo `[HttpGet("{id}")]`
-   - Recebe Guid id como parâmetro
-   - Chame o serviço
-   - Se null, retorne NotFound com mensagem
-   - Senão, retorne Ok(produto)
+- [ ] Nome (string)
+- [ ] Descricao (string)
+- [ ] NÃO contém Id ou DataCriacao
 
-3. **POST /api/produtos** - Criar
-   - Atributo `[HttpPost]`
-   - Recebe `[FromBody] CriarProdutoDto dto`
-   - Use try-catch para capturar ArgumentException
-   - Se erro, retorne BadRequest com mensagem
-   - Se sucesso, retorne CreatedAtAction apontando para ObterPorId
+**UpdateCategoryDto:**
 
-4. **PUT /api/produtos/{id}** - Atualizar
-   - Atributo `[HttpPut("{id}")]`
-   - Recebe id e `[FromBody] AtualizarProdutoDto dto`
-   - Use try-catch para:
-     - KeyNotFoundException → NotFound
-     - ArgumentException → BadRequest
-   - Se sucesso, retorne Ok(produto)
+- [ ] Nome (string)
+- [ ] Descricao (string)
 
-5. **DELETE /api/produtos/{id}** - Remover
-   - Atributo `[HttpDelete("{id}")]`
-   - Recebe id
-   - Try-catch para KeyNotFoundException
-   - Se sucesso, retorne NoContent()
+---
 
-6. **POST /api/produtos/{id}/estoque/adicionar** - AdicionarEstoque
-   - Atributo `[HttpPost("{id}/estoque/adicionar")]`
-   - Recebe id e `[FromBody] int quantidade`
-   - Try-catch para exceções
-   - Retorne Ok com mensagem de sucesso
+#### ✅ Checklist: Product DTOs
 
-7. **POST /api/produtos/{id}/estoque/remover** - RemoverEstoque
-   - Atributo `[HttpPost("{id}/estoque/remover")]`
-   - Recebe id e quantidade
-   - Try-catch para exceções (incluindo InvalidOperationException)
-   - Retorne Ok com mensagem
+**Arquivos criados:**
 
-Adicione comentários XML (///) acima de cada método descrevendo o que faz.
+- [ ] `DTOs/ProductDto.cs`
+- [ ] `DTOs/CreateProductDto.cs`
+- [ ] `DTOs/UpdateProductDto.cs`
 
-**Conceito aplicado**: REST API, Dependency Injection, Tratamento de Exceções
+**ProductDto:**
 
-### ✅ Checklist Fase 10:
+- [ ] Id, SKU, Nome, Status, QuantidadeMinima, DataCriacao
+- [ ] CategoryId, CategoryNome (denormalizado para facilitar UI)
+- [ ] QuantidadeTotal (calculado pela soma dos Items)
 
-- [ ] Controller criado com atributos corretos
+**CreateProductDto:**
+
+- [ ] SKU, Nome, QuantidadeMinima, CategoryId
+- [ ] NÃO contém Id, Status (inicia sempre Ativo)
+
+**UpdateProductDto:**
+
+- [ ] Nome, QuantidadeMinima, CategoryId
+- [ ] NÃO permite alterar SKU (imutável)
+
+---
+
+#### ✅ Checklist: Item DTOs
+
+**Arquivos criados:**
+
+- [ ] `DTOs/ItemDto.cs`
+- [ ] `DTOs/CreateItemDto.cs`
+- [ ] `DTOs/UpdateItemDto.cs`
+
+**ItemDto:**
+
+- [ ] Id, Batch, DataValidade, Quantidade, Localizacao, Status
+- [ ] ProductId, ProductNome (denormalizado)
+- [ ] DataCriacao
+
+**CreateItemDto:**
+
+- [ ] Batch, DataValidade, Quantidade, Localizacao, ProductId
+- [ ] NÃO contém Status (calculado automaticamente)
+
+**UpdateItemDto:**
+
+- [ ] Batch, DataValidade, Localizacao
+- [ ] NÃO permite atualizar Quantidade diretamente (usar endpoints específicos)
+
+---
+
+#### ✅ Checklist: Movement DTOs
+
+**Arquivos criados:**
+
+- [ ] `DTOs/MovementDto.cs` (apenas leitura)
+
+**MovementDto:**
+
+- [ ] Id, Data, Tipo, QuantidadeMovimentada
+- [ ] QuantidadeAnterior, QuantidadeNova
+- [ ] ItemId, ItemBatch (denormalizado)
+- [ ] UserId, UserNome (denormalizado)
+
+**Observação:**
+
+- [ ] NÃO existe CreateMovementDto (criado automaticamente pelo sistema)
+- [ ] NÃO existe UpdateMovementDto (imutável)
+
+---
+
+#### ✅ Checklist: User DTOs
+
+**Arquivos criados:**
+
+- [ ] `DTOs/UserDto.cs`
+- [ ] `DTOs/CreateUserDto.cs`
+- [ ] `DTOs/UpdateUserDto.cs`
+
+**UserDto:**
+
+- [ ] Id, Nome, Email, Perfil
+
+**CreateUserDto:**
+
+- [ ] Nome, Email, Perfil
+
+**UpdateUserDto:**
+
+- [ ] Nome, Email, Perfil
+
+---
+
+#### ✅ Checklist Final da Fase 4
+
+**Validações:**
+
+- [ ] Todos os DTOs compilam sem erros
+- [ ] Nenhum DTO contém métodos ou lógica de negócio
+- [ ] DTOs de criação não contêm campos gerados (Id, DataCriacao)
+- [ ] DTOs de leitura contêm campos denormalizados quando necessário
+- [ ] Propriedades públicas com get/set em todos os DTOs
+
+---
+
+### **FASE 5: Repositories (CRUD genérico + queries específicas)** ⏱️ 3-4h
+
+#### ✅ Checklist: IRepository<T> Genérico
+
+**Arquivo:**
+
+- [ ] `Repositories/IRepository.cs` criado
+
+**Métodos obrigatórios:**
+
+- [ ] `Task<T?> ObterPorIdAsync(Guid id)`
+- [ ] `Task<IEnumerable<T>> ObterTodosAsync()`
+- [ ] `Task AdicionarAsync(T entity)`
+- [ ] `Task AtualizarAsync(T entity)`
+- [ ] `Task<bool> ExisteAsync(Guid id)`
+
+**Validações:**
+
+- [ ] Interface genérica com constraint `where T : class`
+- [ ] Todos os métodos retornam Task (assíncronos)
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: ICategoryRepository
+
+**Arquivo:**
+
+- [ ] `Repositories/ICategoryRepository.cs` criado
+
+**Configuração:**
+
+- [ ] Herda de `IRepository<Category>`
+- [ ] Não adiciona métodos extras (CRUD genérico suficiente)
+
+**Implementação:**
+
+- [ ] `Repositories/CategoryRepository.cs` criado
+- [ ] Implementa `ICategoryRepository`
+- [ ] Recebe `AppDbContext` via construtor
+- [ ] Todos os métodos implementados usando EF Core
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IProductRepository
+
+**Arquivo:**
+
+- [ ] `Repositories/IProductRepository.cs` criado
+
+**Métodos herdados:**
+
+- [ ] Herda `IRepository<Product>`
+
+**Métodos adicionais:**
+
+- [ ] `Task<Product?> BuscarPorSkuAsync(string sku)`
+- [ ] `Task<IEnumerable<Product>> ObterAtivosAsync()`
+- [ ] `Task<IEnumerable<Product>> ObterInativosAsync()`
+- [ ] `Task<IEnumerable<Product>> ObterEstoqueBaixoAsync()` - produtos onde soma dos Items < QuantidadeMinima
+
+**Implementação:**
+
+- [ ] `Repositories/ProductRepository.cs` criado
+- [ ] Implementa todos os métodos
+- [ ] `ObterEstoqueBaixoAsync` usa JOIN/Include com Items
+- [ ] Queries otimizadas (AsNoTracking quando leitura)
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IItemRepository
+
+**Arquivo:**
+
+- [ ] `Repositories/IItemRepository.cs` criado
+
+**Métodos adicionais:**
+
+- [ ] `Task<IEnumerable<Item>> BuscarPorProductAsync(Guid productId)`
+- [ ] `Task<IEnumerable<Item>> BuscarVencendoAsync(int dias)` - DataValidade <= DateTime.UtcNow.AddDays(dias)
+- [ ] `Task<IEnumerable<Item>> BuscarPorStatusAsync(string status)`
+
+**Implementação:**
+
+- [ ] `Repositories/ItemRepository.cs` criado
+- [ ] Todos os métodos implementados
+- [ ] `BuscarPorProductAsync` inclui Product (eager loading)
+- [ ] `BuscarVencendoAsync` filtra apenas itens com DataValidade não-nula
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IMovementRepository
+
+**Arquivo:**
+
+- [ ] `Repositories/IMovementRepository.cs` criado
+
+**Métodos adicionais:**
+
+- [ ] `Task<IEnumerable<Movement>> BuscarPorItemAsync(Guid itemId)`
+- [ ] `Task<IEnumerable<Movement>> BuscarPorPeriodoAsync(DateTime inicio, DateTime fim)`
+
+**Implementação:**
+
+- [ ] `Repositories/MovementRepository.cs` criado
+- [ ] Queries incluem Item e User (eager loading)
+- [ ] Ordenação por Data descendente
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IUserRepository
+
+**Arquivo:**
+
+- [ ] `Repositories/IUserRepository.cs` criado
+
+**Métodos adicionais:**
+
+- [ ] `Task<User?> BuscarPorEmailAsync(string email)`
+
+**Implementação:**
+
+- [ ] `Repositories/UserRepository.cs` criado
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist Final da Fase 5
+
+**Validações gerais:**
+
+- [ ] Todos os 5 repositórios compilam
+- [ ] Todos usam async/await
+- [ ] DbContext injetado via construtor em todos
+- [ ] Queries retornam tipos corretos
+- [ ] Eager loading usado onde necessário (Include)
+- [ ] Nenhum repository contém validação de negócio
+
+---
+
+### **FASE 6: Services (Lógica de negócio)** ⏱️ 4-5h
+
+#### ✅ Checklist: ICategoryService
+
+**Arquivo:**
+
+- [ ] `Services/ICategoryService.cs` criado
+
+**Métodos:**
+
+- [ ] `Task<IEnumerable<CategoryDto>> ObterTodosAsync()`
+- [ ] `Task<CategoryDto?> ObterPorIdAsync(Guid id)`
+- [ ] `Task<CategoryDto> CriarAsync(CreateCategoryDto dto)`
+- [ ] `Task<CategoryDto> AtualizarAsync(Guid id, UpdateCategoryDto dto)`
+
+**Implementação:**
+
+- [ ] `Services/CategoryService.cs` criado
+- [ ] Recebe `ICategoryRepository` via construtor
+- [ ] Recebe `ILogger<CategoryService>` via construtor
+
+**Validações no CriarAsync:**
+
+- [ ] Nome não pode ser vazio → ArgumentException
+- [ ] Nome máximo 255 caracteres → ArgumentException
+
+**Validações no AtualizarAsync:**
+
+- [ ] Categoria deve existir → KeyNotFoundException
+- [ ] Mesmas validações de CriarAsync
+
+**Mapeamentos:**
+
+- [ ] Converte Category → CategoryDto em todos os retornos
+- [ ] Converte DTOs → Category ao criar/atualizar
+
+**Logging:**
+
+- [ ] Log ao criar categoria (nome)
+- [ ] Log ao atualizar categoria
+- [ ] Log de erro em exceções
+
+**Checklist final:**
+
+- [ ] Service compila sem erros
+- [ ] Todas as validações implementadas
+- [ ] Mapeamentos funcionam
+
+---
+
+#### ✅ Checklist: IProductService
+
+**Arquivo:**
+
+- [ ] `Services/IProductService.cs` criado
+
+**Métodos:**
+
+- [ ] `Task<IEnumerable<ProductDto>> ObterTodosAsync()`
+- [ ] `Task<IEnumerable<ProductDto>> ObterInativosAsync()`
+- [ ] `Task<ProductDto?> ObterPorIdAsync(Guid id)`
+- [ ] `Task<ProductDto?> ObterPorSkuAsync(string sku)`
+- [ ] `Task<IEnumerable<ProductDto>> ObterEstoqueBaixoAsync()`
+- [ ] `Task<CategoryDto> CriarAsync(CreateProductDto dto)`
+- [ ] `Task<ProductDto> AtualizarAsync(Guid id, UpdateProductDto dto)`
+- [ ] `Task DesativarAsync(Guid id)`
+
+**Implementação:**
+
+- [ ] `Services/ProductService.cs` criado
+- [ ] Recebe `IProductRepository` e `IItemRepository` via construtor
+- [ ] Recebe `ILogger<ProductService>`
+
+**Validações no CriarAsync:**
+
+- [ ] SKU não pode ser vazio → ArgumentException
+- [ ] SKU deve ser único (usar repository) → ArgumentException "SKU já existe"
+- [ ] Nome não pode ser vazio → ArgumentException
+- [ ] QuantidadeMinima >= 0 → ArgumentException
+- [ ] CategoryId deve existir → ArgumentException
+
+**Validações no AtualizarAsync:**
+
+- [ ] Produto deve existir → KeyNotFoundException
+- [ ] Produto deve estar Ativo → InvalidOperationException "Produto inativo não pode ser alterado"
+- [ ] Mesmas validações de campos do CriarAsync
+
+**Regras do DesativarAsync:**
+
+- [ ] Produto deve existir → KeyNotFoundException
+- [ ] Chama método Desativar() da entidade
+- [ ] Atualiza no repository
+
+**Cálculo de QuantidadeTotal:**
+
+- [ ] Usa IItemRepository para buscar todos os items do produto
+- [ ] Soma as quantidades
+- [ ] Retorna no ProductDto
+
+**Checklist final:**
+
+- [ ] Todas as validações implementadas
+- [ ] Produto inativo não pode ser atualizado
+- [ ] Soft delete funciona (DesativarAsync)
+- [ ] QuantidadeTotal calculada corretamente
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IItemService
+
+**Arquivo:**
+
+- [ ] `Services/IItemService.cs` criado
+
+**Métodos:**
+
+- [ ] `Task<IEnumerable<ItemDto>> ObterPorProductAsync(Guid productId)`
+- [ ] `Task<ItemDto?> ObterPorIdAsync(Guid id)`
+- [ ] `Task<IEnumerable<ItemDto>> ObterVencendoAsync(int dias)`
+- [ ] `Task<ItemDto> CriarAsync(CreateItemDto dto)`
+- [ ] `Task<ItemDto> AtualizarAsync(Guid id, UpdateItemDto dto)`
+- [ ] `Task AdicionarQuantidadeAsync(Guid id, int quantidade, Guid userId)`
+- [ ] `Task RemoverQuantidadeAsync(Guid id, int quantidade, Guid userId)`
+
+**Implementação:**
+
+- [ ] `Services/ItemService.cs` criado
+- [ ] Recebe `IItemRepository`, `IMovementRepository`, `IProductRepository`
+- [ ] Recebe `ILogger<ItemService>`
+
+**Validações no CriarAsync:**
+
+- [ ] Batch não pode ser vazio → ArgumentException
+- [ ] Quantidade >= 0 → ArgumentException
+- [ ] Localizacao não pode ser vazia → ArgumentException
+- [ ] DataValidade, se informada, deve ser futura → ArgumentException
+- [ ] ProductId deve existir → ArgumentException
+
+**Validações no AtualizarAsync:**
+
+- [ ] Item deve existir → KeyNotFoundException
+- [ ] Validações de campos do CriarAsync
+
+**Lógica do AdicionarQuantidadeAsync:**
+
+- [ ] Item deve existir → KeyNotFoundException
+- [ ] Quantidade deve ser > 0 → ArgumentException
+- [ ] Chama Item.AdicionarQuantidade()
+- [ ] Chama Item.AtualizarStatus()
+- [ ] **CRIA registro Movement** com tipo "Entrada"
+- [ ] Movement guarda: QuantidadeAnterior, QuantidadeNova, UserId
+- [ ] Usa transação (SaveChanges salva Item + Movement juntos)
+
+**Lógica do RemoverQuantidadeAsync:**
+
+- [ ] Item deve existir → KeyNotFoundException
+- [ ] Quantidade deve ser > 0 → ArgumentException
+- [ ] Chama Item.RemoverQuantidade() (pode lançar exceção se insuficiente)
+- [ ] Chama Item.AtualizarStatus()
+- [ ] **CRIA registro Movement** com tipo "Saida"
+- [ ] Usa transação
+
+**Checklist final:**
+
+- [ ] Validações implementadas
+- [ ] AdicionarQuantidade cria Movement
+- [ ] RemoverQuantidade cria Movement
+- [ ] Status atualizado automaticamente
+- [ ] Transações garantem consistência
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IMovementService
+
+**Arquivo:**
+
+- [ ] `Services/IMovementService.cs` criado
+
+**Métodos (apenas leitura):**
+
+- [ ] `Task<IEnumerable<MovementDto>> ObterPorItemAsync(Guid itemId)`
+- [ ] `Task<IEnumerable<MovementDto>> ObterPorPeriodoAsync(DateTime inicio, DateTime fim)`
+
+**Implementação:**
+
+- [ ] `Services/MovementService.cs` criado
+- [ ] Recebe `IMovementRepository`
+- [ ] **NÃO tem métodos de criar/atualizar/deletar**
+
+**Regras:**
+
+- [ ] Movements são criados apenas via ItemService
+- [ ] Ordenação por Data descendente
+- [ ] Inclui informações denormalizadas (ItemBatch, UserNome)
+
+**Checklist final:**
+
+- [ ] Apenas leitura
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: IUserService
+
+**Arquivo:**
+
+- [ ] `Services/IUserService.cs` criado
+
+**Métodos básicos:**
+
+- [ ] `Task<IEnumerable<UserDto>> ObterTodosAsync()`
+- [ ] `Task<UserDto?> ObterPorIdAsync(Guid id)`
+- [ ] `Task<UserDto> CriarAsync(CreateUserDto dto)`
+
+**Implementação:**
+
+- [ ] `Services/UserService.cs` criado
+- [ ] Validação básica (email, nome)
+- [ ] Pode ser implementação mínima por enquanto
+
+---
+
+#### ✅ Checklist Final da Fase 6
+
+**Validações gerais:**
+
+- [ ] Todos os 5 services compilam
+- [ ] Validações de negócio nos services, não nos controllers
+- [ ] Exceptions apropriadas lançadas (ArgumentException, KeyNotFoundException, InvalidOperationException)
+- [ ] Logging implementado nos pontos críticos
+- [ ] Mapeamentos DTO ↔ Model funcionam
+- [ ] ItemService cria Movement automaticamente
+- [ ] Transações usadas onde necessário
+
+---
+
+### **FASE 7: Controllers (Endpoints REST)** ⏱️ 3-4h
+
+#### ✅ Checklist: CategoryController
+
+**Arquivo:**
+
+- [ ] `Controllers/CategoryController.cs` criado
+
+**Configuração:**
+
+- [ ] Atributo `[ApiController]`
+- [ ] Atributo `[Route("api/[controller]")]`
+- [ ] Herda de `ControllerBase`
+- [ ] Recebe `ICategoryService` via construtor
+
+**Endpoints:**
+
+- [ ] `GET /api/categories` - ObterTodos
+  - [ ] Retorna 200 OK com lista
+- [ ] `GET /api/categories/{id}` - ObterPorId
+  - [ ] Retorna 200 OK se encontrado
+  - [ ] Retorna 404 Not Found se não existir
+- [ ] `POST /api/categories` - Criar
+  - [ ] Recebe `[FromBody] CreateCategoryDto`
+  - [ ] Retorna 201 Created com CreatedAtAction
+  - [ ] Captura ArgumentException → 400 Bad Request
+- [ ] `PUT /api/categories/{id}` - Atualizar
+  - [ ] Recebe id e `[FromBody] UpdateCategoryDto`
+  - [ ] Retorna 200 OK
+  - [ ] Captura KeyNotFoundException → 404
+  - [ ] Captura ArgumentException → 400
+
+**Tratamento de erros:**
+
+- [ ] Try-catch em todos os endpoints
+- [ ] Mensagens descritivas em objetos JSON
+- [ ] Status codes corretos
+
+**Documentação:**
+
+- [ ] Comentários XML (///) em todos os métodos
+
+---
+
+#### ✅ Checklist: ProductController
+
+**Arquivo:**
+
+- [ ] `Controllers/ProductController.cs` criado
+
+**Endpoints:**
+
+- [ ] `GET /api/products` - ObterTodos (ativos)
+- [ ] `GET /api/products/inactive` - ObterInativos
+- [ ] `GET /api/products/{id}` - ObterPorId
+- [ ] `GET /api/products/sku/{sku}` - ObterPorSku
+- [ ] `GET /api/products/low-stock` - ObterEstoqueBaixo
+- [ ] `POST /api/products` - Criar
+  - [ ] Valida SKU único
+  - [ ] Retorna 201 Created
+- [ ] `PUT /api/products/{id}` - Atualizar
+  - [ ] Impede atualização de produto inativo
+  - [ ] Retorna 400 se inativo
+- [ ] `DELETE /api/products/{id}` - Desativar (soft delete)
+  - [ ] Retorna 204 No Content
+
+**Tratamento de erros:**
+
+- [ ] ArgumentException "SKU já existe" → 400
+- [ ] InvalidOperationException "Produto inativo" → 400
+- [ ] KeyNotFoundException → 404
+
+**Checklist:**
+
+- [ ] Todos os 8 endpoints implementados
+- [ ] Comentários XML completos
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: ItemController
+
+**Arquivo:**
+
+- [ ] `Controllers/ItemController.cs` criado
+
+**Endpoints:**
+
+- [ ] `GET /api/products/{productId}/items` - ObterPorProduct
+- [ ] `GET /api/items/{id}` - ObterPorId
+- [ ] `GET /api/items/expiring?days=7` - ObterVencendo
+  - [ ] Parâmetro query `days` (padrão 7)
+- [ ] `POST /api/products/{productId}/items` - Criar
+  - [ ] Valida DataValidade futura
+  - [ ] Retorna 201 Created
+- [ ] `PUT /api/items/{id}` - Atualizar
+  - [ ] NÃO permite atualizar Quantidade (usar endpoints específicos)
+- [ ] `POST /api/items/{id}/add-quantity` - AdicionarQuantidade
+  - [ ] Recebe `{ quantidade: int, userId: guid }` no body
+  - [ ] Cria Movement automaticamente
+  - [ ] Retorna 200 OK
+- [ ] `POST /api/items/{id}/remove-quantity` - RemoverQuantidade
+  - [ ] Recebe `{ quantidade: int, userId: guid }` no body
+  - [ ] Valida estoque suficiente
+  - [ ] Cria Movement automaticamente
+  - [ ] Retorna 200 OK
+
+**Tratamento de erros:**
+
+- [ ] InvalidOperationException "Estoque insuficiente" → 400
+- [ ] ArgumentException "DataValidade inválida" → 400
+- [ ] KeyNotFoundException → 404
+
+**Checklist:**
+
 - [ ] Todos os 7 endpoints implementados
-- [ ] Tratamento de exceções em cada endpoint
+- [ ] add-quantity e remove-quantity criam Movement
+- [ ] Comentários XML completos
+
+---
+
+#### ✅ Checklist: MovementController
+
+**Arquivo:**
+
+- [ ] `Controllers/MovementController.cs` criado
+
+**Endpoints (apenas leitura):**
+
+- [ ] `GET /api/items/{itemId}/movements` - ObterPorItem
+  - [ ] Retorna histórico ordenado por data DESC
+- [ ] `GET /api/movements?startDate=X&endDate=Y` - ObterPorPeriodo
+  - [ ] Valida que startDate < endDate
+  - [ ] Retorna 400 se datas inválidas
+
+**Checklist:**
+
+- [ ] NÃO tem POST/PUT/DELETE (histórico é imutável)
+- [ ] Comentários XML completos
+- [ ] Compila sem erros
+
+---
+
+#### ✅ Checklist: UserController
+
+**Arquivo:**
+
+- [ ] `Controllers/UserController.cs` criado (opcional se não for foco)
+
+**Endpoints básicos:**
+
+- [ ] `GET /api/users`
+- [ ] `GET /api/users/{id}`
+- [ ] `POST /api/users`
+
+---
+
+#### ✅ Checklist Final da Fase 7
+
+**Validações gerais:**
+
+- [ ] Todos os controllers compilam
+- [ ] Atributos de rota corretos
 - [ ] Status codes corretos (200, 201, 204, 400, 404)
-- [ ] Documentação XML nos métodos
+- [ ] Tratamento de exceções em todos os endpoints
+- [ ] CreatedAtAction usado em POST
+- [ ] Mensagens de erro descritivas em JSON
+- [ ] Comentários XML completos
+- [ ] Controllers NÃO acessam Repositories diretamente
 
 ---
 
-## ⚙️ FASE 11: Configuração da API
+### **FASE 8: Configuração (Program.cs)** ⏱️ 30min-1h
 
-### O que fazer:
+#### ✅ Checklist: Configuração de Serviços
 
-#### 11.1 - Configurar Program.cs
+**DbContext:**
 
-**Onde**: `Program.cs` (raiz do projeto)
+- [ ] `AddDbContext<AppDbContext>` configurado
+- [ ] Connection string definida
+- [ ] Provider correto (UseSqlite, UseSqlServer, etc)
 
-**Substitua todo o conteúdo padrão**:
+**Repositories:**
 
-**Adicione os usings necessários no topo**:
+- [ ] `AddScoped<ICategoryRepository, CategoryRepository>`
+- [ ] `AddScoped<IProductRepository, ProductRepository>`
+- [ ] `AddScoped<IItemRepository, ItemRepository>`
+- [ ] `AddScoped<IMovementRepository, MovementRepository>`
+- [ ] `AddScoped<IUserRepository, UserRepository>`
 
-- Application.DTOs
-- Application.Interfaces
-- Application.Strategies
-- Application.UseCases
-- Domain.Interfaces
-- Infrastructure.Data
-- Infrastructure.Repositories
-- Microsoft.EntityFrameworkCore
+**Services:**
 
-**Configure os serviços (antes de `var app = builder.Build()`)**:
+- [ ] `AddScoped<ICategoryService, CategoryService>`
+- [ ] `AddScoped<IProductService, ProductService>`
+- [ ] `AddScoped<IItemService, ItemService>`
+- [ ] `AddScoped<IMovementService, MovementService>`
+- [ ] `AddScoped<IUserService, UserService>`
 
-1. **DbContext**:
-   - Use AddDbContext para AppDbContext
-   - Configure para usar MySQL
-   - Recupere a connection string de `appsettings.json`
-   - Use `UseMySql()` com `MySqlServerVersion`
+**Controllers e Swagger:**
 
-2. **Services**:
-   - Registre IProdutoService → ProdutoService (Scoped)
+- [ ] `AddControllers()` adicionado
+- [ ] `AddEndpointsApiExplorer()` adicionado
+- [ ] `AddSwaggerGen()` configurado com informações do projeto
 
-3. **Strategies**:
-   - Registre IValidacaoStrategy<CriarProdutoDto> → ValidacaoProdutoStrategy (Scoped)
+**Pipeline:**
 
-4. **Controllers**:
-   - Adicione AddControllers()
-
-5. **Swagger**:
-   - Mantenha AddEndpointsApiExplorer
-   - Configure AddSwaggerGen com informações do projeto
-
-**Configure o pipeline (depois de `var app = builder.Build()`)**:
-
-1. Mantenha configuração de Swagger para Development
-2. Adicione UseHttpsRedirection
-3. Adicione UseAuthorization
-4. **IMPORTANTE**: Adicione MapControllers() (para os endpoints funcionarem)
-5. Mantenha app.Run()
-
-**Remova**: Todo código de WeatherForecast
-
-**Conceito aplicado**: Dependency Injection, Configuração de API
-
-### ✅ Checklist Fase 11:
-
-- [ ] Usings adicionados
-- [ ] DbContext configurado
-- [ ] Todos os repositories registrados
-- [ ] Todos os services registrados
-- [ ] Strategies registrados
-- [ ] Controllers adicionados
-- [ ] MapControllers() incluído
-- [ ] Código de exemplo removido
+- [ ] `UseSwagger()` em Development
+- [ ] `UseSwaggerUI()` em Development
+- [ ] `UseHttpsRedirection()` adicionado
+- [ ] `UseAuthorization()` adicionado
+- [ ] **`MapControllers()`** adicionado (CRÍTICO)
 
 ---
 
-## 📦 FASE 12: Pacotes NuGet
+#### ✅ Checklist Final da Fase 8
 
-### O que fazer:
+**Validações:**
 
-#### 12.1 - Adicionar Pacotes Necessários
-
-**Onde**: Terminal / Linha de comando
-
-**Execute os seguintes comandos**:
-
-```bash
-dotnet add package Microsoft.EntityFrameworkCore
-dotnet add package Pomelo.EntityFrameworkCore.MySql
-dotnet add package Microsoft.EntityFrameworkCore.Tools
-```
-
-**Ou edite manualmente o arquivo .csproj**:
-
-- Abra `controle_estoque_cshap.csproj`
-- Dentro de `<ItemGroup>` onde estão os PackageReference
-- Adicione as 3 linhas acima:
-  - Microsoft.EntityFrameworkCore (versão 8.0.1)
-  - Pomelo.EntityFrameworkCore.MySql (versão 8.0.0)
-  - Microsoft.EntityFrameworkCore.Tools (versão 8.0.1)
-
-Depois execute:
-
-```bash
-dotnet restore
-```
-
-**Conceito aplicado**: Gerenciamento de Dependências
-
-### ✅ Checklist Fase 12:
-
-- [ ] Entity Framework Core instalado
-- [ ] Pomelo MySQL provider instalado
-- [ ] Tools instalado
-- [ ] dotnet restore executado com sucesso
+- [ ] `dotnet build` compila sem erros
+- [ ] `dotnet run` inicia aplicação
+- [ ] Swagger acessível em `/swagger`
+- [ ] Todos os endpoints visíveis no Swagger
+- [ ] Sem erros no console ao iniciar
 
 ---
 
-## 🧪 FASE 13: Testar a Aplicação
+### **FASE 9: Testes e Validações** ⏱️ 3-4h
 
-### O que fazer:
+#### ✅ Checklist: Testes de Sucesso (Happy Path)
 
-#### 13.1 - Compilar
+**Categoria:**
 
-**Terminal**:
+- [ ] POST /api/categories - Criar categoria
+  - [ ] Retorna 201 Created
+  - [ ] Id gerado
+  - [ ] DataCriacao preenchida
+- [ ] GET /api/categories - Listar
+  - [ ] Categoria criada aparece na lista
+- [ ] PUT /api/categories/{id} - Atualizar
+  - [ ] Retorna 200 OK
+  - [ ] Dados atualizados
 
-```bash
-dotnet build
-```
+**Produto:**
 
-**Verifique**:
+- [ ] POST /api/products - Criar produto
+  - [ ] Com CategoryId válido
+  - [ ] SKU único
+  - [ ] Retorna 201
+  - [ ] Status = Ativo
+- [ ] GET /api/products - Listar ativos
+  - [ ] Produto criado aparece
+- [ ] GET /api/products/sku/{sku} - Buscar por SKU
+  - [ ] Retorna produto correto
+- [ ] DELETE /api/products/{id} - Desativar
+  - [ ] Retorna 204
+  - [ ] Produto NÃO aparece mais em GET /api/products
+  - [ ] Produto APARECE em GET /api/products/inactive
 
-- Não deve ter erros de compilação
-- Pode ter warnings sobre nullable (tudo bem)
+**Item (Lote):**
 
----
+- [ ] POST /api/products/{productId}/items - Criar lote
+  - [ ] Com DataValidade futura
+  - [ ] Retorna 201
+  - [ ] Status calculado automaticamente
+- [ ] GET /api/products/{productId}/items - Listar lotes do produto
+  - [ ] Lote criado aparece
+- [ ] POST /api/items/{id}/add-quantity - Adicionar estoque
+  - [ ] Quantidade aumenta
+  - [ ] Retorna 200
+- [ ] GET /api/items/{itemId}/movements - Ver histórico
+  - [ ] **Movement de "Entrada" foi criado**
+  - [ ] QuantidadeAnterior e QuantidadeNova corretos
+  - [ ] UserId registrado
+- [ ] POST /api/items/{id}/remove-quantity - Remover estoque
+  - [ ] Quantidade diminui
+  - [ ] **Movement de "Saida" foi criado**
 
-#### 13.2 - Executar
+**Movimentação:**
 
-**Terminal**:
-
-```bash
-dotnet run
-```
-
-**Observe**:
-
-- A URL onde a aplicação está rodando (geralmente https://localhost:5001)
-- Mensagens de inicialização
-
----
-
-#### 13.3 - Testar no Swagger
-
-**Navegador**:
-
-1. Acesse: `https://localhost:5001/swagger` (ou a porta que aparecer)
-2. Você verá a interface do Swagger com todos os endpoints
-
-**Teste a sequência**:
-
-1. **POST /api/produtos** (Criar):
-   - Clique em "Try it out"
-   - Preencha o JSON com dados de exemplo
-   - Execute
-   - Deve retornar 201 Created
-   - Copie o Id retornado
-
-2. **GET /api/produtos** (Listar):
-   - Execute
-   - Deve retornar o produto criado
-
-3. **GET /api/produtos/{id}** (Buscar por ID):
-   - Cole o Id copiado
-   - Execute
-   - Deve retornar os dados do produto
-
-4. **PUT /api/produtos/{id}** (Atualizar):
-   - Cole o Id
-   - Altere alguns dados
-   - Execute
-   - Deve retornar 200 OK com dados atualizados
-
-5. **POST /api/produtos/{id}/estoque/adicionar**:
-   - Cole o Id
-   - Informe quantidade (ex: 5)
-   - Execute
-   - Deve retornar sucesso
-
-6. **DELETE /api/produtos/{id}** (Remover):
-   - Cole o Id
-   - Execute
-   - Deve retornar 204 No Content
-
-### ✅ Checklist Fase 13:
-
-- [ ] Compilação sem erros
-- [ ] Aplicação executando
-- [ ] Swagger acessível
-- [ ] Endpoint POST funciona
-- [ ] Endpoint GET funciona
-- [ ] Endpoint PUT funciona
-- [ ] Endpoint DELETE funciona
-- [ ] Endpoints de estoque funcionam
+- [ ] GET /api/items/{itemId}/movements - Histórico do lote
+  - [ ] Retorna todas as movimentações
+  - [ ] Ordenado por data DESC
+- [ ] GET /api/movements?startDate=X&endDate=Y - Por período
+  - [ ] Retorna movimentações no período
 
 ---
 
-## 📝 FASE 14: Validação dos Conceitos
+#### ✅ Checklist: Testes de Erro
 
-### Checklist Final - Você Aplicou:
+**Categoria:**
 
-#### SOLID
+- [ ] POST com Nome vazio → 400 Bad Request
+- [ ] PUT de categoria inexistente → 404 Not Found
 
-- [ ] **S**: Cada classe tem uma única responsabilidade?
-- [ ] **O**: Você pode adicionar novos tipos sem modificar código existente?
-- [ ] **L**: Subclasses funcionam no lugar das classes base?
-- [ ] **I**: Interfaces são pequenas e focadas?
-- [ ] **D**: Suas classes dependem de interfaces, não de implementações?
+**Produto:**
 
-#### Design Patterns
+- [ ] POST com SKU duplicado → 400 "SKU já existe"
+- [ ] POST com CategoryId inexistente → 400
+- [ ] PUT de produto inativo → 400 "Produto inativo não pode ser alterado"
+- [ ] GET /api/products/sku/{sku-inexistente} → 404
 
-- [ ] **Strategy**: Validação pode ser trocada facilmente?
-- [ ] **Repository**: Acesso a dados está abstraído?
-- [ ] **Singleton**: LoggerService tem apenas uma instância?
-- [ ] **Factory Method**: Entidades são criadas via método Criar()?
-- [ ] **Dependency Injection**: Dependências injetadas via construtor?
+**Item:**
 
-#### Clean Architecture
+- [ ] POST com DataValidade no passado → 400
+- [ ] POST com ProductId inexistente → 404
+- [ ] POST /api/items/{id}/remove-quantity com quantidade maior que estoque → 400 "Estoque insuficiente"
+- [ ] POST add-quantity com quantidade negativa → 400
 
-- [ ] **Domain**: Sem dependências externas, apenas regras de negócio?
-- [ ] **Application**: Coordena operações, usa Domain e define interfaces?
-- [ ] **Infrastructure**: Implementa interfaces, acessa banco de dados?
-- [ ] **API**: Apenas recebe requisições e chama Application?
+**Movement:**
 
-#### Herança e Polimorfismo
-
-- [ ] BaseEntity é herdada por Produto e Categoria?
-- [ ] Repository<T> é herdado por repositórios específicos?
-- [ ] Métodos podem ser sobrescritos (virtual/override)?
-
-#### Clean Code
-
-- [ ] Nomes descritivos e claros?
-- [ ] Métodos pequenos e focados?
-- [ ] Sem duplicação de código?
-- [ ] Validações nos lugares corretos?
+- [ ] GET com startDate > endDate → 400
 
 ---
 
-## 🎯 Próximos Desafios (Após Dominar o Básico)
+#### ✅ Checklist: Validações de Banco de Dados
 
-1. **Adicionar FluentValidation** para validações mais robustas
-2. **Implementar AutoMapper** para conversões automáticas
-3. **Criar testes unitários** com xUnit
-4. **Adicionar autenticação** com JWT
-5. **Adicionar paginação** nos endpoints de listagem
-6. **Implementar logging com Serilog**
-7. **Criar filtros e middleware** customizados
-8. **Adicionar cache** com Redis
-9. **Implementar CQRS** (Command Query Responsibility Segregation)
-10. **Criar migrations** para versionamento do banco de dados
+**Schema:**
 
----
+- [ ] 5 tabelas criadas (Categories, Products, Items, Movements, Users)
+- [ ] Índice único em Products.SKU existe
+- [ ] FKs configuradas corretamente
 
-## 💡 Dicas Importantes
+**Dados:**
 
-### Durante o Desenvolvimento:
+- [ ] Produto desativado tem Status = Inativo (0) no banco
+- [ ] Produto desativado NÃO é deletado fisicamente
+- [ ] Movement registra UserId de quem fez a operação
+- [ ] Movement tem Data preenchida automaticamente
 
-1. **Faça uma fase por vez** - não pule etapas
-2. **Compile frequentemente** - não acumule erros
-3. **Leia as mensagens de erro** - elas dizem o que está errado
-4. **Use IntelliSense** - Ctrl+Space mostra sugestões
-5. **Pesquise quando travar** - mas tente primeiro
+**Integridade:**
 
-### Conceitos para Estudar Paralelo:
-
-- **Async/Await** em C#
-- **LINQ** (Language Integrated Query)
-- **Entity Framework Core** básico
-- **Attributes** em C# ([HttpGet], [Route], etc)
-- **Exception Handling** (try-catch-finally)
-- **Generics** (classes e métodos genéricos)
-
-### Recursos Úteis:
-
-- Documentação oficial Microsoft: docs.microsoft.com
-- Pesquise sempre: "Como fazer X em C#"
-- VS Code IntelliSense é seu melhor amigo
-- Mensagens de erro do compilador são descritivas
+- [ ] Não consigo inserir Item com ProductId inexistente (FK constraint)
+- [ ] Não consigo inserir 2 produtos com mesmo SKU (unique constraint)
 
 ---
 
-## ✅ Quando Você Terminar
+#### ✅ Checklist: Validações de Negócio
 
-Você terá construído uma API completa que demonstra:
+**Product vs Item:**
 
-- ✅ Arquitetura limpa e bem organizada
-- ✅ Código seguindo princípios SOLID
-- ✅ Uso de Design Patterns profissionais
-- ✅ Boas práticas de Clean Code
-- ✅ API REST funcional e testável
+- [ ] QuantidadeTotal do produto = soma das quantidades de todos os Items
+- [ ] Produto pode ter múltiplos Items (lotes)
+- [ ] Cada Item representa um lote com validade específica
 
-**Parabéns! Você terá um projeto portfolio profissional!** 🎉
+**Status:**
+
+- [ ] Item com Quantidade = 0 tem Status = "Esgotado"
+- [ ] Item com Quantidade > 0 e <= Product.QuantidadeMinima tem Status = "Alerta"
+- [ ] Item com Quantidade > Product.QuantidadeMinima tem Status = "Disponivel"
+
+**Histórico:**
+
+- [ ] TODA adição de estoque cria Movement tipo "Entrada"
+- [ ] TODA remoção de estoque cria Movement tipo "Saida"
+- [ ] Movement registra QuantidadeAnterior e QuantidadeNova
+- [ ] Movement NÃO pode ser editado/deletado
+
+**Data de Validade:**
+
+- [ ] GET /api/items/expiring?days=7 retorna itens vencendo em até 7 dias
+- [ ] Não retorna itens sem DataValidade
+- [ ] Não retorna itens já vencidos (DataValidade < hoje)
 
 ---
 
-**Importante**: Este plano é seu guia. Siga passo a passo, com calma e atenção. Cada conceito aqui é fundamental para ser um bom desenvolvedor C#. Boa sorte! 🚀
+#### ✅ Checklist Final da Fase 9
+
+**Cobertura de testes:**
+
+- [ ] TODOS os cenários de sucesso testados e funcionando
+- [ ] TODOS os cenários de erro retornam status code correto
+- [ ] TODAS as validações de banco confirmadas
+- [ ] TODAS as regras de negócio validadas
+- [ ] Documentado em arquivo TESTES.md (opcional)
+
+---
+
+### **FASE 10: Documentação** ⏱️ 2-3h
+
+#### ✅ Checklist: README.md
+
+**Seção: Descrição do Projeto:**
+
+- [ ] Objetivo do sistema
+- [ ] Contexto (lanchonete, controle de estoque alimentício)
+- [ ] Diferencial (lotes, validade, rastreabilidade)
+
+**Seção: Tecnologias:**
+
+- [ ] .NET 8 (ou versão usada)
+- [ ] Entity Framework Core
+- [ ] Provider de banco (SQLite/SQL Server)
+- [ ] Swagger/OpenAPI
+
+**Seção: Arquitetura:**
+
+- [ ] Padrão MVC/MSC
+- [ ] Diagrama de camadas (texto ou ASCII art)
+- [ ] Separação de responsabilidades
+
+**Seção: Modelo de Dados:**
+
+- [ ] Explicação das 5 entidades
+- [ ] Diferença entre Product (tipo) e Item (lote)
+- [ ] Relacionamentos
+
+**Seção: Pré-requisitos:**
+
+- [ ] .NET SDK (versão mínima)
+- [ ] Ferramentas opcionais (VS Code, Rider, etc)
+
+**Seção: Como Executar:**
+
+- [ ] Clone do repositório
+- [ ] `dotnet restore`
+- [ ] `dotnet ef database update`
+- [ ] `dotnet run`
+- [ ] URL do Swagger
+- [ ] Comandos funcionam quando seguidos passo a passo
+
+**Seção: Endpoints Principais:**
+
+- [ ] Tabela com método, rota, descrição
+- [ ] Pelo menos 1 exemplo de request/response
+
+**Seção: Regras de Negócio:**
+
+- [ ] SKU único e imutável
+- [ ] Soft delete de produtos
+- [ ] Histórico imutável
+- [ ] Status automático de itens
+- [ ] Product vs Item explicado
+
+**Seção: Próximos Passos (Opcional):**
+
+- [ ] Features futuras
+- [ ] Melhorias planejadas
+
+---
+
+#### ✅ Checklist: Documentação no Swagger
+
+**Configuração:**
+
+- [ ] Título e versão definidos em AddSwaggerGen
+- [ ] Descrição do projeto
+- [ ] Informações de contato (opcional)
+
+**Endpoints:**
+
+- [ ] Todos os 25+ endpoints visíveis
+- [ ] Agrupados por controller (Categories, Products, Items, Movements)
+- [ ] Comentários XML aparecem nas descrições
+- [ ] Exemplos de DTOs visíveis
+
+**Schemas:**
+
+- [ ] Todos os DTOs documentados
+- [ ] Propriedades com descrição (se adicionou comentários XML)
+
+---
+
+#### ✅ Checklist: ARQUITETURA.md (Opcional)
+
+**Diagrama de Fluxo:**
+
+- [ ] Request HTTP → Controller → Service → Repository → Database
+- [ ] Response: Database → Repository → Service → Controller → HTTP
+
+**Decisões Técnicas:**
+
+- [ ] Por que MVC/MSC
+- [ ] Por que separar Product e Item
+- [ ] Por que Movement é imutável
+- [ ] Por que soft delete
+
+**Padrões Aplicados:**
+
+- [ ] Repository Pattern
+- [ ] Service Layer
+- [ ] DTO Pattern
+- [ ] Dependency Injection
+
+---
+
+#### ✅ Checklist Final da Fase 10
+
+**Validação:**
+
+- [ ] README.md existe e está completo
+- [ ] Terceiro consegue clonar e executar seguindo README
+- [ ] Swagger documenta todos os endpoints
+- [ ] Comentários XML nos controllers
+- [ ] Projeto apresentável para portfolio
+
+---
+
+## 📋 CRITÉRIOS DE ACEITE FINAL DO PROJETO
+
+### ✅ Funcionalidades Obrigatórias
+
+- [ ] **CRUD de Categorias** funcionando
+- [ ] **CRUD de Produtos** com SKU único e soft delete
+- [ ] **CRUD de Items (Lotes)** com data de validade e localização
+- [ ] **Controle de estoque** (adicionar/remover quantidade)
+- [ ] **Histórico de movimentações** completo e imutável
+- [ ] **Auditoria** com registro de UserId
+- [ ] **Listagem de produtos inativos** separada
+- [ ] **Listagem de itens vencendo** funcional
+- [ ] **Cálculo automático de status** dos itens
+- [ ] **Cálculo de quantidade total** do produto (soma dos lotes)
+
+---
+
+### ✅ Validações de Negócio
+
+- [ ] SKU é único no sistema
+- [ ] Produtos inativos não aparecem em listagem de ativos
+- [ ] Produtos inativos NÃO podem ser atualizados
+- [ ] Soft delete funciona (produto não é deletado do banco)
+- [ ] Estoque nunca fica negativo
+- [ ] Data de validade, se informada, deve ser futura
+- [ ] Toda alteração de estoque cria registro de Movement
+- [ ] Movement é imutável (não pode ser editado/deletado)
+- [ ] Status do item atualiza automaticamente após add/remove
+
+---
+
+### ✅ Arquitetura e Código
+
+- [ ] Estrutura de pastas correta (Models, DTOs, Data, Repositories, Services, Controllers)
+- [ ] Controllers NÃO acessam Repositories diretamente
+- [ ] Services contêm validações de negócio
+- [ ] Repositories apenas acessam dados
+- [ ] Models NÃO acessam banco de dados
+- [ ] DTOs separam modelo de apresentação
+- [ ] Injeção de dependências configurada
+- [ ] Código compila sem erros
+- [ ] Sem warnings críticos
+
+---
+
+### ✅ Banco de Dados
+
+- [ ] 5 tabelas criadas (Categories, Products, Items, Movements, Users)
+- [ ] Relacionamentos FK configurados
+- [ ] Índice único em SKU
+- [ ] Migrations aplicadas
+- [ ] Dados persistem corretamente
+
+---
+
+### ✅ API e Testes
+
+- [ ] Todos os endpoints funcionam
+- [ ] Status codes corretos (200, 201, 204, 400, 404)
+- [ ] Mensagens de erro descritivas
+- [ ] Swagger documenta todos os endpoints
+- [ ] TODOS os testes de sucesso passam
+- [ ] TODOS os testes de erro retornam código correto
+
+---
+
+### ✅ Documentação
+
+- [ ] README.md completo
+- [ ] Comandos de execução funcionam
+- [ ] Swagger acessível e documentado
+- [ ] Terceiro consegue executar projeto
+
+---
+
+## 🎯 PERGUNTAS DE AUTO-AVALIAÇÃO
+
+**Responda SEM consultar código:**
+
+### Conceitos
+
+1. Qual a diferença entre Product e Item?
+2. Por que SKU é único mas pode haver múltiplos Items?
+3. O que acontece quando executo DELETE /api/products/{id}?
+
+### Fluxo de Dados
+
+4. Desenhe o caminho de POST /api/items/{id}/add-quantity
+5. Onde é criado o registro de Movement?
+6. Quantas tabelas são afetadas ao adicionar estoque?
+
+### Regras de Negócio
+
+7. Um produto inativo pode ser atualizado?
+8. Um Movement pode ser deletado?
+9. Como o Status do Item é calculado?
+
+### Arquitetura
+
+10. Controller pode acessar Repository diretamente?
+11. Onde ficam as validações de negócio?
+12. O que Service retorna: Model ou DTO?
+
+**Mínimo: 10/12 para considerar pronto**
+
+---
+
+## 🚀 PRÓXIMOS PASSOS (Opcional)
+
+Se completou TUDO e ainda tem tempo:
+
+**Features Avançadas:**
+
+- [ ] Paginação em listagens (page, pageSize)
+- [ ] Filtros avançados (categoria, faixa de preço, range de validade)
+- [ ] Relatório de movimentações por período
+- [ ] Endpoint de estatísticas (produtos mais movimentados, etc)
+
+**Qualidade:**
+
+- [ ] Testes unitários com xUnit
+- [ ] Testes de integração
+- [ ] FluentValidation para validações
+- [ ] AutoMapper para mapeamentos
+
+**Infraestrutura:**
+
+- [ ] Job automático de limpeza (produtos > X anos)
+- [ ] Notificações de estoque baixo
+- [ ] Logs estruturados com Serilog
+- [ ] Health checks
+
+---
+
+**Começe pela FASE 1. Valide cada checklist antes de avançar. Go! 🚀**
