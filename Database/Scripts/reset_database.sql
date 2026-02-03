@@ -1,0 +1,5 @@
+-- ==============================================
+-- Script para RESETAR o Banco de Dados
+-- ⚠️ CUIDADO: Apaga TODOS os dados!
+-- Use apenas em desenvolvimento/testes
+-- ==============================================

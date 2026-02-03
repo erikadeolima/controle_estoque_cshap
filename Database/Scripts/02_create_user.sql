@@ -1,0 +1,4 @@
+-- ==============================================
+-- Script de Criação de Usuário Específico
+-- (OPCIONAL - Use apenas se quiser um usuário dedicado)
+-- ==============================================

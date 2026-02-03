@@ -1,0 +1,4 @@
+-- ==============================================
+-- Script de Dados Iniciais (SEED DATA)
+-- Execute APÓS aplicar as migrations do Entity Framework
+-- ==============================================
