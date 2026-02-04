@@ -74,26 +74,26 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Setup Inicial:**
 
-- [ ] Projeto .NET criado (webapi template)
-- [ ] Pacotes NuGet instalados:
-  - [ ] Microsoft.EntityFrameworkCore.Sqlite (ou provider escolhido)
-  - [ ] Microsoft.EntityFrameworkCore.Design
-  - [ ] Microsoft.EntityFrameworkCore.Tools
-- [ ] `dotnet restore` executado com sucesso
+- [x] Projeto .NET criado (webapi template)
+- [x] Pacotes NuGet instalados:
+  - [x] Pomelo.EntityFrameworkCore.MySql (cmd: dotnet add package Pomelo.EntityFrameworkCore.MySql --version 8.0.0)
+  - [x] Microsoft.EntityFrameworkCore.Design (cmd: dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.0)
+  - [x] Microsoft.EntityFrameworkCore.Tools (cmd: dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.0)
+- [x] `dotnet restore` executado com sucesso (cmd: dotnet restore)
 
 **Estrutura de Pastas:**
 
-- [ ] Pasta `Models/` criada na raiz
-- [ ] Pasta `DTOs/` criada na raiz
-- [ ] Pasta `Data/` criada na raiz
-- [ ] Pasta `Repositories/` criada na raiz
-- [ ] Pasta `Services/` criada na raiz
-- [ ] Pasta `Controllers/` existe (já vem no template)
+- [x] Pasta `Models/` criada na raiz
+- [x] Pasta `DTOs/` criada na raiz
+- [x] Pasta `Data/` criada na raiz
+- [x] Pasta `Repositories/` criada na raiz
+- [x] Pasta `Services/` criada na raiz
+- [x] Pasta `Controllers/` existe (já vem no template)
 
 **Limpeza:**
 
-- [ ] `WeatherForecast.cs` removido
-- [ ] `WeatherForecastController.cs` removido
+- [x] `WeatherForecast.cs` removido
+- [x] `WeatherForecastController.cs` removido
 
 **Compilação:**
 
@@ -111,20 +111,20 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Models/Category.cs` criado
+- [x] `Models/Category.cs` criado
 
 **Propriedades obrigatórias:**
 
-- [ ] `Id` (Guid, chave primária)
-- [ ] `Nome` (string, obrigatório, máx 255 caracteres)
-- [ ] `Descricao` (string, nullable, máx 200 caracteres)
-- [ ] `DataCriacao` (DateTime)
+- [x] `Id` (Guid, chave primária)
+- [x] `Nome` (string, obrigatório, máx 255 caracteres)
+- [x] `Descricao` (string, nullable, máx 200 caracteres)
+- [x] `DataCriacao` (DateTime)
 
 **Comportamento:**
 
-- [ ] Construtor inicializa `Id` com novo Guid
-- [ ] Construtor define `DataCriacao` como UTC agora
-- [ ] Classe compila sem erros
+- [x] Construtor inicializa `Id` com novo Guid
+- [x] Construtor define `DataCriacao` como UTC agora
+- [x] Classe compila sem erros
 
 ---
 
@@ -132,30 +132,30 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Models/Product.cs` criado
+- [x] `Models/Product.cs` criado
 
 **Propriedades obrigatórias:**
 
-- [ ] `Id` (Guid)
-- [ ] `SKU` (string, obrigatório, máx 45, ÚNICO)
-- [ ] `Nome` (string, obrigatório, máx 200)
-- [ ] `Status` (enum ou int: 0=Inativo, 1=Ativo)
-- [ ] `QuantidadeMinima` (int, padrão >= 0)
-- [ ] `DataCriacao` (DateTime)
-- [ ] `CategoryId` (Guid, FK)
-- [ ] `Category` (navigation property)
+- [x] `Id` (Guid)
+- [x] `SKU` (string, obrigatório, máx 45, ÚNICO)
+- [x] `Nome` (string, obrigatório, máx 200)
+- [x] `Status` (enum ou int: 0=Inativo, 1=Ativo)
+- [x] `QuantidadeMinima` (int, padrão >= 0)
+- [x] `DataCriacao` (DateTime)
+- [x] `CategoryId` (Guid, FK)
+- [x] `Category` (navigation property)
 
 **Métodos obrigatórios:**
 
-- [ ] `Ativar()` - marca Status como Ativo
-- [ ] `Desativar()` - marca Status como Inativo
-- [ ] Validação: `QuantidadeMinima` não pode ser negativa
+- [x] `Ativar()` - marca Status como Ativo
+- [x] `Desativar()` - marca Status como Inativo
+- [x] Validação: `QuantidadeMinima` não pode ser negativa
 
 **Regras de negócio:**
 
-- [ ] SKU é imutável após criação (só get público)
-- [ ] Status começa como Ativo
-- [ ] Classe compila sem erros
+- [x] SKU é imutável após criação (só get público)
+- [x] Status começa como Ativo
+- [x] Classe compila sem erros
 
 ---
 
@@ -163,32 +163,32 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Models/Item.cs` criado
+- [x] `Models/Item.cs` criado
 
 **Propriedades obrigatórias:**
 
-- [ ] `Id` (Guid)
-- [ ] `Batch` (string, máx 55, representa número do lote)
-- [ ] `DataValidade` (DateTime nullable)
-- [ ] `Quantidade` (int, não pode ser negativo)
-- [ ] `Localizacao` (string, máx 100, ex: "Geladeira A")
-- [ ] `Status` (enum ou string: Disponivel, Esgotado, Alerta)
-- [ ] `ProductId` (Guid, FK)
-- [ ] `Product` (navigation property)
-- [ ] `DataCriacao` (DateTime)
+- [x] `Id` (Guid)
+- [x] `Batch` (string, máx 55, representa número do lote)
+- [x] `DataValidade` (DateTime nullable)
+- [x] `Quantidade` (int, não pode ser negativo)
+- [x] `Localizacao` (string, máx 100, ex: "Geladeira A")
+- [x] `Status` (enum ou string: Disponivel, Esgotado, Alerta)
+- [x] `ProductId` (Guid, FK)
+- [x] `Product` (navigation property)
+- [x] `DataCriacao` (DateTime)
 
 **Métodos obrigatórios:**
 
-- [ ] `AdicionarQuantidade(int qtd)` - valida qtd > 0, atualiza Quantidade
-- [ ] `RemoverQuantidade(int qtd)` - valida qtd > 0, valida estoque suficiente
-- [ ] `AtualizarStatus()` - calcula status baseado em Quantidade vs Product.QuantidadeMinima
+- [x] `AdicionarQuantidade(int qtd)` - valida qtd > 0, atualiza Quantidade
+- [x] `RemoverQuantidade(int qtd)` - valida qtd > 0, valida estoque suficiente
+- [x] `AtualizarStatus()` - calcula status baseado em Quantidade vs Product.QuantidadeMinima
 
 **Regras de negócio:**
 
-- [ ] Quantidade nunca fica negativa
-- [ ] DataValidade, se informada, deve ser futura (validação)
-- [ ] Status atualiza automaticamente após add/remove
-- [ ] Exceções lançadas em casos de erro
+- [x] Quantidade nunca fica negativa
+- [x] DataValidade, se informada, deve ser futura (validação)
+- [x] Status atualiza automaticamente após add/remove
+- [x] Exceções lançadas em casos de erro
 
 ---
 
@@ -196,31 +196,31 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Models/Movement.cs` criado
+- [x] `Models/Movement.cs` criado
 
 **Propriedades obrigatórias:**
 
-- [ ] `Id` (Guid)
-- [ ] `Data` (DateTime, UTC)
-- [ ] `Tipo` (enum ou string: Entrada, Saida, Ajuste)
-- [ ] `QuantidadeMovimentada` (int)
-- [ ] `QuantidadeAnterior` (int, snapshot antes da operação)
-- [ ] `QuantidadeNova` (int, snapshot depois da operação)
-- [ ] `ItemId` (Guid, FK)
-- [ ] `Item` (navigation property)
-- [ ] `UserId` (Guid, FK)
-- [ ] `User` (navigation property)
+- [x] `Id` (Guid)
+- [x] `Data` (DateTime, UTC)
+- [x] `Tipo` (enum ou string: Entrada, Saida, Ajuste)
+- [x] `QuantidadeMovimentada` (int)
+- [x] `QuantidadeAnterior` (int, snapshot antes da operação)
+- [x] `QuantidadeNova` (int, snapshot depois da operação)
+- [x] `ItemId` (Guid, FK)
+- [x] `Item` (navigation property)
+- [x] `UserId` (Guid, FK)
+- [x] `User` (navigation property)
 
 **Comportamento:**
 
-- [ ] TODAS as propriedades são somente leitura após criação
-- [ ] Construtor recebe todos os parâmetros necessários
-- [ ] Data é definida automaticamente no construtor
+- [x] TODAS as propriedades são somente leitura após criação
+- [x] Construtor recebe todos os parâmetros necessários
+- [x] Data é definida automaticamente no construtor
 
 **Regras de negócio:**
 
-- [ ] Registro é imutável (não pode ser editado/deletado)
-- [ ] Classe compila sem erros
+- [x] Registro é imutável (não pode ser editado/deletado)
+- [x] Classe compila sem erros
 
 ---
 
@@ -228,19 +228,19 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Models/User.cs` criado
+- [x] `Models/User.cs` criado
 
 **Propriedades obrigatórias:**
 
-- [ ] `Id` (Guid)
-- [ ] `Nome` (string, máx 200)
-- [ ] `Email` (string, máx 100)
-- [ ] `Perfil` (string, máx 50, ex: "Gerente", "Operador")
+- [x] `Id` (Guid)
+- [x] `Nome` (string, máx 200)
+- [x] `Email` (string, máx 100)
+- [x] `Perfil` (string, máx 50, ex: "Gerente", "Operador")
 
 **Comportamento:**
 
-- [ ] Entidade simples sem métodos especiais
-- [ ] Classe compila sem erros
+- [x] Entidade simples sem métodos especiais
+- [x] Classe compila sem erros
 
 ---
 
@@ -248,17 +248,17 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Relacionamentos:**
 
-- [ ] Product tem FK para Category
-- [ ] Item tem FK para Product
-- [ ] Movement tem FK para Item e User
-- [ ] Navigation properties bidirecionais configuradas
+- [x] Product tem FK para Category
+- [x] Item tem FK para Product
+- [x] Movement tem FK para Item e User
+- [x] Navigation properties bidirecionais configuradas
 
 **Validações:**
 
-- [ ] Todas as 5 classes compilam
-- [ ] Enums/constantes definidas para Status e Tipo
-- [ ] Nenhuma lógica de acesso a dados nas entidades
-- [ ] Métodos de negócio funcionam isoladamente (teste unitário manual)
+- [x] Todas as 5 classes compilam
+- [x] Enums/constantes definidas para Status e Tipo
+- [x] Nenhuma lógica de acesso a dados nas entidades
+- [x] Métodos de negócio funcionam isoladamente (teste unitário manual)
 
 ---
 
@@ -276,67 +276,67 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Arquivo:**
 
-- [ ] `Data/AppDbContext.cs` criado
+- [x] `Data/AppDbContext.cs` criado
 
 **Configuração básica:**
 
-- [ ] Classe herda de `DbContext`
-- [ ] Construtor recebe `DbContextOptions<AppDbContext>`
-- [ ] Construtor passa options para base
+- [x] Classe herda de `DbContext`
+- [x] Construtor recebe `DbContextOptions<AppDbContext>`
+- [x] Construtor passa options para base
 
 **DbSets:**
 
-- [ ] `DbSet<Category> Categories` declarado
-- [ ] `DbSet<Product> Products` declarado
-- [ ] `DbSet<Item> Items` declarado
-- [ ] `DbSet<Movement> Movements` declarado
-- [ ] `DbSet<User> Users` declarado
+- [x] `DbSet<Category> Categories` declarado
+- [x] `DbSet<Product> Products` declarado
+- [x] `DbSet<Item> Items` declarado
+- [x] `DbSet<Movement> Movements` declarado
+- [x] `DbSet<User> Users` declarado
 
 **OnModelCreating - Category:**
 
-- [ ] Chave primária configurada (Id)
-- [ ] Nome: obrigatório, máx 255
-- [ ] Descricao: nullable, máx 200
-- [ ] DataCriacao: obrigatório
+- [x] Chave primária configurada (Id)
+- [x] Nome: obrigatório, máx 255
+- [x] Descricao: nullable, máx 200
+- [x] DataCriacao: obrigatório
 
 **OnModelCreating - Product:**
 
-- [ ] Chave primária configurada
-- [ ] SKU: obrigatório, máx 45
-- [ ] Índice único em SKU configurado
-- [ ] Nome: obrigatório, máx 200
-- [ ] Status: configurado como int/tinyint
-- [ ] QuantidadeMinima: default 0
-- [ ] FK para Category configurada
-- [ ] Relacionamento Category→Products configurado
+- [x] Chave primária configurada
+- [x] SKU: obrigatório, máx 45
+- [x] Índice único em SKU configurado
+- [x] Nome: obrigatório, máx 200
+- [x] Status: configurado como int/tinyint
+- [x] QuantidadeMinima: default 0
+- [x] FK para Category configurada
+- [x] Relacionamento Category→Products configurado
 
 **OnModelCreating - Item:**
 
-- [ ] Chave primária configurada
-- [ ] Batch: máx 55
-- [ ] DataValidade: nullable
-- [ ] Quantidade: obrigatório
-- [ ] Localizacao: máx 100
-- [ ] Status: string ou enum
-- [ ] FK para Product configurada
-- [ ] Relacionamento Product→Items configurado
+- [x] Chave primária configurada
+- [x] Batch: máx 55
+- [x] DataValidade: nullable
+- [x] Quantidade: obrigatório
+- [x] Localizacao: máx 100
+- [x] Status: string ou enum
+- [x] FK para Product configurada
+- [x] Relacionamento Product→Items configurado
 
 **OnModelCreating - Movement:**
 
-- [ ] Chave primária configurada
-- [ ] Data: obrigatório
-- [ ] Tipo: string máx 45
-- [ ] Campos de quantidade configurados
-- [ ] FK para Item configurada
-- [ ] FK para User configurada
-- [ ] Relacionamentos configurados
+- [x] Chave primária configurada
+- [x] Data: obrigatório
+- [x] Tipo: string máx 45
+- [x] Campos de quantidade configurados
+- [x] FK para Item configurada
+- [x] FK para User configurada
+- [x] Relacionamentos configurados
 
 **OnModelCreating - User:**
 
-- [ ] Chave primária configurada
-- [ ] Nome: máx 200
-- [ ] Email: máx 100
-- [ ] Perfil: máx 50
+- [x] Chave primária configurada
+- [x] Nome: máx 200
+- [x] Email: máx 100
+- [x] Perfil: máx 50
 
 ---
 
@@ -344,21 +344,21 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 **Comandos executados:**
 
-- [ ] `dotnet ef migrations add Initial` executado sem erros
-- [ ] Pasta `Migrations/` criada
-- [ ] Arquivo de migration contém CreateTable para todas as 5 tabelas
-- [ ] `dotnet ef database update` executado com sucesso
+- [x] `dotnet ef migrations add Initial` executado sem erros (cmd: dotnet ef migrations add Initial)
+- [x] Pasta `Migrations/` criada
+- [x] Arquivo de migration contém CreateTable para todas as 5 tabelas
+- [x] `dotnet ef database update` executado com sucesso (cmd: dotnet ef database update)
 
 **Validação do banco:**
 
-- [ ] Arquivo de database criado (SQLite: arquivo .db existe)
-- [ ] Tabela `Categories` existe
-- [ ] Tabela `Products` existe
-- [ ] Tabela `Items` existe
-- [ ] Tabela `Movements` existe
-- [ ] Tabela `Users` existe
-- [ ] Índice único em `Products.SKU` existe
-- [ ] FKs criadas corretamente
+- [x] Banco criado no MySQL (controle_estoque)
+- [x] Tabela `Categories` existe
+- [x] Tabela `Products` existe
+- [x] Tabela `Items` existe
+- [x] Tabela `Movements` existe
+- [x] Tabela `Users` existe
+- [x] Índice único em `Products.SKU` existe
+- [x] FKs criadas corretamente
 
 ---
 
