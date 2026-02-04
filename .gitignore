@@ -1,0 +1,17 @@
+# Diretórios de build
+bin/
+obj/
+
+# Arquivos de configuração sensíveis
+#appsettings.Development.json
+#appsettings.json
+
+# Arquivos de log
+*.log
+
+# Arquivos de cache
+*.cache
+
+# Arquivos de dependências
+project.assets.json
+*.nuget.*
