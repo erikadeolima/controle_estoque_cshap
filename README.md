@@ -4,7 +4,15 @@ A RESTful API for snack bar inventory management, built with Clean Architecture 
 
 ## 📋 Project Overview
 
-[TBD] - Add project description and business context
+Inventory control system for snack bar specialized in food product management. The system allows complete control of product lifecycle, from registration to movement history, including low stock alerts and expiration date management.
+
+**Implemented Data Model:**
+
+- **Categories**: Product organization (snacks, beverages, ingredients, etc.)
+- **Products**: Stock items with unique SKU and status control
+- **Items**: Individual batches with quantity, expiration date, and location tracking
+- **Movements**: Complete history of stock entries, exits, and adjustments
+- **Users**: Control of who performed each movement
 
 **Related Documentation:**
 
@@ -16,85 +24,144 @@ A RESTful API for snack bar inventory management, built with Clean Architecture 
 
 ## ✨ Features
 
-[TBD] - Feature list to be completed
+### ✅ Implemented
+
+- **Category Management**
+  - Hierarchical product organization
+  - Description and metadata
+
+- **Product Control**
+  - Unique SKU required
+  - Configurable status (Active/Inactive)
+  - Customizable minimum quantity
+  - Relationship with categories
+
+- **Item/Batch Management**
+  - Batch control
+  - Expiration date tracking
+  - Physical location management
+  - Automatic status (Available/Alert/Out of Stock)
+  - Insufficient stock validation
+
+- **Movement History**
+  - Stock entries, exits, and adjustments logging
+  - Complete audit with responsible user
+  - Quantity snapshots (previous/new)
+  - Automatic timestamp
+
+- **MySQL Database**
+  - Entity Framework Core configured
+  - Migrations implemented
+  - Relationships with referential integrity
+
+### 🚧 Next Implementations
+
+- [ ] REST API Controllers
+- [ ] DTOs and validations
+- [ ] Repositories and Services
+- [ ] Authentication system
+- [ ] Low stock alerts
+- [ ] Automatic deletion of old products
 
 ---
 
 ## 🏗️ Architecture
 
-This project follows **Clean Architecture** with clear separation of concerns across four layers:
+The project currently follows a **layered monolithic architecture** with ASP.NET Core Web API:
 
 ```
-src/
-├── Domain/              # Business logic and domain rules
-│   ├── Entities/       # Domain entities (BaseEntity, Produto, Categoria)
-│   └── Interfaces/     # Repository contracts
-├── Application/         # Application use cases and orchestration
-│   ├── DTOs/           # Data Transfer Objects
-│   ├── Interfaces/     # Service contracts
-│   ├── Strategies/     # Strategy pattern implementations
-│   └── UseCases/       # Business use cases (ProdutoService)
-├── Infrastructure/      # Technical implementations
-│   ├── Data/           # Entity Framework DbContext
-│   ├── Repositories/   # Repository implementations
-│   └── Services/       # Infrastructure services (Logger)
-└── API/                # Presentation layer
-    └── Controllers/    # REST API endpoints
+controle_estoque_cshap/
+├── Models/              # Domain entities
+│   ├── Category.cs     # Product categories
+│   ├── Product.cs      # Products with SKU and status
+│   ├── Item.cs         # Individual items/batches
+│   ├── Movement.cs     # Movement history
+│   └── User.cs         # System users
+├── Data/               # Persistence layer
+│   └── AppDbContext.cs # EF Core context with configurations
+├── Controllers/        # REST API endpoints (to implement)
+├── DTOs/              # Data Transfer Objects (to implement)
+├── Services/          # Business logic (to implement)
+├── Repositories/      # Data access layer (to implement)
+└── Migrations/        # Database migrations
 ```
 
-### Architecture Benefits
+### Domain Model
 
-- **Independence**: Framework and database agnostic domain logic
-- **Testability**: Each layer can be tested independently
-- **Flexibility**: Easy to swap implementations (e.g., different databases)
-- **Scalability**: Clear responsibility boundaries
+**Main Entities:**
+
+1. **Category** - Product categorization
+   - 1:N relationship with Products
+
+2. **Product** - Registered product
+   - Unique SKU required
+   - Status: Active/Inactive
+   - 1:N relationship with Items
+
+3. **Item** - Individual product batch
+   - Quantity control per batch
+   - Expiration date and location
+   - Automatic status: Available/Alert/Out of Stock
+   - 1:N relationship with Movements
+
+4. **Movement** - Stock movement
+   - Types: Entry/Exit/Adjustment
+   - Complete audit (date, user, quantities)
+
+5. **User** - System user
+   - Records who performed each movement
 
 ---
 
-## 🎯 Design Patterns Implemented
+## 🎯 Design Patterns & OOP Principles
 
-### 1. Strategy Pattern
+### Implemented Patterns
 
-- `IValidacaoStrategy<T>` - Interface for validation strategies
-- `ValidacaoProdutoStrategy` - Concrete validation implementation
+#### 1. Entity Pattern (DDD)
 
-### 2. Repository Pattern
+- Entities with controlled constructors
+- Business logic encapsulation
+- Private setters for critical properties (Id, DataCriacao)
 
-- `IRepository<T>` - Generic repository interface
-- `Repository<T>` - Generic repository base implementation
-- `ProdutoRepository`, `CategoriaRepository` - Specific repositories
+#### 2. Value Objects (Enums)
 
-### 3. Singleton Pattern
+- `ProductStatus`: Active/Inactive (Ativo/Inativo)
+- `ItemStatus`: Available/Alert/Out of Stock (Disponível/Alerta/Esgotado)
+- `MovementType`: Entry/Exit/Adjustment (Entrada/Saída/Ajuste)
 
-- `LoggerService` - Thread-safe singleton logging service
+#### 3. Rich Domain Model
 
-### 4. Factory Method Pattern
+- Business methods in entities:
+  - `Product.Ativar()` / `Desativar()` (Activate/Deactivate)
+  - `Product.ValidarQuantidadeMinima()` (Validate minimum quantity)
+  - `Item.AdicionarQuantidade()` / `RemoverQuantidade()` (Add/Remove quantity)
+  - `Item.AtualizarStatus()` (Update status)
 
-- `Create()` methods in entities control object instantiation
+### OOP Principles Applied
 
-### 5. Dependency Injection
+- **Encapsulation**: Properties with private setters, protected internal logic
+- **Abstraction**: Separation between domain models and persistence
+- **Single Responsibility**: Each entity manages its own rules
+- **Immutability**: IDs and timestamps set only on creation
 
-- Configured in `Program.cs` following DIP (Dependency Inversion Principle)
+### Planned Patterns
+
+- Repository Pattern (data layer)
+- Unit of Work (transactions)
+- Strategy Pattern (validations)
+- Dependency Injection (services)
 
 ---
 
 ## ✅ SOLID Principles Applied
 
-| Principle                     | Implementation                                                                                                     |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **S** - Single Responsibility | Each class has one reason to change. Services, repositories, and entities have distinct responsibilities.          |
-| **O** - Open/Closed           | Classes are open for extension via inheritance and interfaces, closed for modification.                            |
-| **L** - Liskov Substitution   | `Produto` and `Categoria` properly substitute `BaseEntity`. `ProdutoRepository` substitutes `Repository<Produto>`. |
-| **I** - Interface Segregation | Specific, focused interfaces. Clients don't depend on methods they don't use.                                      |
-| **D** - Dependency Inversion  | Dependencies injected as abstractions (interfaces), not concrete implementations.                                  |
-
----
-
-## 🔄 OOP Concepts
-
-- **Inheritance**: `Produto` and `Categoria` inherit from `BaseEntity`
-- **Polymorphism**: Repositories override base methods; `IValidacaoStrategy<T>` allows different implementations
-- **Encapsulation**: Private setters on entity properties; business logic validation inside domain
+| Principle                     | Current Implementation                                                                             |
+| ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| **S** - Single Responsibility | Each Model has a single responsibility: Product (product), Item (batch), Movement (stock movement) |
+| **O** - Open/Closed           | Entities allow extension through inheritance and public methods, closed for direct modification    |
+| **L** - Liskov Substitution   | To be implemented with repository and service interfaces                                           |
+| **I** - Interface Segregation | To be implemented with specific interfaces for each repository                                     |
+| **D** - Dependency Inversion  | DbContext injected via DI in Program.cs; will be expanded with repositories and services           |
 
 ---
 
@@ -148,31 +215,76 @@ https://localhost:5001/swagger
 
 ## 📡 API Endpoints
 
-### Products (`/api/produtos`)
+**Status**: 🚧 In development - Controllers not yet implemented
 
-| Method | Endpoint                               | Description        | Status                         |
-| ------ | -------------------------------------- | ------------------ | ------------------------------ |
-| GET    | `/api/produtos`                        | List all products  | 200 OK                         |
-| GET    | `/api/produtos/{id}`                   | Get product by ID  | 200 OK / 404 Not Found         |
-| POST   | `/api/produtos`                        | Create new product | 201 Created / 400 Bad Request  |
-| PUT    | `/api/produtos/{id}`                   | Update product     | 200 OK / 404 Not Found         |
-| DELETE | `/api/produtos/{id}`                   | Deactivate product | 204 No Content / 404 Not Found |
-| POST   | `/api/produtos/{id}/estoque/adicionar` | Add to stock       | 200 OK / 400 Bad Request       |
-| POST   | `/api/produtos/{id}/estoque/remover`   | Remove from stock  | 200 OK / 400 Bad Request       |
+### Planned Endpoints
 
-### Request Example - Create Product
+#### Categories (`/api/categories`)
+
+| Method | Endpoint               | Description     |
+| ------ | ---------------------- | --------------- |
+| GET    | `/api/categories`      | List categories |
+| GET    | `/api/categories/{id}` | Get by ID       |
+| POST   | `/api/categories`      | Create category |
+| PUT    | `/api/categories/{id}` | Update category |
+| DELETE | `/api/categories/{id}` | Delete category |
+
+#### Products (`/api/products`)
+
+| Method | Endpoint                        | Description            |
+| ------ | ------------------------------- | ---------------------- |
+| GET    | `/api/products`                 | List active products   |
+| GET    | `/api/products/inactive`        | List inactive products |
+| GET    | `/api/products/{id}`            | Get product by ID      |
+| GET    | `/api/products/sku/{sku}`       | Get by SKU             |
+| POST   | `/api/products`                 | Create product         |
+| PUT    | `/api/products/{id}`            | Update product         |
+| PUT    | `/api/products/{id}/activate`   | Activate product       |
+| PUT    | `/api/products/{id}/deactivate` | Deactivate product     |
+
+#### Items (`/api/items`)
+
+| Method | Endpoint                         | Description           |
+| ------ | -------------------------------- | --------------------- |
+| GET    | `/api/items/product/{productId}` | List items by product |
+| GET    | `/api/items/{id}`                | Get item by ID        |
+| POST   | `/api/items`                     | Create batch/item     |
+| PUT    | `/api/items/{id}`                | Update item           |
+| POST   | `/api/items/{id}/add-stock`      | Add stock quantity    |
+| POST   | `/api/items/{id}/remove-stock`   | Remove stock quantity |
+
+#### Movements (`/api/movements`)
+
+| Method | Endpoint                       | Description       |
+| ------ | ------------------------------ | ----------------- |
+| GET    | `/api/movements`               | Movement history  |
+| GET    | `/api/movements/item/{itemId}` | Movements by item |
+| GET    | `/api/movements/user/{userId}` | Movements by user |
+| POST   | `/api/movements`               | Register movement |
+
+### Request Examples (Planned)
 
 ```json
-POST /api/produtos
-Content-Type: application/json
-
+// POST /api/products
 {
-  "nome": "Hambúrguer Premium",
-  "descricao": "Hambúrguer 250g com queijo cheddar",
-  "preco": 25.90,
-  "quantidadeEstoque": 50,
-  "categoria": "Lanches",
-  "codigoBarras": "7891234567890"
+  "sku": "PROD-001",
+  "nome": "Hambúrguer Artesanal",
+  "categoryId": "guid-da-categoria",
+  "quantidadeMinima": 10
+}
+
+// POST /api/items
+{
+  "productId": "guid-do-produto",
+  "batch": "LOTE-2026-01",
+  "dataValidade": "2026-12-31",
+  "localizacao": "Prateleira A3"
+}
+
+// POST /api/items/{id}/add-stock
+{
+  "quantidade": 50,
+  "userId": "guid-do-usuario"
 }
 ```
 
@@ -180,50 +292,76 @@ Content-Type: application/json
 
 ## 🗃️ Database
 
-**Database**: MySQL 8.0+
+**Database**: MySQL 8.0.34+  
+**ORM**: Entity Framework Core 8.0
+
+### ✅ Current Configuration
+
+The project is already configured with:
+
+- ✅ Pomelo.EntityFrameworkCore.MySql 8.0.0
+- ✅ AppDbContext configured
+- ✅ Migrations created (`20260204224049_Initial`)
+- ✅ Relationships and indexes configured
 
 ### Setup Instructions
 
-1. **Install MySQL** if not already installed
+1. **Install MySQL 8.0.34+**
 
 2. **Create database**:
 
-   ```sql
-   CREATE DATABASE estoque_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```bash
+   mysql -u root -p
    ```
 
-3. **Update `appsettings.json`**:
+   ```sql
+   CREATE DATABASE controle_estoque CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE USER 'estoque_user'@'localhost' IDENTIFIED BY 'your_secure_password';
+   GRANT ALL PRIVILEGES ON controle_estoque.* TO 'estoque_user'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+3. **Configure connection string** in `appsettings.json`:
 
    ```json
    {
      "ConnectionStrings": {
-       "DefaultConnection": "Server=localhost;Database=estoque_db;User=root;Password=your_password;"
+       "DefaultConnection": "Server=localhost;Database=controle_estoque;User=estoque_user;Password=your_secure_password;"
      }
    }
    ```
 
-4. **Install MySQL NuGet package** (if not already installed):
-
+4. **Apply migrations** (already existing):
    ```bash
-   dotnet add package Pomelo.EntityFrameworkCore.MySql
-   ```
-
-5. **Update `Program.cs`**:
-
-   ```csharp
-   builder.Services.AddDbContext<AppDbContext>(options =>
-       options.UseMySql(
-           builder.Configuration.GetConnectionString("DefaultConnection"),
-           new MySqlServerVersion(new Version(8, 0, 0))
-       )
-   );
-   ```
-
-6. **Create migrations and update database**:
-   ```bash
-   dotnet ef migrations add InitialCreate
    dotnet ef database update
    ```
+
+### Database Structure
+
+**Tables:**
+
+- `Categories` - Product categories
+- `Products` - Products (with unique index on SKU)
+- `Items` - Product items/batches
+- `Movements` - Movement history
+- `Users` - System users
+
+**Relationships:**
+
+- Category 1:N Products (DeleteBehavior.Restrict)
+- Product 1:N Items (DeleteBehavior.Restrict)
+- Item 1:N Movements (DeleteBehavior.Restrict)
+- User 1:N Movements (DeleteBehavior.Restrict)
+
+### Available Scripts
+
+See [Database/Scripts](Database/Scripts/) folder for:
+
+- Database creation
+- User creation
+- Database reset
+- Seed data examples
 
 ---
 
@@ -239,35 +377,69 @@ Content-Type: application/json
 
 ## 🧪 Testing
 
-[TBD] - Testing information to be added:
+**Status**: 🚧 Not implemented
 
-- Unit tests
-- Integration tests
-- Test coverage
+### Test Planning
+
+#### Unit Tests (Planned)
+
+- Entity and business rules testing
+- Model validations
+- Automatic status logic
+
+#### Integration Tests (Planned)
+
+- Repository testing
+- API endpoint testing
+- Database testing
+
+#### Planned Tools
+
+- xUnit - Testing framework
+- Moq - Dependency mocking
+- FluentAssertions - Readable assertions
+- In-Memory Database - EF Core testing
 
 ---
 
 ## 📝 Code Standards
 
-- Clean Code practices: meaningful names, small methods, DRY principle
-- XML documentation for public methods
-- Async/await for all I/O operations
-- Proper exception handling
+### Adopted Conventions
+
+- **Naming**: PascalCase for properties, camelCase for parameters
+- **Language**: Portuguese for domain properties, English for technical code
+- **Encapsulation**: Private setters for critical properties
+- **Immutability**: IDs and timestamps set only in constructor
+- **Validations**: Descriptive exceptions (`ArgumentException`, `InvalidOperationException`)
+- **Entity Framework**: Fluent API configurations in OnModelCreating
+
+### Applied Best Practices
+
+- ✅ Controlled constructors to ensure valid state
+- ✅ Business methods inside entities (Rich Domain Model)
+- ✅ Navigation properties for relationships
+- ✅ Enums for fixed values
+- ✅ Nullable reference types enabled
+- ✅ Explicit configuration of indexes and constraints
 
 ---
 
-## 🔄 Future Enhancements
+## 🔄 Roadmap
 
-- [ ] Unit and integration tests (xUnit, Moq)
-- [ ] Authentication/Authorization (JWT)
-- [ ] Input validation (FluentValidation)
-- [ ] Structured logging (Serilog)
-- [ ] Pagination support
-- [ ] API versioning
-- [ ] Caching (Redis)
-- [ ] CI/CD pipeline
-- [ ] Database migrations (SQL Server)
-- [ ] Performance optimization
+### Phase 1: API Core (In Progress) 🚧
+
+- [ ] Implement Controllers
+- [ ] Create DTOs for requests/responses
+- [ ] Implement Repository Pattern
+- [ ] Implement Service Layer
+- [ ] Validations with FluentValidation
+
+### Phase 2: Business Rules
+
+- [ ] Low stock alert system
+- [ ] Expiration date notifications
+- [ ] Automatic deletion of old products
+- [ ] Movement reports
 
 ---
 
