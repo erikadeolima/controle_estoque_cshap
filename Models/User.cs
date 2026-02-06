@@ -1,16 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace controle_estoque_cshap.Models;
 
-public class User
+public partial class User
 {
-  public Guid Id { get; private set; }
-  public string Nome { get; set; } = string.Empty;
-  public string Email { get; set; } = string.Empty;
-  public string Perfil { get; set; } = string.Empty;
+    public int IdUser { get; set; }
 
-  public ICollection<Movement> Movements { get; set; } = new List<Movement>();
+    public string Name { get; set; } = null!;
 
-  public User()
-  {
-    Id = Guid.NewGuid();
-  }
+    public string Email { get; set; } = null!;
+
+    public string Profile { get; set; } = null!;
+
+    public virtual ICollection<Movement> Movements { get; set; } = new List<Movement>();
 }

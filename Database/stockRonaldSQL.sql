@@ -1,5 +1,15 @@
-CREATE SCHEMA if not exists `Stock Ronald`;
-USE `Stock Ronald`;
+-- CREATE SCHEMA if not exists `Stock Ronald`;
+-- USE `Stock Ronald`;
+USE `controle_estoque`;
+
+-- Limpar tabelas existentes se houver
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS movement;
+DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS category;
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE if not exists category (
 category_id INT AUTO_INCREMENT PRIMARY KEY,

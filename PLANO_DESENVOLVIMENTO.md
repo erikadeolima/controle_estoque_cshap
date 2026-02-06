@@ -103,262 +103,273 @@ Models (Entidades) + DTOs + Data (DbContext)
 
 ---
 
-### **FASE 2: Models (Entidades)** ⏱️ 3-4h
+### **FASE 2 & 3: Models + Database (Database First via Scaffold)** ⏱️ 1-2h
 
-**Criar 5 entidades:**
+**⚠️ IMPORTANTE: Abordagem Database First escolhida**
 
-#### ✅ Checklist: Category
+Este projeto utilizou **Database First** em vez de Code First. Isso significa:
 
-**Arquivo:**
+- ✅ Criamos o banco PRIMEIRO com SQL (stockRonaldSQL.sql)
+- ✅ Usamos `dotnet ef dbcontext scaffold` para GERAR os Models automaticamente
+- ✅ Migration apenas "registrou" que banco já existe (não criou tabelas)
 
-- [x] `Models/Category.cs` criado
+**vs Code First (plano original):**
 
-**Propriedades obrigatórias:**
-
-- [x] `Id` (Guid, chave primária)
-- [x] `Nome` (string, obrigatório, máx 255 caracteres)
-- [x] `Descricao` (string, nullable, máx 200 caracteres)
-- [x] `DataCriacao` (DateTime)
-
-**Comportamento:**
-
-- [x] Construtor inicializa `Id` com novo Guid
-- [x] Construtor define `DataCriacao` como UTC agora
-- [x] Classe compila sem erros
+- ❌ Escrever Models manualmente em C#
+- ❌ Criar migrations que criam as tabelas
+- ❌ `dotnet ef database update` cria schema no MySQL
 
 ---
 
-#### ✅ Checklist: Product
+#### ✅ **Checklist: Criação do Banco (SQL First)**
 
-**Arquivo:**
+**Script SQL:**
 
-- [x] `Models/Product.cs` criado
+- [x] `Database/stockRonaldSQL.sql` criado/modificado
+- [x] Script usa database `controle_estoque` (não cria novo schema)
+- [x] Script tem seção de cleanup (DROP TABLE IF EXISTS)
+- [x] Script cria 5 tabelas: category, product, item, movement, user (lowercase)
+- [x] Colunas em snake_case (category_id, creation_date, product_id, etc)
+- [x] Tipos de dado: INT AUTO_INCREMENT para PKs (não GUID/UUID)
+- [x] Índice único em `product.sku`
+- [x] FKs configuradas com ON DELETE/UPDATE RESTRICT
 
-**Propriedades obrigatórias:**
+**Execução:**
 
-- [x] `Id` (Guid)
-- [x] `SKU` (string, obrigatório, máx 45, ÚNICO)
-- [x] `Nome` (string, obrigatório, máx 200)
-- [x] `Status` (enum ou int: 0=Inativo, 1=Ativo)
-- [x] `QuantidadeMinima` (int, padrão >= 0)
-- [x] `DataCriacao` (DateTime)
-- [x] `CategoryId` (Guid, FK)
-- [x] `Category` (navigation property)
+- [x] Banco `controle_estoque` já existia no MySQL
+- [x] Script executado: `mysql -u erikalima -perikalima < Database/stockRonaldSQL.sql`
+- [x] Sem erros de permissão ou sintaxe
+- [x] 5 tabelas criadas: category, product, item, movement, user
 
-**Métodos obrigatórios:**
+**Dados populados:**
 
-- [x] `Ativar()` - marca Status como Ativo
-- [x] `Desativar()` - marca Status como Inativo
-- [x] Validação: `QuantidadeMinima` não pode ser negativa
-
-**Regras de negócio:**
-
-- [x] SKU é imutável após criação (só get público)
-- [x] Status começa como Ativo
-- [x] Classe compila sem erros
-
----
-
-#### ✅ Checklist: Item (Lote)
-
-**Arquivo:**
-
-- [x] `Models/Item.cs` criado
-
-**Propriedades obrigatórias:**
-
-- [x] `Id` (Guid)
-- [x] `Batch` (string, máx 55, representa número do lote)
-- [x] `DataValidade` (DateTime nullable)
-- [x] `Quantidade` (int, não pode ser negativo)
-- [x] `Localizacao` (string, máx 100, ex: "Geladeira A")
-- [x] `Status` (enum ou string: Disponivel, Esgotado, Alerta)
-- [x] `ProductId` (Guid, FK)
-- [x] `Product` (navigation property)
-- [x] `DataCriacao` (DateTime)
-
-**Métodos obrigatórios:**
-
-- [x] `AdicionarQuantidade(int qtd)` - valida qtd > 0, atualiza Quantidade
-- [x] `RemoverQuantidade(int qtd)` - valida qtd > 0, valida estoque suficiente
-- [x] `AtualizarStatus()` - calcula status baseado em Quantidade vs Product.QuantidadeMinima
-
-**Regras de negócio:**
-
-- [x] Quantidade nunca fica negativa
-- [x] DataValidade, se informada, deve ser futura (validação)
-- [x] Status atualiza automaticamente após add/remove
-- [x] Exceções lançadas em casos de erro
+- [x] 8 categorias (Hambúrgueres, Pães, Laticínios, Molhos, Batatas, Bebidas, Sobremesas, Embalagens)
+- [x] 38 produtos com SKUs (HAM-001 a EMB-006)
+- [x] 38 items (lotes) com estoque, validades e localizações
+- [x] 3 usuários (Carlos Admin, Ana Operadora, Pedro Supervisor)
+- [x] Movimentações de exemplo para histórico
 
 ---
 
-#### ✅ Checklist: Movement (Histórico)
+#### ✅ **Checklist: Scaffold (Geração Automática dos Models)**
 
-**Arquivo:**
+**Comando executado:**
 
-- [x] `Models/Movement.cs` criado
+```bash
+dotnet ef dbcontext scaffold \
+  "Server=localhost;Database=controle_estoque;User=erikalima;Password=erikalima;" \
+  Pomelo.EntityFrameworkCore.MySql \
+  -o Models \
+  --context-dir Data \
+  -f
+```
 
-**Propriedades obrigatórias:**
+**Models gerados (6 arquivos):**
 
-- [x] `Id` (Guid)
-- [x] `Data` (DateTime, UTC)
-- [x] `Tipo` (enum ou string: Entrada, Saida, Ajuste)
-- [x] `QuantidadeMovimentada` (int)
-- [x] `QuantidadeAnterior` (int, snapshot antes da operação)
-- [x] `QuantidadeNova` (int, snapshot depois da operação)
-- [x] `ItemId` (Guid, FK)
-- [x] `Item` (navigation property)
-- [x] `UserId` (Guid, FK)
-- [x] `User` (navigation property)
+- [x] `Models/Category.cs` criado automaticamente
+- [x] `Models/Product.cs` criado automaticamente
+- [x] `Models/Item.cs` criado automaticamente
+- [x] `Models/Movement.cs` criado automaticamente
+- [x] `Models/User.cs` criado automaticamente
+- [x] `Models/EfmigrationsHistory.cs` criado (mapeia `__EFMigrationsHistory`)
 
-**Comportamento:**
+**Características dos Models gerados:**
 
-- [x] TODAS as propriedades são somente leitura após criação
-- [x] Construtor recebe todos os parâmetros necessários
-- [x] Data é definida automaticamente no construtor
-
-**Regras de negócio:**
-
-- [x] Registro é imutável (não pode ser editado/deletado)
-- [x] Classe compila sem erros
-
----
-
-#### ✅ Checklist: User (Auditoria)
-
-**Arquivo:**
-
-- [x] `Models/User.cs` criado
-
-**Propriedades obrigatórias:**
-
-- [x] `Id` (Guid)
-- [x] `Nome` (string, máx 200)
-- [x] `Email` (string, máx 100)
-- [x] `Perfil` (string, máx 50, ex: "Gerente", "Operador")
-
-**Comportamento:**
-
-- [x] Entidade simples sem métodos especiais
-- [x] Classe compila sem erros
+- [x] Classes `partial` (podem ser estendidas)
+- [x] PKs tipo `int` (não Guid)
+- [x] Properties PascalCase (C#) mapeadas para snake_case (MySQL)
+- [x] Navigation properties configuradas (Category.Products, Product.Items, etc)
+- [x] `virtual` nas navigation properties para lazy loading
+- [x] Auto-property initializers (`= new HashSet<>()` para coleções)
+- [x] Nullable types onde aplicável (Status?, MinimumQuantity?, etc)
 
 ---
 
-#### ✅ Checklist Final da Fase 2
+#### ✅ **Checklist: AppDbContext**
 
-**Relacionamentos:**
+**Arquivo gerado e modificado:**
 
-- [x] Product tem FK para Category
-- [x] Item tem FK para Product
-- [x] Movement tem FK para Item e User
-- [x] Navigation properties bidirecionais configuradas
+- [x] `Data/ControleEstoqueContext.cs` gerado pelo scaffold
+- [x] Renomeado manualmente para `Data/AppDbContext.cs`
+- [x] Classe renomeada de `ControleEstoqueContext` para `AppDbContext`
 
-**Validações:**
+**DbSets configurados:**
 
-- [x] Todas as 5 classes compilam
-- [x] Enums/constantes definidas para Status e Tipo
-- [x] Nenhuma lógica de acesso a dados nas entidades
-- [x] Métodos de negócio funcionam isoladamente (teste unitário manual)
+- [x] `DbSet<Category> Categories`
+- [x] `DbSet<Product> Products`
+- [x] `DbSet<Item> Items`
+- [x] `DbSet<Movement> Movements`
+- [x] `DbSet<User> Users`
+- [x] `DbSet<EfmigrationsHistory> EfmigrationsHistories`
 
----
+**OnModelCreating (gerado pelo scaffold):**
 
-### **FASE 3: Database (DbContext + Migrations)** ⏱️ 1-2h
+- [x] `ToTable()` para nomes lowercase (category, product, item, movement, user)
+- [x] `HasColumnName()` mapeando PascalCase → snake_case
+  - CategoryId → category_id
+  - CreationDate → creation_date
+  - MinimumQuantity → minimum_quantity
+  - etc
+- [x] `HasCharSet("utf8mb4")` e `UseCollation("utf8mb4_0900_ai_ci")`
+- [x] `HasKey()` para PKs
+- [x] `HasOne().WithMany()` para FKs e navigation properties
+- [x] `HasForeignKey()` mapeando relacionamentos
 
-**O que fazer:**
+**Modificações manuais no AppDbContext:**
 
-- Configurar AppDbContext com todas as 5 entidades
-- Mapear índices únicos (SKU)
-- Configurar relacionamentos
-- Criar migration inicial
-- Aplicar ao banco
-
-#### ✅ Checklist: AppDbContext
-
-**Arquivo:**
-
-- [x] `Data/AppDbContext.cs` criado
-
-**Configuração básica:**
-
-- [x] Classe herda de `DbContext`
-- [x] Construtor recebe `DbContextOptions<AppDbContext>`
-- [x] Construtor passa options para base
-
-**DbSets:**
-
-- [x] `DbSet<Category> Categories` declarado
-- [x] `DbSet<Product> Products` declarado
-- [x] `DbSet<Item> Items` declarado
-- [x] `DbSet<Movement> Movements` declarado
-- [x] `DbSet<User> Users` declarado
-
-**OnModelCreating - Category:**
-
-- [x] Chave primária configurada (Id)
-- [x] Nome: obrigatório, máx 255
-- [x] Descricao: nullable, máx 200
-- [x] DataCriacao: obrigatório
-
-**OnModelCreating - Product:**
-
-- [x] Chave primária configurada
-- [x] SKU: obrigatório, máx 45
-- [x] Índice único em SKU configurado
-- [x] Nome: obrigatório, máx 200
-- [x] Status: configurado como int/tinyint
-- [x] QuantidadeMinima: default 0
-- [x] FK para Category configurada
-- [x] Relacionamento Category→Products configurado
-
-**OnModelCreating - Item:**
-
-- [x] Chave primária configurada
-- [x] Batch: máx 55
-- [x] DataValidade: nullable
-- [x] Quantidade: obrigatório
-- [x] Localizacao: máx 100
-- [x] Status: string ou enum
-- [x] FK para Product configurada
-- [x] Relacionamento Product→Items configurado
-
-**OnModelCreating - Movement:**
-
-- [x] Chave primária configurada
-- [x] Data: obrigatório
-- [x] Tipo: string máx 45
-- [x] Campos de quantidade configurados
-- [x] FK para Item configurada
-- [x] FK para User configurada
-- [x] Relacionamentos configurados
-
-**OnModelCreating - User:**
-
-- [x] Chave primária configurada
-- [x] Nome: máx 200
-- [x] Email: máx 100
-- [x] Perfil: máx 50
+- [x] Removido hardcoded connection string do `OnConfiguring`
+- [x] Connection string vem agora de DI via `Program.cs`
 
 ---
 
-#### ✅ Checklist: Migrations
+#### ✅ **Checklist: Detalhes dos Models**
 
-**Comandos executados:**
+**Category.cs:**
 
-- [x] `dotnet ef migrations add Initial` executado sem erros (cmd: dotnet ef migrations add Initial)
-- [x] Pasta `Migrations/` criada
-- [x] Arquivo de migration contém CreateTable para todas as 5 tabelas
-- [x] `dotnet ef database update` executado com sucesso (cmd: dotnet ef database update)
+- [x] CategoryId (int, PK, auto-increment)
+- [x] Name (string) - não "Nome" (inglês)
+- [x] Description (string?)
+- [x] CreationDate (DateTime?)
+- [x] Navigation: `ICollection<Product> Products`
 
-**Validação do banco:**
+**Product.cs:**
 
-- [x] Banco criado no MySQL (controle_estoque)
-- [x] Tabela `Categories` existe
-- [x] Tabela `Products` existe
-- [x] Tabela `Items` existe
-- [x] Tabela `Movements` existe
-- [x] Tabela `Users` existe
-- [x] Índice único em `Products.SKU` existe
-- [x] FKs criadas corretamente
+- [x] ProductId (int, PK)
+- [x] Sku (string)
+- [x] Name (string) - não "Nome"
+- [x] Status (sbyte? - tinyint do MySQL)
+- [x] MinimumQuantity (int?)
+- [x] CategoryId (int, FK)
+- [x] CreationDate (DateTime?)
+- [x] Navigations: `Category Category`, `ICollection<Item> Items`
+
+**Item.cs:**
+
+- [x] ItemId (int, PK)
+- [x] Batch (string?)
+- [x] ExpirationDate (DateTime?) - não "DataValidade"
+- [x] Quantity (int)
+- [x] Location (string?) - não "Localizacao"
+- [x] Status (sbyte?)
+- [x] ProductId (int, FK)
+- [x] Navigations: `Product Product`, `ICollection<Movement> Movements`
+
+**Movement.cs:**
+
+- [x] MovementId (int, PK)
+- [x] CreatedDate (DateTime? - propriedade `Date` no código)
+- [x] Type (sbyte?) - não string "Tipo"
+- [x] QuantityMoved (int?)
+- [x] PreviousQuantity (int?)
+- [x] NewQuantity (int?)
+- [x] ItemId (int?, FK)
+- [x] UserId (int?, FK)
+- [x] Navigations: `Item Item`, `User User`
+
+**User.cs:**
+
+- [x] IdUser (int, PK) - não "Id"
+- [x] Name (string?)
+- [x] Email (string?)
+- [x] Profile (string?) - não "Perfil"
+- [x] Navigation: `ICollection<Movement> Movements`
+
+---
+
+#### ✅ **Checklist: Migration de Sincronização**
+
+**Problema:**
+
+- Banco já existe (criado pelo SQL)
+- EF Core precisa de migration registrada para tracking
+
+**Solução:**
+
+- [x] Migration criada: `dotnet ef migrations add InitialDatabaseFirst`
+- [x] Migration NÃO faz CREATE TABLE (Up está vazio)
+- [x] Migration apenas serve para EF saber "estado atual"
+- [x] Registro manual na tabela `__EFMigrationsHistory`:
+  ```sql
+  DELETE FROM __EFMigrationsHistory;
+  INSERT INTO __EFMigrationsHistory (MigrationId, ProductVersion)
+  VALUES ('20260206012322_InitialDatabaseFirst', '8.0.0');
+  ```
+- [x] `dotnet ef migrations list` mostra migration como aplicada
+
+---
+
+#### ✅ **Checklist: Validação Final Database First**
+
+**Compilação:**
+
+- [x] `dotnet build` compila sem erros
+- [x] Sem warnings sobre nullable reference types (Models usam `?` corretamente)
+- [x] Namespace correto: `controle_estoque_cshap.Models`
+
+**Banco de dados:**
+
+- [x] 5 tabelas: category, product, item, movement, user (lowercase)
+- [x] Colunas: snake_case (category_id, creation_date, etc)
+- [x] PKs: INT AUTO_INCREMENT
+- [x] FKs funcionando
+- [x] Índice único em `product.sku`
+- [x] Dados: 8 categorias, 38 produtos, 38 items, 3 users
+
+**EF Core Mapping:**
+
+- [x] EF consegue consultar: `db.Categories.ToList()` funciona
+- [x] Navigation properties carregam com `.Include()`:
+  ```csharp
+  db.Products.Include(p => p.Category).FirstOrDefault()
+  ```
+- [x] JOIN funciona corretamente
+- [x] Contagens corretas:
+  - Categories.Count() = 8
+  - Products.Count() = 38
+  - Users.Count() = 3
+
+**Teste de integração:**
+
+- [x] Endpoint `/api/test-db` criado para validação
+- [x] Teste realizado e passou:
+  ```bash
+  curl http://localhost:5000/api/test-db
+  # Retornou: totalCategories=8, totalProducts=38, totalUsers=3
+  # Sample product com Category.Name carregado via JOIN
+  ```
+
+---
+
+#### ✅ **Checklist Final Fases 2 & 3**
+
+**O que FOI feito (Database First):**
+
+- [x] Banco criado via SQL script (stockRonaldSQL.sql)
+- [x] 5 tabelas (snake_case, INT PKs, FKs configuradas)
+- [x] Dados populados (38 produtos, 8 categorias, 3 users, items, movements)
+- [x] Models gerados automaticamente via scaffold (6 arquivos)
+- [x] AppDbContext gerado e renomeado
+- [x] Fluent API completa configurada pelo scaffold
+- [x] Migration de sincronização criada e registrada
+- [x] EF Core ↔ MySQL funcionando (validado com teste)
+
+**O que NÃO FOI feito (não aplicável em Database First):**
+
+- ❌ Escrever Models manualmente linha por linha
+- ❌ Criar construtores que inicializam Guid/DataCriacao
+- ❌ Escrever métodos de negócio nos Models (Ativar, Desativar, etc)
+- ❌ Migrations que criam CREATE TABLE statements
+- ❌ `dotnet ef database update` gerando schema
+
+**Próximos passos:**
+
+- DTOs precisarão adaptar-se aos Models reais:
+  - `int` em vez de `Guid`
+  - `Name` em vez de `Nome`
+  - `IdUser` em vez de `Id` (User)
+  - `sbyte?` para Status em vez de enum
+- Repositories usarão `int` como tipo de ID
+- Services farão validações que originalmente estariam nos Models
 
 ---
 

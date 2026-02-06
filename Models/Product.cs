@@ -1,49 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace controle_estoque_cshap.Models;
 
-public enum ProductStatus
+public partial class Product
 {
-  Inativo = 0,
-  Ativo = 1
-}
+    public int ProductId { get; set; }
 
-public class Product
-{
-  public Guid Id { get; private set; }
-  public string SKU { get; private set; } = string.Empty;
-  public string Nome { get; set; } = string.Empty;
-  public ProductStatus Status { get; private set; }
-  public int QuantidadeMinima { get; set; }
-  public DateTime DataCriacao { get; private set; }
+    public string Sku { get; set; } = null!;
 
-  public Guid CategoryId { get; set; }
+    public string Name { get; set; } = null!;
 
-  public Category Category { get; set; } = null!;
-  public ICollection<Item> Items { get; set; } = new List<Item>();
+    public sbyte? Status { get; set; }
 
-  public Product(string sku)
-  {
-    Id = Guid.NewGuid();
-    SKU = sku;
-    Status = ProductStatus.Ativo;
-    DataCriacao = DateTime.UtcNow;
-    QuantidadeMinima = 0;
-  }
+    public int? MinimumQuantity { get; set; }
 
-  private Product() { SKU = string.Empty; }
+    public DateTime? CreationDate { get; set; }
 
-  public void Ativar()
-  {
-    Status = ProductStatus.Ativo;
-  }
+    public int CategoryId { get; set; }
 
-  public void Desativar()
-  {
-    Status = ProductStatus.Inativo;
-  }
+    public virtual Category Category { get; set; } = null!;
 
-  public void ValidarQuantidadeMinima()
-  {
-    if (QuantidadeMinima < 0)
-      throw new ArgumentException("Quantidade mínima não pode ser negativa.");
-  }
+    public virtual ICollection<Item> Items { get; set; } = new List<Item>();
 }

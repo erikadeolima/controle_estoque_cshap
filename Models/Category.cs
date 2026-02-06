@@ -1,18 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace controle_estoque_cshap.Models;
 
-public class Category
+public partial class Category
 {
-  public Guid Id { get; private set; }
-  public string Nome { get; set; } = string.Empty;
-  public string? Descricao { get; set; }
-  public DateTime DataCriacao { get; private set; }
+    public int CategoryId { get; set; }
 
-  // Navigation property
-  public ICollection<Product> Products { get; set; } = new List<Product>();
+    public string Name { get; set; } = null!;
 
-  public Category()
-  {
-    Id = Guid.NewGuid();
-    DataCriacao = DateTime.UtcNow;
-  }
+    public string? Description { get; set; }
+
+    public DateTime? CreationDate { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }
