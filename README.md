@@ -22,6 +22,9 @@ Inventory control system for snack bar specialized in food product management. T
 
 ---
 
+
+
+
 ## ✨ Features
 
 ### ✅ Implemented

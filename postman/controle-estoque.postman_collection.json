@@ -1,0 +1,51 @@
+{
+  "info": {
+    "_postman_id": "2f0a6e7e-1e8c-4b13-8f06-8b32f2f6a1d1",
+    "name": "Controle Estoque",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products - Get Inactive",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5215/api/products/inactive",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5215",
+          "path": [
+            "api",
+            "products",
+            "inactive"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Products - Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5215/api/products/{id}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5215",
+          "path": [
+            "api",
+            "products",
+            "{id}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
