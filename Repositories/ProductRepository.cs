@@ -24,4 +24,12 @@ public class ProductRepository : IProductRepository
         .Where(p => p.Status == 0)
         .ToListAsync();
   }
+
+  public async Task<Product?> GetByIdAsync(int id)
+  {
+    return await _context.Products
+        .AsNoTracking()
+        .Include(p => p.Items)
+        .FirstOrDefaultAsync(p => p.ProductId == id);
+  }
 }

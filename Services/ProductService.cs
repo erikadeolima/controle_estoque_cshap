@@ -31,4 +31,24 @@ public class ProductService : IProductService
       QuantityTotal = p.Items.Sum(i => i.Quantity)
     });
   }
+
+  public async Task<ProductDto?> GetByIdAsync(int id)
+  {
+    var product = await _productRepository.GetByIdAsync(id);
+
+    if (product == null)
+      return null;
+
+    return new ProductDto
+    {
+      ProductId = product.ProductId,
+      Sku = product.Sku,
+      Name = product.Name,
+      Status = product.Status,
+      MinimumQuantity = product.MinimumQuantity,
+      CreationDate = product.CreationDate,
+      CategoryId = product.CategoryId,
+      QuantityTotal = product.Items.Sum(i => i.Quantity)
+    };
+  }
 }
