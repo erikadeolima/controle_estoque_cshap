@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using controle_estoque_cshap.Data;
+using controle_estoque_cshap.Repositories;
+using controle_estoque_cshap.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Configurar DbContext com MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -29,32 +34,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Endpoint de teste Database First
-app.MapGet("/api/test-db", async (AppDbContext db) => 
-{
-    var totalCategories = await db.Categories.CountAsync();
-    var totalProducts = await db.Products.CountAsync();
-    var totalUsers = await db.Users.CountAsync();
-    
-    var firstProduct = await db.Products
-        .Include(p => p.Category)
-        .FirstOrDefaultAsync();
-    
-    return Results.Ok(new {
-        success = true,
-        message = "Database First funcionou!",
-        data = new {
-            totalCategories,
-            totalProducts,
-            totalUsers,
-            sampleProduct = firstProduct != null ? new {
-                firstProduct.Name,
-                firstProduct.Sku,
-                Category = firstProduct.Category.Name
-            } : null
-        }
-    });
-});
 
 app.Run();
