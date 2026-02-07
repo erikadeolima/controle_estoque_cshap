@@ -22,9 +22,6 @@ Inventory control system for snack bar specialized in food product management. T
 
 ---
 
-
-
-
 ## ✨ Features
 
 ### ✅ Implemented
@@ -230,40 +227,38 @@ https://localhost:5001/swagger
 | GET    | `/api/categories/{id}` | Get by ID       |
 | POST   | `/api/categories`      | Create category |
 | PUT    | `/api/categories/{id}` | Update category |
-| DELETE | `/api/categories/{id}` | Delete category |
 
 #### Products (`/api/products`)
 
-| Method | Endpoint                        | Description            |
-| ------ | ------------------------------- | ---------------------- |
-| GET    | `/api/products`                 | List active products   |
-| GET    | `/api/products/inactive`        | List inactive products |
-| GET    | `/api/products/{id}`            | Get product by ID      |
-| GET    | `/api/products/sku/{sku}`       | Get by SKU             |
-| POST   | `/api/products`                 | Create product         |
-| PUT    | `/api/products/{id}`            | Update product         |
-| PUT    | `/api/products/{id}/activate`   | Activate product       |
-| PUT    | `/api/products/{id}/deactivate` | Deactivate product     |
+| Method | Endpoint                  | Description            |
+| ------ | ------------------------- | ---------------------- |
+| GET    | `/api/products`           | List active products   |
+| GET    | `/api/products/inactive`  | List inactive products |
+| GET    | `/api/products/{id}`      | Get product by ID      |
+| GET    | `/api/products/sku/{sku}` | Get by SKU             |
+| GET    | `/api/products/low-stock` | Get low stock products |
+| POST   | `/api/products`           | Create product         |
+| PUT    | `/api/products/{id}`      | Update product         |
+| DELETE | `/api/products/{id}`      | Deactivate (soft)      |
 
 #### Items (`/api/items`)
 
-| Method | Endpoint                         | Description           |
-| ------ | -------------------------------- | --------------------- |
-| GET    | `/api/items/product/{productId}` | List items by product |
-| GET    | `/api/items/{id}`                | Get item by ID        |
-| POST   | `/api/items`                     | Create batch/item     |
-| PUT    | `/api/items/{id}`                | Update item           |
-| POST   | `/api/items/{id}/add-stock`      | Add stock quantity    |
-| POST   | `/api/items/{id}/remove-stock`   | Remove stock quantity |
+| Method | Endpoint                          | Description           |
+| ------ | --------------------------------- | --------------------- |
+| GET    | `/api/products/{productId}/items` | List items by product |
+| GET    | `/api/items/{id}`                 | Get item by ID        |
+| GET    | `/api/items/expiring?days=7`      | Get expiring items    |
+| POST   | `/api/products/{productId}/items` | Create batch/item     |
+| PUT    | `/api/items/{id}`                 | Update item           |
+| POST   | `/api/items/{id}/add-quantity`    | Add stock quantity    |
+| POST   | `/api/items/{id}/remove-quantity` | Remove stock quantity |
 
 #### Movements (`/api/movements`)
 
-| Method | Endpoint                       | Description       |
-| ------ | ------------------------------ | ----------------- |
-| GET    | `/api/movements`               | Movement history  |
-| GET    | `/api/movements/item/{itemId}` | Movements by item |
-| GET    | `/api/movements/user/{userId}` | Movements by user |
-| POST   | `/api/movements`               | Register movement |
+| Method | Endpoint                               | Description         |
+| ------ | -------------------------------------- | ------------------- |
+| GET    | `/api/items/{itemId}/movements`        | Movements by item   |
+| GET    | `/api/movements?startDate=X&endDate=Y` | Movements by period |
 
 ### Request Examples (Planned)
 
@@ -271,23 +266,23 @@ https://localhost:5001/swagger
 // POST /api/products
 {
   "sku": "PROD-001",
-  "nome": "Hambúrguer Artesanal",
-  "categoryId": "guid-da-categoria",
-  "quantidadeMinima": 10
+  "name": "Hamburguer Artesanal",
+  "categoryId": 1,
+  "minimumQuantity": 10
 }
 
-// POST /api/items
+// POST /api/products/{productId}/items
 {
-  "productId": "guid-do-produto",
   "batch": "LOTE-2026-01",
-  "dataValidade": "2026-12-31",
-  "localizacao": "Prateleira A3"
+  "expirationDate": "2026-12-31",
+  "location": "Prateleira A3",
+  "quantity": 50
 }
 
-// POST /api/items/{id}/add-stock
+// POST /api/items/{id}/add-quantity
 {
   "quantidade": 50,
-  "userId": "guid-do-usuario"
+  "userId": 1
 }
 ```
 
