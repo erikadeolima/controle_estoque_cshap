@@ -4,6 +4,28 @@
     "name": "Controle Estoque",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "variable": [
+    {
+      "key": "protocol",
+      "value": "http",
+      "type": "string"
+    },
+    {
+      "key": "baseUrl",
+      "value": "localhost",
+      "type": "string"
+    },
+    {
+      "key": "port",
+      "value": "5215",
+      "type": "string"
+    },
+    {
+      "key": "id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
   "item": [
     {
       "name": "Products - Get Inactive",
@@ -11,12 +33,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:5215/api/products/inactive",
-          "protocol": "http",
+          "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/inactive",
+          "protocol": "{{protocol}}",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "5215",
+          "port": "{{port}}",
           "path": [
             "api",
             "products",
@@ -32,10 +54,10 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:5215/api/products/{id}",
+          "raw": "http://{{baseUrl}}:5215/api/products/{id}",
           "protocol": "http",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
           "port": "5215",
           "path": [
@@ -46,6 +68,197 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Categories - Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{baseUrl}}:5215/api/categories",
+              "protocol": "http",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "5215",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"categoryId\": 1,\n    \"name\": \"Bebidas\",\n    \"description\": \"Categoria de bebidas\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\",\n    \"totalProducts\": 12\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Categories - Get By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
+              "protocol": "http",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "5215",
+              "path": [
+                "api",
+                "categories",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categoryId\": 1,\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\",\n  \"totalProducts\": 12\n}"
+            }
+          ]
+        },
+        {
+          "name": "Categories - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{baseUrl}}:5215/api/categories",
+              "protocol": "http",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "5215",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categoryId\": 1,\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\",\n  \"totalProducts\": 0\n}"
+            },
+            {
+              "name": "409 Conflict",
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Categoria com este nome ja existe.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Categories - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bebidas e Sucos\",\n  \"description\": \"Atualizacao da categoria\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
+              "protocol": "http",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "5215",
+              "path": [
+                "api",
+                "categories",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "json",
+              "header": []
+            },
+            {
+              "name": "409 Conflict",
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Categoria com este nome ja existe.\"\n}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

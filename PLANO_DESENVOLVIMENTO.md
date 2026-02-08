@@ -381,28 +381,29 @@ dotnet ef dbcontext scaffold \
 
 **Arquivos criados:**
 
-- [ ] `DTOs/CategoryDto.cs` (leitura)
-- [ ] `DTOs/CreateCategoryDto.cs` (criação)
-- [ ] `DTOs/UpdateCategoryDto.cs` (atualização)
+- [x] `DTOs/CategoryDto/CategoryDto.cs` (leitura)
+- [x] `DTOs/CategoryDto/CategoryCreateDto.cs` (criação)
+- [x] `DTOs/CategoryDto/CategoryUpdateDto.cs` (atualização)
 
 **CategoryDto:**
 
-- [ ] Id (Guid)
-- [ ] Nome (string)
-- [ ] Descricao (string)
-- [ ] DataCriacao (DateTime)
-- [ ] Apenas propriedades com get/set, sem lógica
+- [x] CategoryId (int)
+- [x] Name (string)
+- [x] Description (string?)
+- [x] CreationDate (DateTime?)
+- [x] TotalProducts (int)
+- [x] Apenas propriedades com get/set, sem lógica
 
 **CreateCategoryDto:**
 
-- [ ] Nome (string)
-- [ ] Descricao (string)
-- [ ] NÃO contém Id ou DataCriacao
+- [x] Name (string)
+- [x] Description (string?)
+- [x] Nao contem CategoryId ou CreationDate
 
 **UpdateCategoryDto:**
 
-- [ ] Nome (string)
-- [ ] Descricao (string)
+- [x] Name (string?)
+- [x] Description (string?)
 
 ---
 
@@ -540,20 +541,20 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Repositories/ICategoryRepository.cs` criado
+- [x] `Repositories/CategoryRepository/ICategoryRepository.cs` criado
 
 **Configuração:**
 
 - [ ] Herda de `IRepository<Category>`
-- [ ] Não adiciona métodos extras (CRUD genérico suficiente)
+- [x] Inclui métodos específicos da Category (consultas por id/nome)
 
 **Implementação:**
 
-- [ ] `Repositories/CategoryRepository.cs` criado
-- [ ] Implementa `ICategoryRepository`
-- [ ] Recebe `AppDbContext` via construtor
-- [ ] Todos os métodos implementados usando EF Core
-- [ ] Compila sem erros
+- [x] `Repositories/CategoryRepository/CategoryRepository.cs` criado
+- [x] Implementa `ICategoryRepository`
+- [x] Recebe `AppDbContext` via construtor
+- [x] Todos os métodos implementados usando EF Core
+- [x] Compila sem erros
 
 ---
 
@@ -662,19 +663,19 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Services/ICategoryService.cs` criado
+- [x] `Services/CategoryService/ICategoryService.cs` criado
 
 **Métodos:**
 
-- [ ] `Task<IEnumerable<CategoryDto>> ObterTodosAsync()`
-- [ ] `Task<CategoryDto?> ObterPorIdAsync(Guid id)`
-- [ ] `Task<CategoryDto> CriarAsync(CreateCategoryDto dto)`
-- [ ] `Task<CategoryDto> AtualizarAsync(Guid id, UpdateCategoryDto dto)`
+- [x] `Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()`
+- [x] `Task<CategoryDto?> GetCategoryByIdAsync(int id)`
+- [x] `Task<CategoryDto?> CreateCategoryAsync(CategoryCreateDto dto)`
+- [x] `Task<CategoryUpdateResult> UpdateCategoryAsync(int id, CategoryUpdateDto dto)`
 
 **Implementação:**
 
-- [ ] `Services/CategoryService.cs` criado
-- [ ] Recebe `ICategoryRepository` via construtor
+- [x] `Services/CategoryService/CategoryService.cs` criado
+- [x] Recebe `ICategoryRepository` via construtor
 - [ ] Recebe `ILogger<CategoryService>` via construtor
 
 **Validações no CriarAsync:**
@@ -689,8 +690,8 @@ dotnet ef dbcontext scaffold \
 
 **Mapeamentos:**
 
-- [ ] Converte Category → CategoryDto em todos os retornos
-- [ ] Converte DTOs → Category ao criar/atualizar
+- [x] Converte Category → CategoryDto em todos os retornos
+- [x] Converte DTOs → Category ao criar/atualizar
 
 **Logging:**
 
@@ -900,41 +901,41 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Controllers/CategoryController.cs` criado
+- [x] `Controllers/CategoryController.cs` criado
 
 **Configuração:**
 
-- [ ] Atributo `[ApiController]`
-- [ ] Atributo `[Route("api/[controller]")]`
-- [ ] Herda de `ControllerBase`
-- [ ] Recebe `ICategoryService` via construtor
+- [x] Atributo `[ApiController]`
+- [x] Atributo `[Route("api/categories")]`
+- [x] Herda de `ControllerBase`
+- [x] Recebe `ICategoryService` via construtor
 
 **Endpoints:**
 
-- [ ] `GET /api/categories` - ObterTodos
-  - [ ] Retorna 200 OK com lista
-- [ ] `GET /api/categories/{id}` - ObterPorId
-  - [ ] Retorna 200 OK se encontrado
-  - [ ] Retorna 404 Not Found se não existir
-- [ ] `POST /api/categories` - Criar
-  - [ ] Recebe `[FromBody] CreateCategoryDto`
-  - [ ] Retorna 201 Created com CreatedAtAction
-  - [ ] Captura ArgumentException → 400 Bad Request
-- [ ] `PUT /api/categories/{id}` - Atualizar
-  - [ ] Recebe id e `[FromBody] UpdateCategoryDto`
-  - [ ] Retorna 200 OK
-  - [ ] Captura KeyNotFoundException → 404
-  - [ ] Captura ArgumentException → 400
+- [x] `GET /api/categories` - ObterTodos
+  - [x] Retorna 200 OK com lista
+- [x] `GET /api/categories/{id}` - ObterPorId
+  - [x] Retorna 200 OK se encontrado
+  - [x] Retorna 404 Not Found se não existir
+- [x] `POST /api/categories` - Criar
+  - [x] Recebe `[FromBody] CategoryCreateDto`
+  - [x] Retorna 201 Created com CreatedAtAction
+  - [x] Retorna 409 Conflict se nome ja existir
+- [x] `PUT /api/categories/{id}` - Atualizar
+  - [x] Recebe id e `[FromBody] CategoryUpdateDto`
+  - [x] Retorna 204 No Content
+  - [x] Retorna 404 Not Found se nao existir
+  - [x] Retorna 409 Conflict se nome ja existir
 
 **Tratamento de erros:**
 
-- [ ] Try-catch em todos os endpoints
-- [ ] Mensagens descritivas em objetos JSON
-- [ ] Status codes corretos
+- [x] Try-catch em todos os endpoints
+- [x] Mensagens descritivas em objetos JSON
+- [x] Status codes corretos
 
 **Documentação:**
 
-- [ ] Comentários XML (///) em todos os métodos
+- [x] Comentários XML (///) em todos os métodos
 
 ---
 
@@ -1072,39 +1073,39 @@ dotnet ef dbcontext scaffold \
 
 **DbContext:**
 
-- [ ] `AddDbContext<AppDbContext>` configurado
-- [ ] Connection string definida
-- [ ] Provider correto (UseSqlite, UseSqlServer, etc)
+- [x] `AddDbContext<AppDbContext>` configurado
+- [x] Connection string definida
+- [x] Provider correto (UseSqlite, UseSqlServer, etc)
 
 **Repositories:**
 
-- [ ] `AddScoped<ICategoryRepository, CategoryRepository>`
-- [ ] `AddScoped<IProductRepository, ProductRepository>`
+- [x] `AddScoped<ICategoryRepository, CategoryRepository>`
+- [x] `AddScoped<IProductRepository, ProductRepository>`
 - [ ] `AddScoped<IItemRepository, ItemRepository>`
 - [ ] `AddScoped<IMovementRepository, MovementRepository>`
 - [ ] `AddScoped<IUserRepository, UserRepository>`
 
 **Services:**
 
-- [ ] `AddScoped<ICategoryService, CategoryService>`
-- [ ] `AddScoped<IProductService, ProductService>`
+- [x] `AddScoped<ICategoryService, CategoryService>`
+- [x] `AddScoped<IProductService, ProductService>`
 - [ ] `AddScoped<IItemService, ItemService>`
 - [ ] `AddScoped<IMovementService, MovementService>`
 - [ ] `AddScoped<IUserService, UserService>`
 
 **Controllers e Swagger:**
 
-- [ ] `AddControllers()` adicionado
-- [ ] `AddEndpointsApiExplorer()` adicionado
-- [ ] `AddSwaggerGen()` configurado com informações do projeto
+- [x] `AddControllers()` adicionado
+- [x] `AddEndpointsApiExplorer()` adicionado
+- [x] `AddSwaggerGen()` configurado com informações do projeto
 
 **Pipeline:**
 
-- [ ] `UseSwagger()` em Development
-- [ ] `UseSwaggerUI()` em Development
-- [ ] `UseHttpsRedirection()` adicionado
-- [ ] `UseAuthorization()` adicionado
-- [ ] **`MapControllers()`** adicionado (CRÍTICO)
+- [x] `UseSwagger()` em Development
+- [x] `UseSwaggerUI()` em Development
+- [x] `UseHttpsRedirection()` adicionado
+- [x] `UseAuthorization()` adicionado
+- [x] **`MapControllers()`** adicionado (CRÍTICO)
 
 ---
 
