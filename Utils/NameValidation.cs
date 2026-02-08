@@ -4,6 +4,8 @@ namespace controle_estoque_cshap.Utils;
 
 public static class NameValidation
 {
+  private static readonly CultureInfo PtBrCulture = new("pt-BR");
+
   public static bool HasLeadingOrTrailingSpaces(string name)
   {
     var nameWithoutWithSpaces = name.Trim();
@@ -24,8 +26,8 @@ public static class NameValidation
   public static string NormalizeTitleCase(string name)
   {
     var nameWithoutWithSpace = name.Trim();
-    var lower = nameWithoutWithSpace.ToLower();
+    var lower = nameWithoutWithSpace.ToLower(PtBrCulture);
     // Se o sistema for multinacional, considere receber locale/pais para normalizar com a cultura correta.
-    return new CultureInfo("pt-BR").TextInfo.ToTitleCase(lower);
+    return PtBrCulture.TextInfo.ToTitleCase(lower);
   }
 }

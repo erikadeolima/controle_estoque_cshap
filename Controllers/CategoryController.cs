@@ -33,7 +33,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
-      return StatusCode(500, new { message = "Erro ao obter categorias.", detail = ex.Message });
+      return StatusCode(500, new { message = "Erro ao obter categorias." });
     }
   }
 
@@ -57,7 +57,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
-      return StatusCode(500, new { message = "Erro ao obter categoria.", detail = ex.Message });
+      return StatusCode(500, new { message = "Erro ao obter categoria." });
     }
   }
 
@@ -81,7 +81,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
-      return StatusCode(500, new { message = "Erro ao criar categoria.", detail = ex.Message });
+      return StatusCode(500, new { message = "Erro ao criar categoria." });
     }
   }
 
@@ -109,7 +109,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
-      return StatusCode(500, new { message = "Erro ao atualizar categoria.", detail = ex.Message });
+      return StatusCode(500, new { message = "Erro ao atualizar categoria." });
     }
   }
 }

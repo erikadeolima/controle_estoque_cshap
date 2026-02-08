@@ -6,8 +6,23 @@
   },
   "variable": [
     {
+      "key": "protocol",
+      "value": "http",
+      "type": "string"
+    },
+    {
       "key": "baseUrl",
-      "value": "http://localhost:5215",
+      "value": "localhost",
+      "type": "string"
+    },
+    {
+      "key": "port",
+      "value": "5215",
+      "type": "string"
+    },
+    {
+      "key": "id",
+      "value": "1",
       "type": "string"
     }
   ],
@@ -18,10 +33,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/products/inactive",
+          "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/inactive",
+          "protocol": "{{protocol}}",
           "host": [
             "{{baseUrl}}"
           ],
+          "port": "{{port}}",
           "path": [
             "api",
             "products",
@@ -37,10 +54,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/products/{id}",
+          "raw": "http://{{baseUrl}}:5215/api/products/{id}",
+          "protocol": "http",
           "host": [
             "{{baseUrl}}"
           ],
+          "port": "5215",
           "path": [
             "api",
             "products",
@@ -59,10 +78,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/categories",
+              "raw": "http://{{baseUrl}}:5215/api/categories",
+              "protocol": "http",
               "host": [
                 "{{baseUrl}}"
               ],
+              "port": "5215",
               "path": [
                 "api",
                 "categories"
@@ -91,10 +112,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/categories/{{id}}",
+              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
+              "protocol": "http",
               "host": [
                 "{{baseUrl}}"
               ],
+              "port": "5215",
               "path": [
                 "api",
                 "categories",
@@ -138,10 +161,12 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/categories",
+              "raw": "http://{{baseUrl}}:5215/api/categories",
+              "protocol": "http",
               "host": [
                 "{{baseUrl}}"
               ],
+              "port": "5215",
               "path": [
                 "api",
                 "categories"
@@ -197,10 +222,12 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/categories/{{id}}",
+              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
+              "protocol": "http",
               "host": [
                 "{{baseUrl}}"
               ],
+              "port": "5215",
               "path": [
                 "api",
                 "categories",

@@ -40,10 +40,10 @@ public class CategoryRepository : ICategoryRepository
 
   public async Task<Category?> GetCategoryByNameAsync(string name)
   {
-    var normalizedName = name.Trim().ToLower();
+    var trimmedName = name.Trim();
     return await _context.Categories
         .AsNoTracking()
-      .FirstOrDefaultAsync(c => c.Name.ToLower().Trim() == normalizedName);
+        .FirstOrDefaultAsync(c => c.Name == trimmedName);
   }
 
   public async Task CreateCategoryAsync(Category category)

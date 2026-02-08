@@ -23,7 +23,7 @@ public class CategoryUpdateDto : IValidatableObject
         yield return new ValidationResult("Name nao pode ter espacos no inicio ou no fim.");
 
       if (!NameValidation.ContainsOnlyLettersAndSpaces(Name!))
-        yield return new ValidationResult("Name deve conter apenas letras.");
+        yield return new ValidationResult("Name deve conter apenas letras e espacos.");
     }
   }
 }
