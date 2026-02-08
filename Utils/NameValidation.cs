@@ -8,15 +8,15 @@ public static class NameValidation
 
   public static bool HasLeadingOrTrailingSpaces(string name)
   {
-    var nameWithoutWithSpaces = name.Trim();
-    return name != nameWithoutWithSpaces;
+    var trimmedName = name.Trim();
+    return name != trimmedName;
   }
 
   public static bool ContainsOnlyLettersAndSpaces(string name)
   {
     foreach (var ch in name)
     {
-      if (!char.IsLetter(ch) && !char.IsWhiteSpace(ch))
+      if (!char.IsLetter(ch) && ch != ' ')
         return false;
     }
 
@@ -25,8 +25,8 @@ public static class NameValidation
 
   public static string NormalizeTitleCase(string name)
   {
-    var nameWithoutWithSpace = name.Trim();
-    var lower = nameWithoutWithSpace.ToLower(PtBrCulture);
+    var trimmedName = name.Trim();
+    var lower = trimmedName.ToLower(PtBrCulture);
     // Se o sistema for multinacional, considere receber locale/pais para normalizar com a cultura correta.
     return PtBrCulture.TextInfo.ToTitleCase(lower);
   }

@@ -6,9 +6,9 @@ namespace controle_estoque_cshap.Repositories.CategoryRepository;
 
 public interface ICategoryRepository
 {
-  Task<IEnumerable<Category>> GetAllCategoriesAsync();
-  Task<Category?> GetCategoryByIdAsync(int id);
   Task<Category?> GetCategoryByIdForUpdateAsync(int id);
+  Task<IEnumerable<CategoryWithProductCount>> GetAllWithProductCountAsync();
+  Task<CategoryWithProductCount?> GetByIdWithProductCountAsync(int id);
   Task<Category?> GetCategoryByNameAsync(string name);
 
   Task CreateCategoryAsync(Category category);

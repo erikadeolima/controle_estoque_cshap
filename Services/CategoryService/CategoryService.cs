@@ -20,32 +20,32 @@ public class CategoryService : ICategoryService
 
   public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
   {
-    var categories = await _categoryRepository.GetAllCategoriesAsync();
+    var categories = await _categoryRepository.GetAllWithProductCountAsync();
 
     return categories.Select(c => new CategoryDto
     {
-      CategoryId = c.CategoryId,
-      Name = c.Name,
-      Description = c.Description,
-      CreationDate = c.CreationDate,
-      TotalProducts = c.Products.Count
+      CategoryId = c.Category.CategoryId,
+      Name = c.Category.Name,
+      Description = c.Category.Description,
+      CreationDate = c.Category.CreationDate,
+      TotalProducts = c.TotalProducts
     });
   }
 
   public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
   {
-    var category = await _categoryRepository.GetCategoryByIdAsync(id);
+    var category = await _categoryRepository.GetByIdWithProductCountAsync(id);
 
     if (category == null)
       return null;
 
     return new CategoryDto
     {
-      CategoryId = category.CategoryId,
-      Name = category.Name,
-      Description = category.Description,
-      CreationDate = category.CreationDate,
-      TotalProducts = category.Products.Count
+      CategoryId = category.Category.CategoryId,
+      Name = category.Category.Name,
+      Description = category.Category.Description,
+      CreationDate = category.Category.CreationDate,
+      TotalProducts = category.TotalProducts
     };
   }
 
@@ -92,7 +92,7 @@ public class CategoryService : ICategoryService
       existing.Name = normalizedName;
     }
 
-    if (dto.Description != null)
+    if (!string.IsNullOrWhiteSpace(dto.Description))
       existing.Description = dto.Description;
 
     await _categoryRepository.UpdateCategoryAsync();

@@ -16,26 +16,43 @@ public class CategoryRepository : ICategoryRepository
     _context = context;
   }
 
-  public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
-  {
-    return await _context.Categories
-        .AsNoTracking() // Melhora o desempenho para consultas somente leitura
-        .Include(c => c.Products) // Inclui os produtos relacionados à categoria
-        .ToListAsync();
-  }
-
-  public async Task<Category?> GetCategoryByIdAsync(int id)
-  {
-    return await _context.Categories
-        .AsNoTracking() // Melhora o desempenho para consultas somente leitura
-        .Include(c => c.Products) // Inclui os produtos relacionados à categoria
-        .FirstOrDefaultAsync(c => c.CategoryId == id);
-  }
-
   public async Task<Category?> GetCategoryByIdForUpdateAsync(int id)
   {
     return await _context.Categories
         .FirstOrDefaultAsync(c => c.CategoryId == id);
+  }
+
+  public async Task<IEnumerable<CategoryWithProductCount>> GetAllWithProductCountAsync()
+  {
+    return await _context.Categories
+        .AsNoTracking()
+        .Select(c => new CategoryWithProductCount(
+            new Category
+            {
+              CategoryId = c.CategoryId,
+              Name = c.Name,
+              Description = c.Description,
+              CreationDate = c.CreationDate
+            },
+            c.Products.Count))
+        .ToListAsync();
+  }
+
+  public async Task<CategoryWithProductCount?> GetByIdWithProductCountAsync(int id)
+  {
+    return await _context.Categories
+        .AsNoTracking()
+        .Where(c => c.CategoryId == id)
+        .Select(c => new CategoryWithProductCount(
+            new Category
+            {
+              CategoryId = c.CategoryId,
+              Name = c.Name,
+              Description = c.Description,
+              CreationDate = c.CreationDate
+            },
+            c.Products.Count))
+        .FirstOrDefaultAsync();
   }
 
   public async Task<Category?> GetCategoryByNameAsync(string name)

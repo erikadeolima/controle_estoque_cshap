@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using controle_estoque_cshap.DTOs.CategoryDto;
 using controle_estoque_cshap.Services.CategoryService;
 
@@ -12,10 +13,12 @@ namespace controle_estoque_cshap.Controllers;
 public class CategoryController : ControllerBase
 {
   private readonly ICategoryService _categoryService;
+  private readonly ILogger<CategoryController> _logger;
 
-  public CategoryController(ICategoryService categoryService)
+  public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
   {
     _categoryService = categoryService;
+    _logger = logger;
   }
 
   /// <summary>
@@ -33,6 +36,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
+      _logger.LogError(ex, "Erro ao obter categorias.");
       return StatusCode(500, new { message = "Erro ao obter categorias." });
     }
   }
@@ -57,6 +61,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
+      _logger.LogError(ex, "Erro ao obter categoria.");
       return StatusCode(500, new { message = "Erro ao obter categoria." });
     }
   }
@@ -81,6 +86,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
+      _logger.LogError(ex, "Erro ao criar categoria.");
       return StatusCode(500, new { message = "Erro ao criar categoria." });
     }
   }
@@ -109,6 +115,7 @@ public class CategoryController : ControllerBase
     }
     catch (Exception ex)
     {
+      _logger.LogError(ex, "Erro ao atualizar categoria.");
       return StatusCode(500, new { message = "Erro ao atualizar categoria." });
     }
   }

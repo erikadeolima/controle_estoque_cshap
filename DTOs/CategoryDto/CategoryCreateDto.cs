@@ -6,7 +6,6 @@ namespace controle_estoque_cshap.DTOs.CategoryDto;
 
 public class CategoryCreateDto : IValidatableObject
 {
-  [Required(ErrorMessage = "Name e obrigatorio.")]
   public string Name { get; set; } = string.Empty;
 
   public string? Description { get; set; }
