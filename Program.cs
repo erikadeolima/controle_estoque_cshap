@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using controle_estoque_cshap.Data;
 using controle_estoque_cshap.Repositories;
+using controle_estoque_cshap.Repositories.CategoryRepository;
 using controle_estoque_cshap.Services;
+using controle_estoque_cshap.Services.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Configurar DbContext com MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
