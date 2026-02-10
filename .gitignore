@@ -1,6 +1,6 @@
 # Diretórios de build
 bin/
-obj/
+obj
 
 # Arquivos de configuração sensíveis
 #appsettings.Development.json
@@ -15,3 +15,6 @@ obj/
 # Arquivos de dependências
 project.assets.json
 *.nuget.*
+
+# Arquivos de solucao
+controle_estoque_cshap.sln
