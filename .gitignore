@@ -18,3 +18,6 @@ project.assets.json
 
 # Arquivos de solucao
 controle_estoque_cshap.sln
+
+# Arquivos de Configuração da Aplicação
+appsettings.Development.json
