@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using controle_estoque_cshap.DTOs;
-using controle_estoque_cshap.Repositories;
+using controle_estoque_cshap.DTOs.ProductDto;
+using controle_estoque_cshap.Repositories.ProductRepository;
 
-namespace controle_estoque_cshap.Services;
+namespace controle_estoque_cshap.Services.ProductService;
 
 public class ProductService : IProductService
 {
@@ -53,7 +53,7 @@ public class ProductService : IProductService
   }
   public List<ProductActiveDto> GetActiveProducts()
     {
-        var products = _repository.GetActive();
+        var products = _productRepository.GetActiveAsync().Result;
 
         return products.Select(p => new ProductActiveDto
         {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using controle_estoque_cshap.Data;
 using controle_estoque_cshap.Models;
 
-namespace controle_estoque_cshap.Repositories;
+namespace controle_estoque_cshap.Repositories.ProductRepository;
 
 public class ProductRepository : IProductRepository
 {

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using controle_estoque_cshap.DTOs;
-using controle_estoque_cshap.Services;
+using controle_estoque_cshap.DTOs.ProductDto;
+using controle_estoque_cshap.Services.ProductService;
 
 namespace controle_estoque_cshap.Controllers;
 
@@ -67,4 +67,24 @@ public class ProductController : ControllerBase
       return StatusCode(500, new { message = "Erro ao obter produto.", detail = ex.Message });
     }
   }
+  [HttpGet("active")]
+    [ProducesResponseType(typeof(IEnumerable<ProductActiveDto>), 200)]
+    [ProducesResponseType(500)]
+    public ActionResult<IEnumerable<ProductActiveDto>> GetActiveProducts()
+    {
+        try
+        {
+            var products = _productService.GetActiveProducts();
+            if (products == null || products.Count == 0)
+            {
+                return NotFound(new { message = "Nenhum produto ativo encontrado." });
+            }
+
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Erro ao obter produtos ativos.", detail = ex.Message });
+        }
+    }
 }

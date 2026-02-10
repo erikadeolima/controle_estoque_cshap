@@ -1,7 +1,6 @@
 using System;
 
-namespace controle_estoque_cshap.DTOs;
-
+namespace controle_estoque_cshap.DTOs.ProductDto;
 public class ProductDto
 {
     public int ProductId { get; set; }

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using controle_estoque_cshap.Data;
-using controle_estoque_cshap.Repositories;
+using controle_estoque_cshap.Repositories.ProductRepository;
 using controle_estoque_cshap.Repositories.CategoryRepository;
-using controle_estoque_cshap.Services;
+using controle_estoque_cshap.Services.ProductService;
 using controle_estoque_cshap.Services.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);

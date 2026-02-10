@@ -1,4 +1,6 @@
-namespace controle.Dtos
+using System;
+
+namespace controle_estoque_cshap.DTOs.ProductDto
 {
     public class ProductActiveDto
     {

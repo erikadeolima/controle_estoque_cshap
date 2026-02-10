@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/controle_estoque_cshap.csproj": {}
+    "/workspaces/controle_estoque_cshap/controle_estoque_cshap.csproj": {}
   },
   "projects": {
-    "/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/controle_estoque_cshap.csproj": {
+    "/workspaces/controle_estoque_cshap/controle_estoque_cshap.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/controle_estoque_cshap.csproj",
+        "projectUniqueName": "/workspaces/controle_estoque_cshap/controle_estoque_cshap.csproj",
         "projectName": "controle_estoque_cshap",
-        "projectPath": "/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/controle_estoque_cshap.csproj",
-        "packagesPath": "/home/erikadeoliveiralima/.nuget/packages/",
-        "outputPath": "/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/obj/",
+        "projectPath": "/workspaces/controle_estoque_cshap/controle_estoque_cshap.csproj",
+        "packagesPath": "/home/codespace/.nuget/packages/",
+        "outputPath": "/workspaces/controle_estoque_cshap/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/erikadeoliveiralima/.nuget/NuGet/NuGet.Config"
+          "/home/codespace/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -75,6 +76,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.22, 8.0.22]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.22, 8.0.22]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.22, 8.0.22]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -83,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.417/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
