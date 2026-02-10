@@ -1,0 +1,11 @@
+{
+  "name": "C# MySQL Project",
+  "image": "mcr.microsoft.com/devcontainers/universal:2", 
+  "features": {
+    "ghcr.io/devcontainers/features/mysql:1": {
+      "databaseName": "controle_estoque",
+      "rootPassword": "erikalima"
+    }
+  },
+  "postCreateCommand": "mysql -u root -proot_password_temp -e \"CREATE USER IF NOT EXISTS 'erikalima'@'localhost' IDENTIFIED BY 'erikalima'; GRANT ALL PRIVILEGES ON controle_estoque.* TO 'erikalima'@'localhost'; FLUSH PRIVILEGES;\""
+}
