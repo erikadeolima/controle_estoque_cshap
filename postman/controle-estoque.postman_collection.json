@@ -21,7 +21,17 @@
       "type": "string"
     },
     {
-      "key": "id",
+      "key": "productId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "itemId",
       "value": "1",
       "type": "string"
     }
@@ -54,16 +64,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://{{baseUrl}}:5215/api/products/{id}",
-          "protocol": "http",
+          "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/{{productId}}",
+          "protocol": "{{protocol}}",
           "host": [
             "{{baseUrl}}"
           ],
-          "port": "5215",
+          "port": "{{port}}",
           "path": [
             "api",
             "products",
-            "{id}"
+            "{{productId}}"
           ]
         }
       },
@@ -78,12 +88,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://{{baseUrl}}:5215/api/categories",
-              "protocol": "http",
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories",
+              "protocol": "{{protocol}}",
               "host": [
                 "{{baseUrl}}"
               ],
-              "port": "5215",
+              "port": "{{port}}",
               "path": [
                 "api",
                 "categories"
@@ -112,16 +122,16 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
-              "protocol": "http",
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories/{{categoryId}}",
+              "protocol": "{{protocol}}",
               "host": [
                 "{{baseUrl}}"
               ],
-              "port": "5215",
+              "port": "{{port}}",
               "path": [
                 "api",
                 "categories",
-                "{{id}}"
+                "{{categoryId}}"
               ]
             }
           },
@@ -161,12 +171,12 @@
               }
             },
             "url": {
-              "raw": "http://{{baseUrl}}:5215/api/categories",
-              "protocol": "http",
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories",
+              "protocol": "{{protocol}}",
               "host": [
                 "{{baseUrl}}"
               ],
-              "port": "5215",
+              "port": "{{port}}",
               "path": [
                 "api",
                 "categories"
@@ -222,16 +232,16 @@
               }
             },
             "url": {
-              "raw": "http://{{baseUrl}}:5215/api/categories/{{id}}",
-              "protocol": "http",
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories/{{categoryId}}",
+              "protocol": "{{protocol}}",
               "host": [
                 "{{baseUrl}}"
               ],
-              "port": "5215",
+              "port": "{{port}}",
               "path": [
                 "api",
                 "categories",
-                "{{id}}"
+                "{{categoryId}}"
               ]
             }
           },
@@ -257,6 +267,192 @@
               "body": "{\n  \"message\": \"Categoria com este nome ja existe.\"\n}"
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "Items",
+      "item": [
+        {
+          "name": "Items - Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Get By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/{{itemId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "{{itemId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Get By Product Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/by-product/{{productId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "by-product",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Get Expiring",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/expiring?days=30",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "expiring"
+              ],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"batch\": \"Lote-001\",\n  \"quantity\": 10,\n  \"expirationDate\": \"2026-12-31T00:00:00Z\",\n  \"location\": \"Prateleira A\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 15,\n  \"location\": \"Prateleira B\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/{{itemId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "{{itemId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Items - Inactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/{{itemId}}/inactivate",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "{{itemId}}",
+                "inactivate"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
