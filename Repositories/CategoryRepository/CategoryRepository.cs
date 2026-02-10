@@ -1,0 +1,76 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using controle_estoque_cshap.Data;
+using controle_estoque_cshap.Models;
+
+namespace controle_estoque_cshap.Repositories.CategoryRepository;
+
+public class CategoryRepository : ICategoryRepository
+{
+  private readonly AppDbContext _context;
+
+  public CategoryRepository(AppDbContext context)
+  {
+    _context = context;
+  }
+
+  public async Task<Category?> GetCategoryByIdForUpdateAsync(int id)
+  {
+    return await _context.Categories
+        .FirstOrDefaultAsync(c => c.CategoryId == id);
+  }
+
+  public async Task<IEnumerable<CategoryWithProductCount>> GetAllWithProductCountAsync()
+  {
+    return await _context.Categories
+        .AsNoTracking()
+        .Select(c => new CategoryWithProductCount(
+            new Category
+            {
+              CategoryId = c.CategoryId,
+              Name = c.Name,
+              Description = c.Description,
+              CreationDate = c.CreationDate
+            },
+            c.Products.Count))
+        .ToListAsync();
+  }
+
+  public async Task<CategoryWithProductCount?> GetByIdWithProductCountAsync(int id)
+  {
+    return await _context.Categories
+        .AsNoTracking()
+        .Where(c => c.CategoryId == id)
+        .Select(c => new CategoryWithProductCount(
+            new Category
+            {
+              CategoryId = c.CategoryId,
+              Name = c.Name,
+              Description = c.Description,
+              CreationDate = c.CreationDate
+            },
+            c.Products.Count))
+        .FirstOrDefaultAsync();
+  }
+
+  public async Task<Category?> GetCategoryByNameAsync(string name)
+  {
+    var trimmedName = name.Trim();
+    return await _context.Categories
+        .AsNoTracking()
+        .FirstOrDefaultAsync(c => c.Name == trimmedName);
+  }
+
+  public async Task CreateCategoryAsync(Category category)
+  {
+    _context.Categories.Add(category);
+    await _context.SaveChangesAsync();
+  }
+
+  public async Task UpdateCategoryAsync()
+  {
+    await _context.SaveChangesAsync();
+  }
+}
