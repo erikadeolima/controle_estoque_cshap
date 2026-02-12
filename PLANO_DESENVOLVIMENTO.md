@@ -446,6 +446,7 @@ dotnet ef dbcontext scaffold \
 - [ ] Id, Batch, DataValidade, Quantidade, Localizacao, Status
 - [ ] ProductId, ProductNome (denormalizado)
 - [ ] DataCriacao
+- [ ] Status segue convencao: 0=Inativo, 1=Disponivel, 2=Alerta, 3=Esgotado
 
 **CreateItemDto:**
 
@@ -799,6 +800,7 @@ dotnet ef dbcontext scaffold \
 **Validações no AtualizarAsync:**
 
 - [ ] Item deve existir → KeyNotFoundException
+- [ ] Item inativo nao pode ser atualizado → InvalidOperationException
 - [ ] Validações de campos do CriarAsync
 
 **Lógica do AdicionarQuantidadeAsync:**
@@ -825,7 +827,7 @@ dotnet ef dbcontext scaffold \
 - [ ] Validações implementadas
 - [ ] AdicionarQuantidade cria Movement
 - [ ] RemoverQuantidade cria Movement
-- [ ] Status atualizado automaticamente
+- [ ] Status atualizado automaticamente (0=Inativo, 1=Disponivel, 2=Alerta, 3=Esgotado)
 - [ ] Transações garantem consistência
 - [ ] Compila sem erros
 
@@ -992,6 +994,8 @@ dotnet ef dbcontext scaffold \
   - [ ] Retorna 201 Created
 - [ ] `PUT /api/items/{id}` - Atualizar
   - [ ] NÃO permite atualizar Quantidade (usar endpoints específicos)
+- [ ] `DELETE /api/items/{id}` - Inativar (soft delete)
+  - [ ] Retorna 204 No Content
 - [ ] `POST /api/items/{id}/add-quantity` - AdicionarQuantidade
   - [ ] Recebe `{ quantidade: int, userId: guid }` no body
   - [ ] Cria Movement automaticamente
@@ -1005,12 +1009,13 @@ dotnet ef dbcontext scaffold \
 **Tratamento de erros:**
 
 - [ ] InvalidOperationException "Estoque insuficiente" → 400
+- [ ] InvalidOperationException "Item inativo" → 409
 - [ ] ArgumentException "DataValidade inválida" → 400
 - [ ] KeyNotFoundException → 404
 
 **Checklist:**
 
-- [ ] Todos os 7 endpoints implementados
+- [ ] Todos os 8 endpoints implementados
 - [ ] add-quantity e remove-quantity criam Movement
 - [ ] Comentários XML completos
 
@@ -1161,6 +1166,9 @@ dotnet ef dbcontext scaffold \
   - [ ] Status calculado automaticamente
 - [ ] GET /api/products/{productId}/items - Listar lotes do produto
   - [ ] Lote criado aparece
+- [ ] DELETE /api/items/{id} - Inativar lote
+  - [ ] Retorna 204
+  - [ ] Item fica com Status = 0
 - [ ] POST /api/items/{id}/add-quantity - Adicionar estoque
   - [ ] Quantidade aumenta
   - [ ] Retorna 200
@@ -1202,6 +1210,7 @@ dotnet ef dbcontext scaffold \
 - [ ] POST com ProductId inexistente → 404
 - [ ] POST /api/items/{id}/remove-quantity com quantidade maior que estoque → 400 "Estoque insuficiente"
 - [ ] POST add-quantity com quantidade negativa → 400
+- [ ] PUT /api/items/{id} com item inativo → 409 "Item inativo nao pode ser atualizado"
 
 **Movement:**
 
@@ -1241,6 +1250,7 @@ dotnet ef dbcontext scaffold \
 
 **Status:**
 
+- [ ] Item inativo tem Status = 0 e nao pode ser atualizado
 - [ ] Item com Quantidade = 0 tem Status = "Esgotado"
 - [ ] Item com Quantidade > 0 e <= Product.QuantidadeMinima tem Status = "Alerta"
 - [ ] Item com Quantidade > Product.QuantidadeMinima tem Status = "Disponivel"
@@ -1332,6 +1342,7 @@ dotnet ef dbcontext scaffold \
 
 - [ ] Features futuras
 - [ ] Melhorias planejadas
+- [ ] Auditoria de alteracoes de Item (user, datetime, campos alterados)
 
 ---
 

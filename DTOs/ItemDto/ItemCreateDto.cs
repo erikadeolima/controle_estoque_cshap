@@ -18,11 +18,6 @@ public class ItemCreateDto : IValidatableObject
 
   public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
   {
-    if (ProductId <= 0)
-    {
-      yield return new ValidationResult("ProductId deve ser maior que zero.", new[] { nameof(ProductId) });
-    }
-
     if (string.IsNullOrWhiteSpace(Batch))
     {
       yield return new ValidationResult("Batch e obrigatorio.", new[] { nameof(Batch) });
@@ -31,6 +26,11 @@ public class ItemCreateDto : IValidatableObject
     if (Quantity < 0)
     {
       yield return new ValidationResult("Quantity deve ser maior ou igual a zero.", new[] { nameof(Quantity) });
+    }
+
+    if (string.IsNullOrWhiteSpace(Location))
+    {
+      yield return new ValidationResult("Location e obrigatoria.", new[] { nameof(Location) });
     }
 
     if (ExpirationDate.HasValue && ExpirationDate.Value <= DateTime.Now)

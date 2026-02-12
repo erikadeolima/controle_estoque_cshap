@@ -45,6 +45,18 @@ public class ItemService : IItemService
 
   public async Task<ItemDto?> CreateItemAsync(ItemCreateDto dto)
   {
+    if (string.IsNullOrWhiteSpace(dto.Batch))
+      throw new System.ArgumentException("Batch e obrigatorio.", nameof(dto.Batch));
+
+    if (dto.Quantity < 0)
+      throw new System.ArgumentException("Quantity deve ser maior ou igual a zero.", nameof(dto.Quantity));
+
+    if (string.IsNullOrWhiteSpace(dto.Location))
+      throw new System.ArgumentException("Location e obrigatoria.", nameof(dto.Location));
+
+    if (dto.ExpirationDate.HasValue && dto.ExpirationDate.Value <= System.DateTime.Now)
+      throw new System.ArgumentException("ExpirationDate deve ser uma data futura.", nameof(dto.ExpirationDate));
+
     var product = await _productRepository.GetByIdAsync(dto.ProductId);
     if (product == null)
       return null;
@@ -55,8 +67,8 @@ public class ItemService : IItemService
       Batch = dto.Batch.Trim(),
       Quantity = dto.Quantity,
       ExpirationDate = dto.ExpirationDate,
-      Location = dto.Location,
-      Status = 1
+      Location = dto.Location.Trim(),
+      Status = CalculateStatus(dto.Quantity, product.MinimumQuantity)
     };
 
     await _itemRepository.CreateAsync(item);
@@ -71,20 +83,32 @@ public class ItemService : IItemService
     if (item == null)
       return null;
 
-    if (dto.Batch != null)
-      item.Batch = dto.Batch.Trim();
+    if (item.Status == 0)
+      throw new System.InvalidOperationException("Item inativo nao pode ser atualizado.");
 
-    if (dto.Quantity.HasValue)
-      item.Quantity = dto.Quantity.Value;
+    if (dto.Batch != null)
+    {
+      if (string.IsNullOrWhiteSpace(dto.Batch))
+        throw new System.ArgumentException("Batch nao pode ser vazio.", nameof(dto.Batch));
+
+      item.Batch = dto.Batch.Trim();
+    }
 
     if (dto.ExpirationDate.HasValue)
+    {
+      if (dto.ExpirationDate.Value <= System.DateTime.Now)
+        throw new System.ArgumentException("ExpirationDate deve ser uma data futura.", nameof(dto.ExpirationDate));
+
       item.ExpirationDate = dto.ExpirationDate.Value;
+    }
 
     if (dto.Location != null)
-      item.Location = dto.Location;
+    {
+      if (string.IsNullOrWhiteSpace(dto.Location))
+        throw new System.ArgumentException("Location nao pode ser vazia.", nameof(dto.Location));
 
-    if (dto.Status.HasValue)
-      item.Status = dto.Status.Value;
+      item.Location = dto.Location.Trim();
+    }
 
     await _itemRepository.UpdateAsync();
 
@@ -104,5 +128,16 @@ public class ItemService : IItemService
     item.Status = 0;
     await _itemRepository.UpdateAsync();
     return ItemDeleteResult.Deactivated;
+  }
+
+  private static sbyte CalculateStatus(int quantity, int? minimumQuantity)
+  {
+    if (quantity == 0)
+      return 3;
+
+    if (minimumQuantity.HasValue && quantity <= minimumQuantity.Value)
+      return 2;
+
+    return 1;
   }
 }

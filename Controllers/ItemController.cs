@@ -68,7 +68,7 @@ public class ItemController : ControllerBase
   /// <summary>
   /// Returns items by product id.
   /// </summary>
-  [HttpGet("by-product/{productId:int}")]
+  [HttpGet("/api/products/{productId:int}/items")]
   [ProducesResponseType(typeof(IEnumerable<ItemDto>), 200)]
   [ProducesResponseType(500)]
   public async Task<ActionResult<IEnumerable<ItemDto>>> GetByProduct(int productId)
@@ -92,7 +92,7 @@ public class ItemController : ControllerBase
   [ProducesResponseType(typeof(IEnumerable<ItemDto>), 200)]
   [ProducesResponseType(400)]
   [ProducesResponseType(500)]
-  public async Task<ActionResult<IEnumerable<ItemDto>>> GetExpiring([FromQuery] int days = 30)
+  public async Task<ActionResult<IEnumerable<ItemDto>>> GetExpiring([FromQuery] int days = 7)
   {
     if (days < 0)
       return BadRequest(new { message = "days deve ser maior ou igual a zero." });
@@ -112,15 +112,17 @@ public class ItemController : ControllerBase
   /// <summary>
   /// Creates a new item.
   /// </summary>
-  [HttpPost]
+  [HttpPost("/api/products/{productId:int}/items")]
   [ProducesResponseType(typeof(ItemDto), 201)]
   [ProducesResponseType(400)]
   [ProducesResponseType(404)]
   [ProducesResponseType(500)]
-  public async Task<ActionResult<ItemDto>> Create([FromBody] ItemCreateDto dto)
+  public async Task<ActionResult<ItemDto>> Create(int productId, [FromBody] ItemCreateDto dto)
   {
-    if (dto.ProductId <= 0)
+    if (productId <= 0)
       return BadRequest(new { message = "ProductId deve ser maior que zero." });
+
+    dto.ProductId = productId;
 
     try
     {
@@ -129,6 +131,11 @@ public class ItemController : ControllerBase
         return NotFound(new { message = "Produto nao encontrado." });
 
       return CreatedAtAction(nameof(GetById), new { id = created.ItemId }, created);
+    }
+    catch (ArgumentException ex)
+    {
+      _logger.LogWarning(ex, "Dados invalidos ao criar item.");
+      return BadRequest(new { message = ex.Message });
     }
     catch (Exception ex)
     {
@@ -155,6 +162,16 @@ public class ItemController : ControllerBase
 
       return NoContent();
     }
+    catch (InvalidOperationException ex)
+    {
+      _logger.LogWarning(ex, "Tentativa de atualizar item inativo.");
+      return Conflict(new { message = ex.Message });
+    }
+    catch (ArgumentException ex)
+    {
+      _logger.LogWarning(ex, "Dados invalidos ao atualizar item.");
+      return BadRequest(new { message = ex.Message });
+    }
     catch (Exception ex)
     {
       _logger.LogError(ex, "Erro ao atualizar item.");
@@ -165,7 +182,7 @@ public class ItemController : ControllerBase
   /// <summary>
   /// Inactivates an item by id.
   /// </summary>
-  [HttpPatch("{id:int}/inactivate")]
+  [HttpDelete("{id:int}")]
   [ProducesResponseType(204)]
   [ProducesResponseType(404)]
   [ProducesResponseType(500)]
