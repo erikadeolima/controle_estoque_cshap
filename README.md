@@ -60,6 +60,7 @@ Inventory control system for snack bar specialized in food product management. T
 - [ ] DTOs and validations
 - [ ] Repositories and Services
 - [ ] Authentication system
+- [ ] Item audit trail (user, datetime, changed fields)
 - [ ] Low stock alerts
 - [ ] Automatic deletion of old products
 
@@ -101,8 +102,9 @@ controle_estoque_cshap/
 3. **Item** - Individual product batch
    - Quantity control per batch
    - Expiration date and location
-   - Automatic status: Available/Alert/Out of Stock
-   - 1:N relationship with Movements
+
+- Automatic status: Available/Alert/Out of Stock
+- 1:N relationship with Movements
 
 4. **Movement** - Stock movement
    - Types: Entry/Exit/Adjustment
@@ -126,7 +128,7 @@ controle_estoque_cshap/
 #### 2. Value Objects (Enums)
 
 - `ProductStatus`: Active/Inactive (Ativo/Inativo)
-- `ItemStatus`: Available/Alert/Out of Stock (Disponível/Alerta/Esgotado)
+- `ItemStatus`: Available/Alert/Out of Stock (Disponivel/Alerta/Esgotado)
 - `MovementType`: Entry/Exit/Adjustment (Entrada/Saída/Ajuste)
 
 #### 3. Rich Domain Model
@@ -250,8 +252,27 @@ https://localhost:5001/swagger
 | GET    | `/api/items/expiring?days=7`      | Get expiring items    |
 | POST   | `/api/products/{productId}/items` | Create batch/item     |
 | PUT    | `/api/items/{id}`                 | Update item           |
+| DELETE | `/api/items/{id}`                 | Deactivate (soft)     |
 | POST   | `/api/items/{id}/add-quantity`    | Add stock quantity    |
 | POST   | `/api/items/{id}/remove-quantity` | Remove stock quantity |
+
+---
+
+## 📌 Item Status Rules
+
+The `Item.Status` field uses a numeric convention that aligns with business rules:
+
+| Value | Meaning      | Rule                                                                       |
+| ----- | ------------ | -------------------------------------------------------------------------- |
+| 0     | Inactive     | Item is inactive and cannot be updated or reactivated via update endpoints |
+| 1     | Available    | Quantity is above the minimum threshold                                    |
+| 2     | Alert        | Quantity is greater than 0 and less than or equal to minimum quantity      |
+| 3     | Out of Stock | Quantity equals 0                                                          |
+
+**Notes:**
+
+- Inactive items are not allowed to be updated.
+- Status is calculated automatically from quantity and product minimum quantity.
 
 #### Movements (`/api/movements`)
 
@@ -438,6 +459,7 @@ See [Database/Scripts](Database/Scripts/) folder for:
 - [ ] Expiration date notifications
 - [ ] Automatic deletion of old products
 - [ ] Movement reports
+- [ ] Item audit trail (user, datetime, changed fields)
 
 ---
 
