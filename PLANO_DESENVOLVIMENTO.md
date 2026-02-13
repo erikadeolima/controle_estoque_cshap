@@ -411,15 +411,15 @@ dotnet ef dbcontext scaffold \
 
 **Arquivos criados:**
 
-- [ ] `DTOs/ProductDto.cs`
+- [x] `DTOs/ProductDto.cs`
 - [ ] `DTOs/CreateProductDto.cs`
 - [ ] `DTOs/UpdateProductDto.cs`
 
 **ProductDto:**
 
-- [ ] Id, SKU, Nome, Status, QuantidadeMinima, DataCriacao
+- [x] Id, SKU, Nome, Status, QuantidadeMinima, DataCriacao
 - [ ] CategoryId, CategoryNome (denormalizado para facilitar UI)
-- [ ] QuantidadeTotal (calculado pela soma dos Items)
+- [x] QuantidadeTotal (calculado pela soma dos Items)
 
 **CreateProductDto:**
 
@@ -437,25 +437,26 @@ dotnet ef dbcontext scaffold \
 
 **Arquivos criados:**
 
-- [ ] `DTOs/ItemDto.cs`
-- [ ] `DTOs/CreateItemDto.cs`
-- [ ] `DTOs/UpdateItemDto.cs`
+- [x] `DTOs/ItemDto.cs`
+- [x] `DTOs/CreateItemDto.cs`
+- [x] `DTOs/UpdateItemDto.cs`
 
 **ItemDto:**
 
-- [ ] Id, Batch, DataValidade, Quantidade, Localizacao, Status
-- [ ] ProductId, ProductNome (denormalizado)
+- [x] Id, Batch, DataValidade, Quantidade, Localizacao, Status
+- [x] ProductId, ProductNome (denormalizado)
 - [ ] DataCriacao
+- [x] Status segue convencao: 0=Inativo, 1=Disponivel, 2=Alerta, 3=Esgotado
 
 **CreateItemDto:**
 
-- [ ] Batch, DataValidade, Quantidade, Localizacao, ProductId
-- [ ] NÃO contém Status (calculado automaticamente)
+- [x] Batch, DataValidade, Quantidade, Localizacao, ProductId
+- [x] NÃO contém Status (calculado automaticamente)
 
 **UpdateItemDto:**
 
-- [ ] Batch, DataValidade, Localizacao
-- [ ] NÃO permite atualizar Quantidade diretamente (usar endpoints específicos)
+- [x] Batch, DataValidade, Localizacao
+- [x] NÃO permite atualizar Quantidade diretamente (usar endpoints específicos)
 
 ---
 
@@ -562,7 +563,7 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Repositories/IProductRepository.cs` criado
+- [x] `Repositories/IProductRepository.cs` criado
 
 **Métodos herdados:**
 
@@ -577,11 +578,11 @@ dotnet ef dbcontext scaffold \
 
 **Implementação:**
 
-- [ ] `Repositories/ProductRepository.cs` criado
+- [x] `Repositories/ProductRepository.cs` criado
 - [ ] Implementa todos os métodos
 - [ ] `ObterEstoqueBaixoAsync` usa JOIN/Include com Items
-- [ ] Queries otimizadas (AsNoTracking quando leitura)
-- [ ] Compila sem erros
+- [x] Queries otimizadas (AsNoTracking quando leitura)
+- [x] Compila sem erros
 
 ---
 
@@ -589,7 +590,7 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Repositories/IItemRepository.cs` criado
+- [x] `Repositories/IItemRepository.cs` criado
 
 **Métodos adicionais:**
 
@@ -599,11 +600,11 @@ dotnet ef dbcontext scaffold \
 
 **Implementação:**
 
-- [ ] `Repositories/ItemRepository.cs` criado
+- [x] `Repositories/ItemRepository.cs` criado
 - [ ] Todos os métodos implementados
-- [ ] `BuscarPorProductAsync` inclui Product (eager loading)
-- [ ] `BuscarVencendoAsync` filtra apenas itens com DataValidade não-nula
-- [ ] Compila sem erros
+- [x] `BuscarPorProductAsync` inclui Product (eager loading)
+- [x] `BuscarVencendoAsync` filtra apenas itens com DataValidade não-nula
+- [x] Compila sem erros
 
 ---
 
@@ -701,9 +702,9 @@ dotnet ef dbcontext scaffold \
 
 **Checklist final:**
 
-- [ ] Service compila sem erros
+- [x] Service compila sem erros
 - [ ] Todas as validações implementadas
-- [ ] Mapeamentos funcionam
+- [x] Mapeamentos funcionam
 
 ---
 
@@ -711,13 +712,13 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Services/IProductService.cs` criado
+- [x] `Services/IProductService.cs` criado
 
 **Métodos:**
 
 - [ ] `Task<IEnumerable<ProductDto>> ObterTodosAsync()`
-- [ ] `Task<IEnumerable<ProductDto>> ObterInativosAsync()`
-- [ ] `Task<ProductDto?> ObterPorIdAsync(Guid id)`
+- [x] `Task<IEnumerable<ProductDto>> ObterInativosAsync()`
+- [x] `Task<ProductDto?> ObterPorIdAsync(Guid id)`
 - [ ] `Task<ProductDto?> ObterPorSkuAsync(string sku)`
 - [ ] `Task<IEnumerable<ProductDto>> ObterEstoqueBaixoAsync()`
 - [ ] `Task<CategoryDto> CriarAsync(CreateProductDto dto)`
@@ -726,7 +727,7 @@ dotnet ef dbcontext scaffold \
 
 **Implementação:**
 
-- [ ] `Services/ProductService.cs` criado
+- [x] `Services/ProductService.cs` criado
 - [ ] Recebe `IProductRepository` e `IItemRepository` via construtor
 - [ ] Recebe `ILogger<ProductService>`
 
@@ -753,16 +754,16 @@ dotnet ef dbcontext scaffold \
 **Cálculo de QuantidadeTotal:**
 
 - [ ] Usa IItemRepository para buscar todos os items do produto
-- [ ] Soma as quantidades
-- [ ] Retorna no ProductDto
+- [x] Soma as quantidades
+- [x] Retorna no ProductDto
 
 **Checklist final:**
 
 - [ ] Todas as validações implementadas
 - [ ] Produto inativo não pode ser atualizado
 - [ ] Soft delete funciona (DesativarAsync)
-- [ ] QuantidadeTotal calculada corretamente
-- [ ] Compila sem erros
+- [x] QuantidadeTotal calculada corretamente
+- [x] Compila sem erros
 
 ---
 
@@ -770,7 +771,7 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Services/IItemService.cs` criado
+- [x] `Services/IItemService.cs` criado
 
 **Métodos:**
 
@@ -784,22 +785,23 @@ dotnet ef dbcontext scaffold \
 
 **Implementação:**
 
-- [ ] `Services/ItemService.cs` criado
+- [x] `Services/ItemService.cs` criado
 - [ ] Recebe `IItemRepository`, `IMovementRepository`, `IProductRepository`
 - [ ] Recebe `ILogger<ItemService>`
 
 **Validações no CriarAsync:**
 
-- [ ] Batch não pode ser vazio → ArgumentException
-- [ ] Quantidade >= 0 → ArgumentException
-- [ ] Localizacao não pode ser vazia → ArgumentException
-- [ ] DataValidade, se informada, deve ser futura → ArgumentException
+- [x] Batch não pode ser vazio → ArgumentException
+- [x] Quantidade >= 0 → ArgumentException
+- [x] Localizacao não pode ser vazia → ArgumentException
+- [x] DataValidade, se informada, deve ser futura → ArgumentException
 - [ ] ProductId deve existir → ArgumentException
 
 **Validações no AtualizarAsync:**
 
 - [ ] Item deve existir → KeyNotFoundException
-- [ ] Validações de campos do CriarAsync
+- [x] Item inativo nao pode ser atualizado → InvalidOperationException
+- [x] Validações de campos do CriarAsync
 
 **Lógica do AdicionarQuantidadeAsync:**
 
@@ -825,9 +827,9 @@ dotnet ef dbcontext scaffold \
 - [ ] Validações implementadas
 - [ ] AdicionarQuantidade cria Movement
 - [ ] RemoverQuantidade cria Movement
-- [ ] Status atualizado automaticamente
+- [x] Status atualizado automaticamente (0=Inativo, 1=Disponivel, 2=Alerta, 3=Esgotado)
 - [ ] Transações garantem consistência
-- [ ] Compila sem erros
+- [x] Compila sem erros
 
 ---
 
@@ -943,13 +945,13 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Controllers/ProductController.cs` criado
+- [x] `Controllers/ProductController.cs` criado
 
 **Endpoints:**
 
 - [ ] `GET /api/products` - ObterTodos (ativos)
-- [ ] `GET /api/products/inactive` - ObterInativos
-- [ ] `GET /api/products/{id}` - ObterPorId
+- [x] `GET /api/products/inactive` - ObterInativos
+- [x] `GET /api/products/{id}` - ObterPorId
 - [ ] `GET /api/products/sku/{sku}` - ObterPorSku
 - [ ] `GET /api/products/low-stock` - ObterEstoqueBaixo
 - [ ] `POST /api/products` - Criar
@@ -979,19 +981,21 @@ dotnet ef dbcontext scaffold \
 
 **Arquivo:**
 
-- [ ] `Controllers/ItemController.cs` criado
+- [x] `Controllers/ItemController.cs` criado
 
 **Endpoints:**
 
-- [ ] `GET /api/products/{productId}/items` - ObterPorProduct
-- [ ] `GET /api/items/{id}` - ObterPorId
-- [ ] `GET /api/items/expiring?days=7` - ObterVencendo
-  - [ ] Parâmetro query `days` (padrão 7)
-- [ ] `POST /api/products/{productId}/items` - Criar
-  - [ ] Valida DataValidade futura
-  - [ ] Retorna 201 Created
-- [ ] `PUT /api/items/{id}` - Atualizar
-  - [ ] NÃO permite atualizar Quantidade (usar endpoints específicos)
+- [x] `GET /api/products/{productId}/items` - ObterPorProduct
+- [x] `GET /api/items/{id}` - ObterPorId
+- [x] `GET /api/items/expiring?days=7` - ObterVencendo
+  - [x] Parâmetro query `days` (padrão 7)
+- [x] `POST /api/products/{productId}/items` - Criar
+  - [x] Valida DataValidade futura
+  - [x] Retorna 201 Created
+- [x] `PUT /api/items/{id}` - Atualizar
+  - [x] NÃO permite atualizar Quantidade (usar endpoints específicos)
+- [x] `DELETE /api/items/{id}` - Inativar (soft delete)
+  - [x] Retorna 204 No Content
 - [ ] `POST /api/items/{id}/add-quantity` - AdicionarQuantidade
   - [ ] Recebe `{ quantidade: int, userId: guid }` no body
   - [ ] Cria Movement automaticamente
@@ -1005,14 +1009,15 @@ dotnet ef dbcontext scaffold \
 **Tratamento de erros:**
 
 - [ ] InvalidOperationException "Estoque insuficiente" → 400
-- [ ] ArgumentException "DataValidade inválida" → 400
+- [x] InvalidOperationException "Item inativo" → 409
+- [x] ArgumentException "DataValidade inválida" → 400
 - [ ] KeyNotFoundException → 404
 
 **Checklist:**
 
-- [ ] Todos os 7 endpoints implementados
+- [ ] Todos os 8 endpoints implementados
 - [ ] add-quantity e remove-quantity criam Movement
-- [ ] Comentários XML completos
+- [x] Comentários XML completos
 
 ---
 
@@ -1081,7 +1086,7 @@ dotnet ef dbcontext scaffold \
 
 - [x] `AddScoped<ICategoryRepository, CategoryRepository>`
 - [x] `AddScoped<IProductRepository, ProductRepository>`
-- [ ] `AddScoped<IItemRepository, ItemRepository>`
+- [x] `AddScoped<IItemRepository, ItemRepository>`
 - [ ] `AddScoped<IMovementRepository, MovementRepository>`
 - [ ] `AddScoped<IUserRepository, UserRepository>`
 
@@ -1089,7 +1094,7 @@ dotnet ef dbcontext scaffold \
 
 - [x] `AddScoped<ICategoryService, CategoryService>`
 - [x] `AddScoped<IProductService, ProductService>`
-- [ ] `AddScoped<IItemService, ItemService>`
+- [x] `AddScoped<IItemService, ItemService>`
 - [ ] `AddScoped<IMovementService, MovementService>`
 - [ ] `AddScoped<IUserService, UserService>`
 
@@ -1113,9 +1118,9 @@ dotnet ef dbcontext scaffold \
 
 **Validações:**
 
-- [ ] `dotnet build` compila sem erros
-- [ ] `dotnet run` inicia aplicação
-- [ ] Swagger acessível em `/swagger`
+- [x] `dotnet build` compila sem erros
+- [x] `dotnet run` inicia aplicação
+- [x] Swagger acessível em `/swagger`
 - [ ] Todos os endpoints visíveis no Swagger
 - [ ] Sem erros no console ao iniciar
 
@@ -1127,15 +1132,15 @@ dotnet ef dbcontext scaffold \
 
 **Categoria:**
 
-- [ ] POST /api/categories - Criar categoria
-  - [ ] Retorna 201 Created
-  - [ ] Id gerado
+- [x] POST /api/categories - Criar categoria
+  - [x] Retorna 201 Created
+  - [x] Id gerado
   - [ ] DataCriacao preenchida
-- [ ] GET /api/categories - Listar
-  - [ ] Categoria criada aparece na lista
-- [ ] PUT /api/categories/{id} - Atualizar
+- [x] GET /api/categories - Listar
+  - [x] Categoria criada aparece na lista
+- [x] PUT /api/categories/{id} - Atualizar
   - [ ] Retorna 200 OK
-  - [ ] Dados atualizados
+  - [x] Dados atualizados
 
 **Produto:**
 
@@ -1155,12 +1160,15 @@ dotnet ef dbcontext scaffold \
 
 **Item (Lote):**
 
-- [ ] POST /api/products/{productId}/items - Criar lote
-  - [ ] Com DataValidade futura
-  - [ ] Retorna 201
+- [x] POST /api/products/{productId}/items - Criar lote
+  - [x] Com DataValidade futura
+  - [x] Retorna 201
   - [ ] Status calculado automaticamente
-- [ ] GET /api/products/{productId}/items - Listar lotes do produto
-  - [ ] Lote criado aparece
+- [x] GET /api/products/{productId}/items - Listar lotes do produto
+  - [x] Lote criado aparece
+- [x] DELETE /api/items/{id} - Inativar lote
+  - [x] Retorna 204
+  - [x] Item fica com Status = 0
 - [ ] POST /api/items/{id}/add-quantity - Adicionar estoque
   - [ ] Quantidade aumenta
   - [ ] Retorna 200
@@ -1198,10 +1206,11 @@ dotnet ef dbcontext scaffold \
 
 **Item:**
 
-- [ ] POST com DataValidade no passado → 400
+- [x] POST com DataValidade no passado → 400
 - [ ] POST com ProductId inexistente → 404
 - [ ] POST /api/items/{id}/remove-quantity com quantidade maior que estoque → 400 "Estoque insuficiente"
 - [ ] POST add-quantity com quantidade negativa → 400
+- [x] PUT /api/items/{id} com item inativo → 409 "Item inativo nao pode ser atualizado"
 
 **Movement:**
 
@@ -1241,6 +1250,7 @@ dotnet ef dbcontext scaffold \
 
 **Status:**
 
+- [x] Item inativo tem Status = 0 e nao pode ser atualizado
 - [ ] Item com Quantidade = 0 tem Status = "Esgotado"
 - [ ] Item com Quantidade > 0 e <= Product.QuantidadeMinima tem Status = "Alerta"
 - [ ] Item com Quantidade > Product.QuantidadeMinima tem Status = "Disponivel"
@@ -1332,6 +1342,7 @@ dotnet ef dbcontext scaffold \
 
 - [ ] Features futuras
 - [ ] Melhorias planejadas
+- [ ] Auditoria de alteracoes de Item (user, datetime, campos alterados)
 
 ---
 
