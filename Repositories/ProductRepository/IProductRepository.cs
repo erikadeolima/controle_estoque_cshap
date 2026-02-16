@@ -9,4 +9,10 @@ public interface IProductRepository
   Task<IEnumerable<Product>> GetInactiveAsync();
   Task<Product?> GetByIdAsync(int id);
   Task<List<Product>> GetActiveAsync();
+  Task<Product?> GetBySkuAsync(string sku);
+  Task CreateAsync(Product product);
+  Task UpdateAsync(Product product);
+
+
+
 }

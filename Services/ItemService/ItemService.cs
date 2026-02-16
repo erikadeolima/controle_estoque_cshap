@@ -5,6 +5,8 @@ using controle_estoque_cshap.DTOs.ItemDto;
 using controle_estoque_cshap.Models;
 using controle_estoque_cshap.Repositories;
 using controle_estoque_cshap.Repositories.ItemRepository;
+using controle_estoque_cshap.Repositories.ProductRepository;
+
 
 namespace controle_estoque_cshap.Services.ItemService;
 

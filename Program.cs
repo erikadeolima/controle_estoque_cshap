@@ -27,8 +27,16 @@ builder.Services.AddScoped<IItemService, ItemService>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 34));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion)
+    options.UseMySql(
+        connectionString,
+        serverVersion,
+        mySqlOptions =>
+        {
+            mySqlOptions.EnableRetryOnFailure();
+        }
+    )
 );
+
 
 var app = builder.Build();
 

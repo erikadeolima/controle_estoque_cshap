@@ -32,10 +32,32 @@ public class ProductRepository : IProductRepository
         .Include(p => p.Items)
         .FirstOrDefaultAsync(p => p.ProductId == id);
   }
-   public async Task<List<Product>> GetActiveAsync()
-        {
-            return await _context.Products
-                .Where(p => p.Status == 1)
-                .ToListAsync();
-        }
+  public async Task<List<Product>> GetActiveAsync()
+  {
+    return await _context.Products
+        .Where(p => p.Status == 1)
+        .ToListAsync();
+  }
+  public async Task<Product?> GetBySkuAsync(string sku)
+  {
+    return await _context.Products
+        .AsNoTracking()
+        .Include(p => p.Items)
+        .FirstOrDefaultAsync(p => p.Sku == sku);
+  }
+  public async Task CreateAsync(Product product)
+  {
+    await _context.Products.AddAsync(product);
+    await _context.SaveChangesAsync();
+  }
+  public async Task UpdateAsync(Product product)
+  {
+    _context.Products.Update(product);
+    await _context.SaveChangesAsync();
+  }
+
+
+
+   
 }
+  
