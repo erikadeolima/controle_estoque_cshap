@@ -3,9 +3,9 @@ set -euo pipefail
 
 bash .devcontainer/postStart.sh
 
-DB_NAME=$(grep -oP 'Database=\K[^;" ]+' appsettings.json | head -n 1 || true)
-DB_USER=$(grep -oP 'User=\K[^;" ]+' appsettings.json | head -n 1 || true)
-DB_PASS=$(grep -oP 'Password=\K[^;" ]+' appsettings.json | head -n 1 || true)
+DB_NAME=$(grep -oP 'Database=\K[^;" ]+' appsettings.Development.json | head -n 1 || true)
+DB_USER=$(grep -oP 'User=\K[^;" ]+' appsettings.Development.json | head -n 1 || true)
+DB_PASS=$(grep -oP 'Password=\K[^;" ]+' appsettings.Development.json | head -n 1 || true)
 
 DB_NAME=${DB_NAME:-controle_estoque}
 DB_USER=${DB_USER:-erikalima}
