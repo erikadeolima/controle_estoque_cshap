@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using controle_estoque_cshap.DTOs.ProductDto;
 using controle_estoque_cshap.Repositories.ProductRepository;
 using controle_estoque_cshap.Models;
+using controle_estoque_cshap.Services.ProductService;
+
 
 
 namespace controle_estoque_cshap.Services.ProductService;
@@ -91,6 +93,10 @@ public class ProductService : IProductService
     if (string.IsNullOrWhiteSpace(dto.Name))
         throw new ArgumentException("Name é obrigatório");
 
+    if (dto.MinimumQuantity <= 0)
+        throw new ArgumentException("MinimumQuantity deve ser maior que zero.");
+
+     var existing = await _productRepository.GetBySkuAsync(dto.Sku);
     var product = new Product
     {
         Sku = dto.Sku.Trim(),
@@ -168,6 +174,23 @@ public async Task<bool> DeleteAsync(int id)
 
     return true;
 }
+public async Task<List<ProductDto>> GetLowStockAsync()
+{
+    var products = await _productRepository.GetLowStockAsync();
+
+    return products.Select(p => new ProductDto
+    {
+        ProductId = p.ProductId,
+        Sku = p.Sku,
+        Name = p.Name,
+        Status = p.Status,
+        MinimumQuantity = p.MinimumQuantity,
+        CategoryId = p.CategoryId,
+        QuantityTotal = p.Items.Sum(i => i.Quantity)
+    }).ToList();
+}
+
+
 
 
 }

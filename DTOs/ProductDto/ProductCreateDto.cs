@@ -29,9 +29,9 @@ namespace controle_estoque_cshap.DTOs.ProductDto
                 yield return new ValidationResult("CategoryId deve ser maior que zero.", new[] { nameof(CategoryId) });
             }
 
-            if (MinimumQuantity < 0)
+            if (MinimumQuantity <= 0)
             {
-                yield return new ValidationResult("MinimumQuantity deve ser maior ou igual a zero.", new[] { nameof(MinimumQuantity) });
+                yield return new ValidationResult("MinimumQuantity deve ser maior que zero.", new[] { nameof(MinimumQuantity) });
             }
         } 
     }

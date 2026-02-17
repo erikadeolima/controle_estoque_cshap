@@ -56,6 +56,18 @@ public class ProductRepository : IProductRepository
     await _context.SaveChangesAsync();
   }
 
+public async Task<List<Product>> GetLowStockAsync()
+{
+    return await _context.Products
+        .AsNoTracking()
+        .Include(p => p.Items)
+        .Where(p =>
+            p.Status == 1 &&
+            p.MinimumQuantity != null &&
+            p.Items.Sum(i => i.Quantity) < p.MinimumQuantity
+        )
+        .ToListAsync();
+}
 
 
    

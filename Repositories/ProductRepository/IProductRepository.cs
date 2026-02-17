@@ -10,9 +10,11 @@ public interface IProductRepository
   Task<Product?> GetByIdAsync(int id);
   Task<List<Product>> GetActiveAsync();
   Task<Product?> GetBySkuAsync(string sku);
+  Task<List<Product>> GetLowStockAsync();
   Task CreateAsync(Product product);
   Task UpdateAsync(Product product);
 
-
+  
+  
 
 }

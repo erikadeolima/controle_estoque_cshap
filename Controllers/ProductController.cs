@@ -159,7 +159,7 @@ public async Task<ActionResult<ProductDto>> Create([FromBody] ProductCreateDto d
     }
   }
    /// <summary>
-  /// Returns a sku.
+  /// Returns 
   /// </summary>
 [HttpPut("{id:int}")]
 [ProducesResponseType(typeof(ProductDto), 200)]
@@ -215,7 +215,27 @@ public async Task<IActionResult> Delete(int id)
     }
 }
 
+[HttpGet("low-stock")]
+public async Task<IActionResult> GetLowStock()
+{
+    try
+    {
+        var products = await _productService.GetLowStockAsync();
 
+        if (products == null || !products.Any())
+            return NotFound(new { message = "Nenhum produto com baixo estoque encontrado." });
+
+        return Ok(products);
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new
+        {
+            message = "Erro ao obter produtos com baixo estoque.",
+            detail = ex.Message
+        });
+    }
+}
 
 
 }
