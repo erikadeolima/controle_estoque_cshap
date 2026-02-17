@@ -49,6 +49,12 @@ Inventory control system for snack bar specialized in food product management. T
   - Quantity snapshots (previous/new)
   - Automatic timestamp
 
+- **Reports** ✅ NEW
+  - **Expiration Report**: Items expiring within specified days
+  - **Expired Items Report**: Items that have already expired
+  - CSV export format for spreadsheet compatibility
+  - Uses **JOIN** queries across multiple tables
+
 - **MySQL Database**
   - Entity Framework Core configured
   - Migrations implemented
@@ -56,13 +62,10 @@ Inventory control system for snack bar specialized in food product management. T
 
 ### 🚧 Next Implementations
 
-- [ ] REST API Controllers
-- [ ] DTOs and validations
-- [ ] Repositories and Services
 - [ ] Authentication system
-- [ ] Item audit trail (user, datetime, changed fields)
 - [ ] Low stock alerts
 - [ ] Automatic deletion of old products
+- [ ] REST API documentation enhancement
 
 ---
 
@@ -281,6 +284,23 @@ The `Item.Status` field uses a numeric convention that aligns with business rule
 | GET    | `/api/items/{itemId}/movements`        | Movements by item   |
 | GET    | `/api/movements?startDate=X&endDate=Y` | Movements by period |
 
+#### Reports (`/api/items/reports`) - **NEW**
+
+| Method | Endpoint                               | Description                           | Returns  |
+| ------ | -------------------------------------- | ------------------------------------- | -------- |
+| GET    | `/api/items/reports/expiration?days=7` | Items expiring within N days (CSV)    | CSV File |
+| GET    | `/api/items/reports/expired`           | Items that have already expired (CSV) | CSV File |
+
+**Features:**
+
+- ✅ Uses **JOIN** queries across Item → Product → Category tables
+- ✅ Returns downloadable CSV files with:
+  - Item batch, quantity, location, expiration date
+  - Product name, SKU
+  - Category name
+  - Days until expiration / Days since expiration (for expired items)
+- ✅ Filters with parameters (days to warning)
+
 ### Request Examples (Planned)
 
 ```json
@@ -396,28 +416,39 @@ See [Database/Scripts](Database/Scripts/) folder for:
 
 ## 🧪 Testing
 
-**Status**: 🚧 Not implemented
+**Status**: ✅ Implemented & Comprehensive
 
-### Test Planning
+### Coverage & Results
 
-#### Unit Tests (Planned)
+- **Total Tests**: 152 (All passing ✅)
+- **Code Coverage**: **86.48%** (Exceeds 80% minimum)
+- **Branch Coverage**: 83.65%
+- **Method Coverage**: 88.74%
 
-- Entity and business rules testing
-- Model validations
-- Automatic status logic
+### Test Framework & Tools
 
-#### Integration Tests (Planned)
+- **Framework**: NUnit
+- **Mocking**: Moq
+- **Coverage Tool**: Coverlet
 
-- Repository testing
-- API endpoint testing
-- Database testing
+### Test Categories
 
-#### Planned Tools
+1. **Service Tests** (Business Logic)
+2. **Repository Tests** (Data Access with JOIN queries)
+3. **Controller Tests** (API Endpoints)
+4. **Integration Tests** (End-to-end workflows)
 
-- xUnit - Testing framework
-- Moq - Dependency mocking
-- FluentAssertions - Readable assertions
-- In-Memory Database - EF Core testing
+### Running Tests
+
+```bash
+# Run all tests
+dotnet test controle_estoque_cshap.Tests/controle_estoque_cshap.Tests.csproj
+
+# Run with coverage
+dotnet test controle_estoque_cshap.Tests/controle_estoque_cshap.Tests.csproj \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=opencover
+```
 
 ---
 
@@ -445,21 +476,24 @@ See [Database/Scripts](Database/Scripts/) folder for:
 
 ## 🔄 Roadmap
 
-### Phase 1: API Core (In Progress) 🚧
+### Phase 1: API Core ✅ Complete
 
-- [ ] Implement Controllers
-- [ ] Create DTOs for requests/responses
-- [ ] Implement Repository Pattern
-- [ ] Implement Service Layer
-- [ ] Validations with FluentValidation
+- ✅ Implement Controllers (Category, Product, Item, User)
+- ✅ Create DTOs for requests/responses
+- ✅ Implement Repository Pattern
+- ✅ Implement Service Layer
+- ✅ Validations and error handling
+- ✅ Reports with JOIN queries
+- ✅ Comprehensive testing (86.48% coverage)
 
-### Phase 2: Business Rules
+### Phase 2: Business Rules & Enhancements
 
 - [ ] Low stock alert system
 - [ ] Expiration date notifications
 - [ ] Automatic deletion of old products
 - [ ] Movement reports
 - [ ] Item audit trail (user, datetime, changed fields)
+- [ ] Authentication & Authorization
 
 ---
 

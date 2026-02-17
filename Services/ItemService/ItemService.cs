@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using controle_estoque_cshap.DTOs.ItemDto;
 using controle_estoque_cshap.Models;
@@ -128,6 +130,55 @@ public class ItemService : IItemService
     item.Status = 0;
     await _itemRepository.UpdateAsync();
     return ItemDeleteResult.Deactivated;
+  }
+
+  public async Task<string> GenerateExpirationReportCsvAsync(int daysToWarning)
+  {
+    var data = await _itemRepository.GetExpirationReportAsync(daysToWarning);
+
+    if (data == null || !data.Any())
+      return string.Empty;
+
+    var csv = new StringBuilder();
+    csv.AppendLine("Item ID,Lote,Quantidade,Localização,Data de Vencimento,Produto,SKU,Categoria");
+
+    foreach (var item in data)
+    {
+      var expirationDateFormatted = item.ExpirationDate?.ToString("yyyy-MM-dd") ?? "N/A";
+      var line = $"\"{item.ItemId}\",\"{EscapeCsv(item.Batch)}\",\"{item.Quantity}\",\"{EscapeCsv(item.Location)}\",\"{expirationDateFormatted}\",\"{EscapeCsv(item.ProductName)}\",\"{item.ProductSku}\",\"{EscapeCsv(item.CategoryName)}\"";
+      csv.AppendLine(line);
+    }
+
+    return csv.ToString();
+  }
+
+  public async Task<string> GenerateExpiredItemsReportCsvAsync()
+  {
+    var data = await _itemRepository.GetExpiredItemsReportAsync();
+
+    if (data == null || !data.Any())
+      return string.Empty;
+
+    var csv = new StringBuilder();
+    csv.AppendLine("Item ID,Lote,Quantidade,Localização,Data de Vencimento,Produto,SKU,Categoria,Dias Vencido");
+
+    foreach (var item in data)
+    {
+      var expirationDateFormatted = item.ExpirationDate?.ToString("yyyy-MM-dd") ?? "N/A";
+      var daysExpired = (int)(DateTime.UtcNow.Date - item.ExpirationDate?.Date).Value.TotalDays;
+      var line = $"\"{item.ItemId}\",\"{EscapeCsv(item.Batch)}\",\"{item.Quantity}\",\"{EscapeCsv(item.Location)}\",\"{expirationDateFormatted}\",\"{EscapeCsv(item.ProductName)}\",\"{item.ProductSku}\",\"{EscapeCsv(item.CategoryName)}\",\"{daysExpired}\"";
+      csv.AppendLine(line);
+    }
+
+    return csv.ToString();
+  }
+
+  private static string EscapeCsv(string value)
+  {
+    if (string.IsNullOrEmpty(value))
+      return string.Empty;
+
+    return value.Replace("\"", "\"\"");
   }
 
   private static sbyte CalculateStatus(int quantity, int? minimumQuantity)

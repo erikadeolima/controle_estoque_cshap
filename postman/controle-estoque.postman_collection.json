@@ -1,92 +1,76 @@
 {
   "info": {
     "_postman_id": "2f0a6e7e-1e8c-4b13-8f06-8b32f2f6a1d1",
-    "name": "Controle Estoque",
+    "name": "Controle Estoque - API Completa",
+    "description": "Coleção completa de endpoints para o sistema de controle de estoque em snack bar. Inclui operações CRUD em todas as entidades e relatórios com JOINs (expressão obrigatória do curso).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "protocol",
       "value": "http",
-      "type": "string"
+      "type": "string",
+      "description": "Protocolo HTTP/HTTPS"
     },
     {
       "key": "baseUrl",
       "value": "localhost",
-      "type": "string"
+      "type": "string",
+      "description": "URL base da API"
     },
     {
       "key": "port",
       "value": "5215",
-      "type": "string"
-    },
-    {
-      "key": "productId",
-      "value": "1",
-      "type": "string"
+      "type": "string",
+      "description": "Porta da API"
     },
     {
       "key": "categoryId",
       "value": "1",
-      "type": "string"
+      "type": "string",
+      "description": "ID de categoria para testes"
+    },
+    {
+      "key": "productId",
+      "value": "1",
+      "type": "string",
+      "description": "ID de produto para testes"
     },
     {
       "key": "itemId",
       "value": "1",
-      "type": "string"
+      "type": "string",
+      "description": "ID de item para testes"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "string",
+      "description": "ID de usuário para testes"
+    },
+    {
+      "key": "daysWarning",
+      "value": "7",
+      "type": "string",
+      "description": "Dias para aviso de vencimento"
     }
   ],
   "item": [
     {
-      "name": "Products - Get Inactive",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/inactive",
-          "protocol": "{{protocol}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "port": "{{port}}",
-          "path": [
-            "api",
-            "products",
-            "inactive"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Products - Get By Id",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/{{productId}}",
-          "protocol": "{{protocol}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "port": "{{port}}",
-          "path": [
-            "api",
-            "products",
-            "{{productId}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
       "name": "Categories",
+      "description": "Endpoints para gerenciamento de categorias de produtos",
       "item": [
         {
-          "name": "Categories - Get All",
+          "name": "Get All Categories",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories",
               "protocol": "{{protocol}}",
@@ -98,7 +82,8 @@
                 "api",
                 "categories"
               ]
-            }
+            },
+            "description": "Retorna lista de todas as categorias cadastradas"
           },
           "response": [
             {
@@ -112,15 +97,21 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"categoryId\": 1,\n    \"name\": \"Bebidas\",\n    \"description\": \"Categoria de bebidas\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\",\n    \"totalProducts\": 12\n  }\n]"
+              "body": "[\n  {\n    \"categoryId\": 1,\n    \"name\": \"Bebidas\",\n    \"description\": \"Bebidas em geral\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\",\n    \"totalProducts\": 5\n  },\n  {\n    \"categoryId\": 2,\n    \"name\": \"Lanches\",\n    \"description\": \"Lanches e salgados\",\n    \"creationDate\": \"2026-02-08T11:00:00Z\",\n    \"totalProducts\": 8\n  }\n]"
             }
           ]
         },
         {
-          "name": "Categories - Get By Id",
+          "name": "Get Category By Id",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/categories/{{categoryId}}",
               "protocol": "{{protocol}}",
@@ -133,7 +124,8 @@
                 "categories",
                 "{{categoryId}}"
               ]
-            }
+            },
+            "description": "Retorna detalhes de uma categoria específica"
           },
           "response": [
             {
@@ -147,23 +139,37 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"categoryId\": 1,\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\",\n  \"totalProducts\": 12\n}"
+              "body": "{\n  \"categoryId\": 1,\n  \"name\": \"Bebidas\",\n  \"description\": \"Bebidas em geral\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\",\n  \"totalProducts\": 5\n}"
+            },
+            {
+              "name": "404 Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Categoria não encontrada.\"\n}"
             }
           ]
         },
         {
-          "name": "Categories - Create",
+          "name": "Create Category",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\"\n}",
+              "raw": "{\n  \"name\": \"Sobremesas\",\n  \"description\": \"Sobremesas e doces\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -181,7 +187,8 @@
                 "api",
                 "categories"
               ]
-            }
+            },
+            "description": "Cria uma nova categoria de produtos"
           },
           "response": [
             {
@@ -195,36 +202,24 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"categoryId\": 1,\n  \"name\": \"Bebidas\",\n  \"description\": \"Categoria de bebidas\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\",\n  \"totalProducts\": 0\n}"
-            },
-            {
-              "name": "409 Conflict",
-              "status": "Conflict",
-              "code": 409,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Categoria com este nome ja existe.\"\n}"
+              "body": "{\n  \"categoryId\": 3,\n  \"name\": \"Sobremesas\",\n  \"description\": \"Sobremesas e doces\",\n  \"creationDate\": \"2026-02-08T12:00:00Z\",\n  \"totalProducts\": 0\n}"
             }
           ]
         },
         {
-          "name": "Categories - Update",
+          "name": "Update Category",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Bebidas e Sucos\",\n  \"description\": \"Atualizacao da categoria\"\n}",
+              "raw": "{\n  \"name\": \"Bebidas Premium\",\n  \"description\": \"Bebidas de alta qualidade\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -243,20 +238,55 @@
                 "categories",
                 "{{categoryId}}"
               ]
-            }
+            },
+            "description": "Atualiza informações de uma categoria existente"
           },
           "response": [
             {
               "name": "204 No Content",
               "status": "No Content",
               "code": 204,
-              "_postman_previewlanguage": "json",
+              "_postman_previewlanguage": null,
               "header": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "description": "Endpoints para gerenciamento de produtos do estoque",
+      "item": [
+        {
+          "name": "Get All Active Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "products"
+              ]
             },
+            "description": "Retorna lista de todos os produtos ativos"
+          },
+          "response": [
             {
-              "name": "409 Conflict",
-              "status": "Conflict",
-              "code": 409,
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
               "_postman_previewlanguage": "json",
               "header": [
                 {
@@ -264,7 +294,186 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"Categoria com este nome ja existe.\"\n}"
+              "body": "[\n  {\n    \"productId\": 1,\n    \"categoryId\": 1,\n    \"categoryName\": \"Bebidas\",\n    \"name\": \"Refrigerante 350ml\",\n    \"sku\": \"REF-350\",\n    \"minimumQuantity\": 10,\n    \"status\": \"Active\",\n    \"creationDate\": \"2026-02-08T09:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get All Inactive Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/inactive",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "products",
+                "inactive"
+              ]
+            },
+            "description": "Retorna lista de todos os produtos inativos"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[]"
+            }
+          ]
+        },
+        {
+          "name": "Get Product By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/{{productId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "products",
+                "{{productId}}"
+              ]
+            },
+            "description": "Retorna detalhes de um produto específico"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"productId\": 1,\n  \"categoryId\": 1,\n  \"categoryName\": \"Bebidas\",\n  \"name\": \"Refrigerante 350ml\",\n  \"sku\": \"REF-350\",\n  \"minimumQuantity\": 10,\n  \"status\": \"Active\",\n  \"creationDate\": \"2026-02-08T09:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 1,\n  \"name\": \"Suco Natural 500ml\",\n  \"sku\": \"SUCO-500\",\n  \"minimumQuantity\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "Cria um novo produto"
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"productId\": 2,\n  \"categoryId\": 1,\n  \"categoryName\": \"Bebidas\",\n  \"name\": \"Suco Natural 500ml\",\n  \"sku\": \"SUCO-500\",\n  \"minimumQuantity\": 5,\n  \"status\": \"Active\",\n  \"creationDate\": \"2026-02-08T12:30:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 1,\n  \"name\": \"Refrigerante 350ml Premium\",\n  \"sku\": \"REF-350-P\",\n  \"minimumQuantity\": 15\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/products/{{productId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "products",
+                "{{productId}}"
+              ]
+            },
+            "description": "Atualiza informações de um produto existente"
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": []
             }
           ]
         }
@@ -272,12 +481,19 @@
     },
     {
       "name": "Items",
+      "description": "Endpoints para gerenciamento de itens de estoque (lotes com datas de validade)",
       "item": [
         {
-          "name": "Items - Get All",
+          "name": "Get All Items",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items",
               "protocol": "{{protocol}}",
@@ -289,15 +505,36 @@
                 "api",
                 "items"
               ]
-            }
+            },
+            "description": "Retorna lista de todos os itens (lotes) de estoque"
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"itemId\": 1,\n    \"productId\": 1,\n    \"batch\": \"LOTE-2026-001\",\n    \"quantity\": 50,\n    \"location\": \"Prateleira A1\",\n    \"expirationDate\": \"2026-06-15T00:00:00Z\",\n    \"status\": \"Available\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\"\n  }\n]"
+            }
+          ]
         },
         {
-          "name": "Items - Get By Id",
+          "name": "Get Item By Id",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/{{itemId}}",
               "protocol": "{{protocol}}",
@@ -310,15 +547,36 @@
                 "items",
                 "{{itemId}}"
               ]
-            }
+            },
+            "description": "Retorna detalhes de um item específico"
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"itemId\": 1,\n  \"productId\": 1,\n  \"batch\": \"LOTE-2026-001\",\n  \"quantity\": 50,\n  \"location\": \"Prateleira A1\",\n  \"expirationDate\": \"2026-06-15T00:00:00Z\",\n  \"status\": \"Available\",\n  \"creationDate\": \"2026-02-08T10:00:00Z\"\n}"
+            }
+          ]
         },
         {
-          "name": "Items - Get By Product Id",
+          "name": "Get Items By Product",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/by-product/{{productId}}",
               "protocol": "{{protocol}}",
@@ -332,17 +590,38 @@
                 "by-product",
                 "{{productId}}"
               ]
-            }
+            },
+            "description": "Retorna todos os itens de um produto específico"
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"itemId\": 1,\n    \"productId\": 1,\n    \"batch\": \"LOTE-2026-001\",\n    \"quantity\": 50,\n    \"location\": \"Prateleira A1\",\n    \"expirationDate\": \"2026-06-15T00:00:00Z\",\n    \"status\": \"Available\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\"\n  }\n]"
+            }
+          ]
         },
         {
-          "name": "Items - Get Expiring",
+          "name": "Get Expiring Items",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/expiring?days=30",
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/expiring?days={{daysWarning}}",
               "protocol": "{{protocol}}",
               "host": [
                 "{{baseUrl}}"
@@ -356,26 +635,42 @@
               "query": [
                 {
                   "key": "days",
-                  "value": "30"
+                  "value": "{{daysWarning}}"
                 }
               ]
-            }
+            },
+            "description": "Retorna itens que estão vencendo nos próximos N dias (usa INNER JOIN entre Item, Product e Category)"
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"itemId\": 1,\n    \"batch\": \"LOTE-2026-001\",\n    \"quantity\": 50,\n    \"location\": \"Prateleira A1\",\n    \"expirationDate\": \"2026-02-15T00:00:00Z\",\n    \"productName\": \"Refrigerante 350ml\",\n    \"productSku\": \"REF-350\",\n    \"categoryName\": \"Bebidas\",\n    \"status\": \"Alert\",\n    \"daysUntilExpiration\": 7\n  }\n]"
+            }
+          ]
         },
         {
-          "name": "Items - Create",
+          "name": "Create Item",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"batch\": \"Lote-001\",\n  \"quantity\": 10,\n  \"expirationDate\": \"2026-12-31T00:00:00Z\",\n  \"location\": \"Prateleira A\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"batch\": \"LOTE-2026-002\",\n  \"quantity\": 30,\n  \"location\": \"Prateleira B2\",\n  \"expirationDate\": \"2026-12-31T00:00:00Z\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -393,23 +688,39 @@
                 "api",
                 "items"
               ]
-            }
+            },
+            "description": "Cria um novo item de estoque (lote)"
           },
-          "response": []
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"itemId\": 2,\n  \"productId\": 1,\n  \"batch\": \"LOTE-2026-002\",\n  \"quantity\": 30,\n  \"location\": \"Prateleira B2\",\n  \"expirationDate\": \"2026-12-31T00:00:00Z\",\n  \"status\": \"Available\",\n  \"creationDate\": \"2026-02-08T14:00:00Z\"\n}"
+            }
+          ]
         },
         {
-          "name": "Items - Update",
+          "name": "Update Item",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"quantity\": 15,\n  \"location\": \"Prateleira B\"\n}",
+              "raw": "{\n  \"quantity\": 25,\n  \"location\": \"Prateleira C1\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -428,15 +739,30 @@
                 "items",
                 "{{itemId}}"
               ]
-            }
+            },
+            "description": "Atualiza informações de um item de estoque"
           },
-          "response": []
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": []
+            }
+          ]
         },
         {
-          "name": "Items - Inactivate",
+          "name": "Inactivate Item",
           "request": {
             "method": "PATCH",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/{{itemId}}/inactivate",
               "protocol": "{{protocol}}",
@@ -450,9 +776,257 @@
                 "{{itemId}}",
                 "inactivate"
               ]
-            }
+            },
+            "description": "Desativa um item de estoque (soft delete)"
           },
-          "response": []
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "description": "Endpoints para geração de relatórios com JOINs (requisito obrigatório do curso)",
+      "item": [
+        {
+          "name": "Get Expiration Report (CSV)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/reports/expiration",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "reports",
+                "expiration"
+              ]
+            },
+            "description": "Gera relatório CSV de itens vencendo nos próximos 7 dias usando INNER JOIN (Item → Product → Category). Retorna arquivo CSV com coluna escaping."
+          },
+          "response": [
+            {
+              "name": "200 OK - CSV File",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv; charset=utf-8"
+                },
+                {
+                  "key": "Content-Disposition",
+                  "value": "attachment; filename=expiration_report.csv"
+                }
+              ],
+              "body": "ItemId,Batch,Quantity,Location,ExpirationDate,ProductName,ProductSku,CategoryName,Status,DaysUntilExpiration\n1,\"LOTE-2026-001\",50,\"Prateleira A1\",2026-02-15,Refrigerante 350ml,REF-350,Bebidas,Alert,7\n2,\"LOTE-2026-003\",25,\"Prateleira B2\",2026-02-20,Suco Natural 500ml,SUCO-500,Bebidas,Alert,12"
+            }
+          ]
+        },
+        {
+          "name": "Get Expired Items Report (CSV)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/items/reports/expired",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "items",
+                "reports",
+                "expired"
+              ]
+            },
+            "description": "Gera relatório CSV de itens com data de validade passada usando INNER JOIN (Item → Product → Category). Suporta CSV escaping para valores com aspas ou vírgulas."
+          },
+          "response": [
+            {
+              "name": "200 OK - CSV File",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv; charset=utf-8"
+                },
+                {
+                  "key": "Content-Disposition",
+                  "value": "attachment; filename=expired_report.csv"
+                }
+              ],
+              "body": "ItemId,Batch,Quantity,Location,ExpirationDate,ProductName,ProductSku,CategoryName,Status,DaysUntilExpiration\n5,\"LOTE-VENCIDO\",10,\"Prateleira D1\",2026-01-31,Refrigerante 350ml,REF-350,Bebidas,OutOfStock,-8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Endpoints para gerenciamento de usuários do sistema",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/users",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "Retorna lista de todos os usuários do sistema"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"userId\": 1,\n    \"name\": \"João Silva\",\n    \"email\": \"joao@example.com\",\n    \"role\": \"Manager\",\n    \"creationDate\": \"2026-02-08T09:00:00Z\"\n  },\n  {\n    \"userId\": 2,\n    \"name\": \"Maria Santos\",\n    \"email\": \"maria@example.com\",\n    \"role\": \"Attendant\",\n    \"creationDate\": \"2026-02-08T10:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get User By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/users/{{userId}}",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "users",
+                "{{userId}}"
+              ]
+            },
+            "description": "Retorna detalhes de um usuário específico"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": 1,\n  \"name\": \"João Silva\",\n  \"email\": \"joao@example.com\",\n  \"role\": \"Manager\",\n  \"creationDate\": \"2026-02-08T09:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Pedro Oliveira\",\n  \"email\": \"pedro@example.com\",\n  \"role\": \"Attendant\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{protocol}}://{{baseUrl}}:{{port}}/api/users",
+              "protocol": "{{protocol}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "port": "{{port}}",
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "Cria um novo usuário do sistema"
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": 3,\n  \"name\": \"Pedro Oliveira\",\n  \"email\": \"pedro@example.com\",\n  \"role\": \"Attendant\",\n  \"creationDate\": \"2026-02-08T15:00:00Z\"\n}"
+            }
+          ]
         }
       ]
     }
