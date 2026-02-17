@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 using controle_estoque_cshap.Models;
 
 namespace controle_estoque_cshap.Data;
 
+[ExcludeFromCodeCoverage]
 public partial class AppDbContext : DbContext
 {
     public AppDbContext()
