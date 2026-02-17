@@ -2,9 +2,9 @@
 <CoverageSession>
   <Summary numSequencePoints="655" visitedSequencePoints="569" numBranchPoints="154" visitedBranchPoints="135" sequenceCoverage="86.87" branchCoverage="87.66" maxCyclomaticComplexity="231" minCyclomaticComplexity="231" visitedClasses="64" numClasses="69" visitedMethods="99" numMethods="104" />
   <Modules>
-    <Module hash="94C19F0B-E0CE-4151-873D-19A6796B7337">
+    <Module hash="3878B64E-7E13-489D-8285-05EDBD54E201">
       <ModulePath>controle_estoque_cshap.dll</ModulePath>
-      <ModuleTime>2026-02-17T12:25:58</ModuleTime>
+      <ModuleTime>2026-02-17T02:47:09</ModuleTime>
       <ModuleName>controle_estoque_cshap</ModuleName>
       <Files>
         <File uid="1" fullPath="/home/erikadeoliveiralima/Projetos/controle_estoque_cshap/Program.cs" />
