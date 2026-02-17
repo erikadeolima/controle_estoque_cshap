@@ -42,4 +42,10 @@ public class MovementRepository : IMovementRepository
             .OrderByDescending(m => m.Date)
             .ToListAsync();
     }
+    public async Task AddAsync(Movement movement)
+    {
+        _context.Movements.Add(movement);
+        await _context.SaveChangesAsync();
+    }
+
 }

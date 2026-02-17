@@ -4,16 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using controle_estoque_cshap.DTOs.MovementDto;
 using controle_estoque_cshap.Repositories.MovementRepository;
+using controle_estoque_cshap.Repositories.ItemRepository;
 
 namespace controle_estoque_cshap.Services.MovementService;
 
 public class MovementService : IMovementService
 {
     private readonly IMovementRepository _movementRepository;
+    private readonly IItemRepository _itemRepository;
 
-    public MovementService(IMovementRepository movementRepository)
+    public MovementService(
+        IMovementRepository movementRepository,
+        IItemRepository itemRepository)
     {
         _movementRepository = movementRepository;
+        _itemRepository = itemRepository;
     }
 
     public async Task<List<MovementDto>> GetByItemAsync(int itemId)

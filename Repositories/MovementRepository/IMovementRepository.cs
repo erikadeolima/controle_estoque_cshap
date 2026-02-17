@@ -10,4 +10,6 @@ public interface IMovementRepository
     Task<List<Movement>> GetByItemAsync(int itemId);
 
     Task<List<Movement>> GetByPeriodAsync(DateTime startDate, DateTime endDate);
+    Task AddAsync(Movement movement);
+
 }
