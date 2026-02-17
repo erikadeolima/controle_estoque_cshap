@@ -84,34 +84,43 @@ Category (1) ──────── (N) Product
 
 ## 📡 API Endpoints
 
-### Categories
+### Category Management (`/api/categories`)
 
-- `GET /api/categories` — List all categories
-- `GET /api/categories/{id}` — Get category by ID
-- `POST /api/categories` — Create new category
-- `PUT /api/categories/{id}` — Update category
+| Method | Endpoint               | Description              | Response Codes          |
+| ------ | ---------------------- | ------------------------ | ----------------------- |
+| GET    | `/api/categories`      | List all categories      | 200, 500                |
+| GET    | `/api/categories/{id}` | Get category by ID       | 200, 404, 500           |
+| POST   | `/api/categories`      | Create new category      | 201, 400, 409, 500      |
+| PUT    | `/api/categories/{id}` | Update existing category | 204, 400, 404, 409, 500 |
 
-### Products
+### Product Management (`/api/products`)
 
-- `GET /api/products/active` — List active products
-- `GET /api/products/inactive` — List inactive products
-- `GET /api/products/{id}` — Get product by ID
+| Method | Endpoint                 | Description                | Response Codes |
+| ------ | ------------------------ | -------------------------- | -------------- |
+| GET    | `/api/products/active`   | List all active products   | 200, 404, 500  |
+| GET    | `/api/products/inactive` | List all inactive products | 200, 404, 500  |
+| GET    | `/api/products/{id}`     | Get product by ID          | 200, 404, 500  |
 
-### Items (Complete CRUD)
+### Item Management (`/api/items`) — Complete CRUD
 
-- `GET /api/items` — List all items
-- `GET /api/items/{id}` — Get item by ID
-- `GET /api/items/expiring?days=7` — Items expiring in N days
-- `POST /api/products/{productId}/items` — Create item
-- `PUT /api/items/{id}` — Update item
-- `DELETE /api/items/{id}` — Soft delete (inactivate)
+| Method | Endpoint                          | Description                    | Response Codes          |
+| ------ | --------------------------------- | ------------------------------ | ----------------------- |
+| GET    | `/api/items`                      | List all items                 | 200, 500                |
+| GET    | `/api/items/{id}`                 | Get item by ID                 | 200, 404, 500           |
+| GET    | `/api/products/{productId}/items` | List items by product ID       | 200, 500                |
+| GET    | `/api/items/expiring?days=7`      | Items expiring in N days       | 200, 400, 500           |
+| POST   | `/api/products/{productId}/items` | Create new item for product    | 201, 400, 404, 500      |
+| PUT    | `/api/items/{id}`                 | Update item (inactive blocked) | 204, 400, 404, 409, 500 |
+| DELETE | `/api/items/{id}`                 | Soft delete (inactivate item)  | 204, 404, 409, 500      |
 
-### Reports (CSV Export with JOINs)
+### Reports (`/api/items/reports`) — CSV Export with JOINs
 
-- `GET /api/items/reports/expiration?days=7` — Expiration report (CSV)
-- `GET /api/items/reports/expired` — Expired items report (CSV)
+| Method | Endpoint                               | Description                         | Response Codes     |
+| ------ | -------------------------------------- | ----------------------------------- | ------------------ |
+| GET    | `/api/items/reports/expiration?days=7` | Expiration report (CSV download)    | 200, 400, 404, 500 |
+| GET    | `/api/items/reports/expired`           | Expired items report (CSV download) | 200, 404, 500      |
 
-Each endpoint includes full validation and returns appropriate HTTP status codes (200, 201, 204, 400, 404, 409, 500).
+> 💡 **Note**: All endpoints include full validation, error handling, and return standard HTTP status codes for consistency.
 
 ## 🎯 Business Rules Implemented
 
