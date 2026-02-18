@@ -67,11 +67,11 @@ public class ItemRepository : IItemRepository
     return item;
   }
 
-  public async Task UpdateAsync()
-  {
+  public async Task UpdateAsync(Item item)
+{
+    _context.Items.Update(item);
     await _context.SaveChangesAsync();
-  }
-
+}
   public async Task DeleteAsync(Item item)
   {
     _context.Items.Remove(item);

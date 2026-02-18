@@ -110,7 +110,7 @@ public class ItemService : IItemService
       item.Location = dto.Location.Trim();
     }
 
-    await _itemRepository.UpdateAsync();
+    await _itemRepository.UpdateAsync(item);
 
     var updated = await _itemRepository.GetByIdAsync(item.ItemId);
     return updated == null ? null : ItemDto.FromModel(updated);
@@ -126,7 +126,7 @@ public class ItemService : IItemService
       return ItemDeleteResult.AlreadyInactive;
 
     item.Status = 0;
-    await _itemRepository.UpdateAsync();
+    await _itemRepository.UpdateAsync(item);
     return ItemDeleteResult.Deactivated;
   }
 

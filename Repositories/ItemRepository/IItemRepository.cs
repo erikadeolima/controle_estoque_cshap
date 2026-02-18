@@ -12,6 +12,6 @@ public interface IItemRepository
   Task<IEnumerable<Item>> GetByProductIdAsync(int productId);
   Task<IEnumerable<Item>> GetExpiringItemsAsync(int days);
   Task<Item> CreateAsync(Item item);
-  Task UpdateAsync();
+  Task UpdateAsync(Item item);
   Task DeleteAsync(Item item);
 }

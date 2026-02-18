@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using controle_estoque_cshap.Services.MovementService;
+using controle_estoque_cshap.DTOs.MovementDto;
+
 
 namespace controle_estoque_cshap.Controllers;
 
@@ -42,4 +44,18 @@ public class MovementController : ControllerBase
 
         return Ok(result);
     }
+    [HttpPost]
+public async Task<IActionResult> Create(CreateMovementDto dto)
+{
+    try
+    {
+        var result = await _movementService.CreateAsync(dto);
+        return Ok(result);
+    }
+    catch (Exception ex)
+    {
+        return BadRequest(new { message = ex.Message });
+    }
+}
+
 }
