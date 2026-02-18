@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/dotnet:10.0
+FROM mcr.microsoft.com/devcontainers/dotnet:8.0
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
