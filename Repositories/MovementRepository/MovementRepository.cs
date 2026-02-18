@@ -47,5 +47,17 @@ public class MovementRepository : IMovementRepository
         _context.Movements.Add(movement);
         await _context.SaveChangesAsync();
     }
+    public async Task<Movement> CreateAsync(Movement movement)
+{
+    _context.Movements.Add(movement);
+    await _context.SaveChangesAsync();
+
+    return await _context.Movements
+        .Include(m => m.Item)
+            .ThenInclude(i => i.Product)
+        .Include(m => m.User)
+        .FirstAsync(m => m.MovementId == movement.MovementId);
+}
+
 
 }

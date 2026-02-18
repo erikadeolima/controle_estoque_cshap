@@ -11,4 +11,6 @@ public interface IMovementService
     Task<List<MovementDto>> GetByItemAsync(int itemId);
 
     Task<List<MovementDto>> GetByPeriodAsync(DateTime startDate, DateTime endDate);
+    Task<MovementDto> CreateAsync(CreateMovementDto dto);
+
 }

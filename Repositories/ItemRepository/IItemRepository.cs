@@ -27,6 +27,6 @@ public interface IItemRepository
   Task<IEnumerable<ExpirationReportData>> GetExpirationReportAsync(int daysToWarning);
   Task<IEnumerable<ExpirationReportData>> GetExpiredItemsReportAsync();
   Task<Item> CreateAsync(Item item);
-  Task UpdateAsync();
+  Task UpdateAsync(Item item);
   Task DeleteAsync(Item item);
 }
