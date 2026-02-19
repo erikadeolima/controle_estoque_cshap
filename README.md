@@ -1,25 +1,25 @@
 # Inventory Control API
 
 [![Build & Test](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![Coverage](https://img.shields.io/badge/coverage-86.48%25-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-87%25-brightgreen)]()
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue)]()
-[![License](https://img.shields.io/badge/license-MIT-blue)]()
+[![Database](https://img.shields.io/badge/database-MySQL%208.0-blue)]()
 [![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen)]()
 
-> A production-ready RESTful API for snack bar inventory management. Built with Clean Architecture, SOLID principles, and comprehensive test coverage (86.48%).
+> A production-ready RESTful API for snack bar inventory management. Built with Clean Architecture, SOLID principles, and comprehensive test coverage (87%).
 
 ## 📋 Overview
 
 **Inventory Control** is a comprehensive inventory management system designed specifically for food service businesses. It provides complete product lifecycle management from registration through movement history, with real-time expiration tracking and audit trails.
 
-| Feature        | Status                        |
-| -------------- | ----------------------------- |
-| Database Layer | ✅ 5 tables, fully normalized |
-| API Layer      | ✅ 17+ endpoints implemented  |
-| Business Logic | ✅ 8 rules implemented        |
-| Test Coverage  | ✅ 86.48% (152 tests passing) |
-| Reporting      | ✅ CSV export with JOINs      |
-| Documentation  | ✅ Complete + API Docs        |
+| Feature        | Status                                         |
+| -------------- | ---------------------------------------------- |
+| Database Layer | ✅ 5 core entities (+ EF history table)        |
+| API Layer      | ✅ 27 endpoints implemented                    |
+| Business Logic | ✅ Core validations implemented                |
+| Test Coverage  | ✅ 87% line / 80.4% branch (200 tests passing) |
+| Reporting      | ✅ CSV export with JOINs                       |
+| Documentation  | ✅ Complete + API Docs                         |
 
 ## 🚀 Quick Start
 
@@ -50,8 +50,9 @@ dotnet ef database update
 dotnet run
 
 # Access API
-# Swagger: https://localhost:5001/swagger
-# API: https://localhost:5001/api
+# Swagger: https://localhost:7012/swagger
+# API: https://localhost:7012/api
+# HTTP profile: http://localhost:5215
 ```
 
 ## 📚 Data Model
@@ -69,18 +70,19 @@ dotnet run
 ```
 Category (1) ──────── (N) Product
                         │
-                        └─── (N) Item ──── (N) Movement ──── (N) User
+                        └─── (N) Item ──── (N) Movement
+                                       └─── (N) User
 ```
 
 ### Database Stats
 
-| Aspect         | Value                     |
-| -------------- | ------------------------- |
-| Tables         | 5 (fully normalized)      |
-| Columns        | 32 total                  |
-| Foreign Keys   | 6 (referential integrity) |
-| Indexes        | 8 (optimized queries)     |
-| Sample Records | 102+ (ready to use)       |
+| Aspect       | Value                                                      |
+| ------------ | ---------------------------------------------------------- |
+| Tables       | 6 mapped in DbContext (5 domain + `__EFMigrationsHistory`) |
+| Core Tables  | `category`, `product`, `item`, `movement`, `user`          |
+| Foreign Keys | 4 explicit relations in EF mapping                         |
+| ORM          | EF Core 8 + Pomelo MySQL provider                          |
+| Migrations   | EF Core migrations enabled                                 |
 
 ## 📡 API Endpoints
 
@@ -95,11 +97,16 @@ Category (1) ──────── (N) Product
 
 ### Product Management (`/api/products`)
 
-| Method | Endpoint                 | Description                | Response Codes |
-| ------ | ------------------------ | -------------------------- | -------------- |
-| GET    | `/api/products/active`   | List all active products   | 200, 404, 500  |
-| GET    | `/api/products/inactive` | List all inactive products | 200, 404, 500  |
-| GET    | `/api/products/{id}`     | Get product by ID          | 200, 404, 500  |
+| Method | Endpoint                     | Description                          | Response Codes |
+| ------ | ---------------------------- | ------------------------------------ | -------------- |
+| GET    | `/api/products/active`       | List active products                 | 200, 404, 500  |
+| GET    | `/api/products/inactive`     | List inactive products               | 200, 404, 500  |
+| GET    | `/api/products/{id}`         | Get product by ID                    | 200, 404, 500  |
+| GET    | `/api/products/by-sku/{sku}` | Get product by SKU                   | 200, 404, 500  |
+| GET    | `/api/products/low-stock`    | List products under minimum quantity | 200, 404, 500  |
+| POST   | `/api/products`              | Create product (optional item list)  | 201, 400, 500  |
+| PUT    | `/api/products/{id}`         | Update product                       | 200, 404, 500  |
+| DELETE | `/api/products/{id}`         | Soft delete product (set inactive)   | 204, 404, 500  |
 
 ### Item Management (`/api/items`) — Complete CRUD
 
@@ -120,39 +127,49 @@ Category (1) ──────── (N) Product
 | GET    | `/api/items/reports/expiration?days=7` | Expiration report (CSV download)    | 200, 400, 404, 500 |
 | GET    | `/api/items/reports/expired`           | Expired items report (CSV download) | 200, 404, 500      |
 
+### Movement Management (`/api`)
+
+| Method | Endpoint                               | Description                          | Response Codes |
+| ------ | -------------------------------------- | ------------------------------------ | -------------- |
+| GET    | `/api/items/{itemId}/movements`        | List movements by item               | 200, 404       |
+| GET    | `/api/movements?startDate=X&endDate=Y` | List movements by date period        | 200, 404       |
+| POST   | `/api`                                 | Create stock movement (`IN` / `OUT`) | 200, 400       |
+
 > 💡 **Note**: All endpoints include full validation, error handling, and return standard HTTP status codes for consistency.
 
 ## 🎯 Business Rules Implemented
 
-| Rule                   | Description                                | Implementation                                   |
-| ---------------------- | ------------------------------------------ | ------------------------------------------------ |
-| **Unique SKU**         | Each product must have a unique identifier | UNIQUE constraint in DB                          |
-| **Inactive Immutable** | Inactive items cannot be updated           | Runtime validation                               |
-| **Future Expiration**  | Expiration dates must be in the future     | DateTime validation                              |
-| **Auto Status**        | Item status calculated from quantity       | `0=Inactive, 1=Available, 2=Alert, 3=OutOfStock` |
-| **Non-negative Qty**   | Quantities cannot be negative              | Validation layer                                 |
-| **Soft Delete**        | Items are deactivated, not removed         | Maintain audit trail                             |
-| **Mandatory Location** | Each item must have a physical location    | DTO validation                                   |
-| **Audit Trail**        | All movements tracked by user/timestamp    | Movement table                                   |
+| Rule                         | Description                                                      | Implementation                                   |
+| ---------------------------- | ---------------------------------------------------------------- | ------------------------------------------------ |
+| **Mandatory Product Fields** | `Sku`, `Name`, `MinimumQuantity` are required                    | Product service validation                       |
+| **Inactive Immutable**       | Inactive items/products are not updated                          | Runtime validation                               |
+| **Future Expiration**        | Expiration dates must be in the future (when provided)           | Item service validation                          |
+| **Auto Status**              | Item status calculated from quantity and minimum quantity        | `0=Inactive, 1=Available, 2=Alert, 3=OutOfStock` |
+| **Non-negative Qty**         | Item quantity and resulting movement quantity cannot be negative | Validation + movement checks                     |
+| **Soft Delete**              | Items and products are deactivated, not physically removed       | Status update (`0`)                              |
+| **Mandatory Location/Batch** | `Location` and `Batch` are required for item lifecycle           | Item service validation                          |
+| **Movement Validation**      | Only `IN`/`OUT`, existing item required                          | Movement service validation                      |
+| **Unique Category Name**     | Category name conflict is blocked                                | Category service check (normalized name)         |
+| **Unique User Email**        | Duplicate user email is blocked                                  | User service check                               |
 
 ## 🧪 Testing & Quality
 
 ### Coverage Metrics
 
 ```
-Line Coverage:      86.48% ✅ (Exceeds 80% minimum)
-Branch Coverage:    83.65% ✅
-Method Coverage:    88.74% ✅
-Total Tests:        152 (All passing)
-Execution Time:     ~25 seconds
+Line Coverage:      87% ✅ (Exceeds 80% minimum)
+Branch Coverage:    80.4% ✅
+Total Tests:        200 (All passing)
+Execution Time:     ~1-2 seconds (local run)
 ```
 
 ### Test Distribution
 
-- **Service Tests**: 45 tests (business logic validation)
-- **Repository Tests**: 38 tests (data access with JOINs)
-- **Controller Tests**: 35 tests (HTTP endpoints)
-- **Integration Tests**: 34 tests (end-to-end workflows)
+- **Services**: category, product, item, movement, and user business rules
+- **Repositories**: category, product, item, movement, and user data access
+- **Controllers**: HTTP contracts and status code behavior
+- **Integration**: application startup and API-level scenarios
+- **DTO/Data/Utils**: validation, mapping, and helper coverage
 
 Run tests with:
 
@@ -201,7 +218,7 @@ dotnet test controle_estoque_cshap.Tests/controle_estoque_cshap.Tests.csproj \
 | **API**      | ASP.NET Core          | 8.0     |
 | **ORM**      | Entity Framework Core | 8.0     |
 | **Database** | MySQL                 | 8.0.34+ |
-| **Testing**  | xUnit + Moq           | Latest  |
+| **Testing**  | xUnit + NUnit + Moq   | Latest  |
 | **Coverage** | Coverlet              | Latest  |
 
 ## 📝 Configuration
@@ -244,7 +261,7 @@ controle_estoque_cshap/
 ├── Data/                  # DbContext
 ├── Migrations/            # EF Core migrations
 ├── Database/              # SQL scripts
-└── Tests/                 # Unit & integration tests
+└── controle_estoque_cshap.Tests/  # Unit, integration and coverage tests
 ```
 
 ## 🔄 Request/Response Examples
@@ -292,6 +309,32 @@ GET /api/items/expiring?days=7
 ]
 ```
 
+### Create Movement
+
+```bash
+POST /api
+Content-Type: application/json
+
+{
+  "itemId": 1,
+  "userId": 1,
+  "type": "OUT",
+  "quantity": 10
+}
+
+# Response: 200 OK
+{
+  "movementId": 101,
+  "date": "2026-02-19T23:00:00Z",
+  "type": "OUT",
+  "quantityMoved": 10,
+  "previousQuantity": 50,
+  "newQuantity": 40,
+  "itemId": 1,
+  "userId": 1
+}
+```
+
 ### Download Expiration Report
 
 ```bash
@@ -305,15 +348,15 @@ GET /api/items/reports/expiration?days=30
 
 | #   | Requirement         | Status | Evidence                                |
 | --- | ------------------- | ------ | --------------------------------------- |
-| 1   | 5+ Database Tables  | ✅     | 5 tables with relationships             |
-| 2   | Complete CRUD       | ✅     | Item module fully implemented           |
+| 1   | 5+ Database Tables  | ✅     | 5 core tables (+ migration history)     |
+| 2   | Complete CRUD       | ✅     | Category, Product and Item implemented  |
 | 3   | Report Generation   | ✅     | 2 CSV endpoints with JOINs              |
 | 4   | N:N Relationship    | ⏳     | Structure ready, pending implementation |
-| 5   | Business Rules      | ✅     | 8 rules enforced                        |
-| 6   | Query Filters       | ✅     | Days parameter for expiration           |
-| 7   | SQL JOINs           | ✅     | Item + Product + Category               |
+| 5   | Business Rules      | ✅     | Validations implemented in services     |
+| 6   | Query Filters       | ✅     | Expiration days + movement date range   |
+| 7   | SQL JOINs           | ✅     | Item + Product + Category (reports)     |
 | 8   | README              | ✅     | Comprehensive documentation             |
-| 9   | 80% Test Coverage   | ✅     | 86.48% achieved                         |
+| 9   | 80% Test Coverage   | ✅     | 87% line / 80.4% branch                 |
 | 10  | Presentation Slides | ⏳     | In progress                             |
 
 **Overall: 9/10 (90% Complete)**
@@ -328,10 +371,10 @@ GET /api/items/reports/expiration?days=30
 ## 🔍 Key Statistics
 
 - **Code Lines**: ~3,500 LOC
-- **Endpoints**: 17+ fully documented
-- **Database Records**: 102+ sample data
-- **Test Cases**: 152 automated tests
-- **Test Execution**: <30 seconds
+- **Endpoints**: 27 implemented
+- **Database Records**: available via SQL seed scripts
+- **Test Cases**: 200 automated tests
+- **Test Execution**: ~1-2 seconds (local `dotnet test`)
 - **Database Queries**: Optimized with indexes
 
 ## 🚀 Roadmap
@@ -349,7 +392,7 @@ GET /api/items/reports/expiration?days=30
 
 - [ ] Authentication (JWT)
 - [ ] Authorization (Role-based)
-- [ ] Low stock notifications
+- [ ] Low stock notifications (endpoint exists, notification flow pending)
 - [ ] Advanced reporting
 - [ ] Dashboard widgets
 
@@ -394,6 +437,6 @@ For issues, questions, or suggestions, please check the documentation files or c
 
 **Built with Clean Architecture & SOLID Principles**  
 **Status**: Production Ready (90% Complete)  
-**Coverage**: 86.48% | **Code Quality**: A | **Endpoints**: 17+
+**Coverage**: 87% line / 80.4% branch | **Endpoints**: 27
 
-Last updated: February 17, 2026
+Last updated: February 19, 2026
