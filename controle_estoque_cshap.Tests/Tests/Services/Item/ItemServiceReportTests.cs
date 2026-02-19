@@ -76,8 +76,8 @@ public class ItemServiceReportTests
     var csv = await _service.GenerateExpirationReportCsvAsync(7);
 
     // Assert
-    Assert.IsNotNull(csv);
-    Assert.IsNotEmpty(csv);
+    Assert.That(csv, Is.Not.Null);
+    Assert.That(csv, Is.Not.Empty);
     Assert.That(csv, Does.Contain("Item ID"));
     Assert.That(csv, Does.Contain(item.ItemId.ToString()));
     Assert.That(csv, Does.Contain("LOTE-001"));
@@ -120,7 +120,7 @@ public class ItemServiceReportTests
     var csv = await _service.GenerateExpirationReportCsvAsync(7);
 
     // Assert
-    Assert.IsEmpty(csv);
+    Assert.That(csv, Is.Empty);
   }
 
   [Test]
@@ -159,8 +159,8 @@ public class ItemServiceReportTests
     var csv = await _service.GenerateExpiredItemsReportCsvAsync();
 
     // Assert
-    Assert.IsNotNull(csv);
-    Assert.IsNotEmpty(csv);
+    Assert.That(csv, Is.Not.Null);
+    Assert.That(csv, Is.Not.Empty);
     Assert.That(csv, Does.Contain("Item ID"));
     Assert.That(csv, Does.Contain("Dias Vencido"));
     Assert.That(csv, Does.Contain(item.ItemId.ToString()));
@@ -202,7 +202,7 @@ public class ItemServiceReportTests
     var csv = await _service.GenerateExpiredItemsReportCsvAsync();
 
     // Assert
-    Assert.IsEmpty(csv);
+    Assert.That(csv, Is.Empty);
   }
 
   [Test]
@@ -293,7 +293,7 @@ public class ItemServiceReportTests
     var csv = await _service.GenerateExpirationReportCsvAsync(7);
 
     // Assert
-    Assert.IsNotEmpty(csv);
+    Assert.That(csv, Is.Not.Empty);
     Assert.That(csv, Does.Contain("\"\"ESPECIAL\"\""));
   }
 }

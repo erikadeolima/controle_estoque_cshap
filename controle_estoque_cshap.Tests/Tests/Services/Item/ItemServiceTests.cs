@@ -195,7 +195,7 @@ public class ItemServiceTests
     var productRepo = new Mock<IProductRepository>();
     itemRepo.Setup(r => r.GetByIdForUpdateAsync(1)).ReturnsAsync(item);
     itemRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(item);
-    itemRepo.Setup(r => r.UpdateAsync()).Returns(Task.CompletedTask);
+    itemRepo.Setup(r => r.UpdateAsync(It.IsAny<Item>())).Returns(Task.CompletedTask);
 
     var service = new ItemService(itemRepo.Object, productRepo.Object);
     var dto = new ItemUpdateDto { Batch = "B2", Location = "L2" };
@@ -242,7 +242,7 @@ public class ItemServiceTests
     var itemRepo = new Mock<IItemRepository>();
     var productRepo = new Mock<IProductRepository>();
     itemRepo.Setup(r => r.GetByIdForUpdateAsync(1)).ReturnsAsync(item);
-    itemRepo.Setup(r => r.UpdateAsync()).Returns(Task.CompletedTask);
+    itemRepo.Setup(r => r.UpdateAsync(It.IsAny<Item>())).Returns(Task.CompletedTask);
 
     var service = new ItemService(itemRepo.Object, productRepo.Object);
 

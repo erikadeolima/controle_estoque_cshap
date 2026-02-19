@@ -129,7 +129,7 @@ public class ItemRepositoryTests
     item.Batch = "B2";
     var repo = new ItemRepository(context);
 
-    await repo.UpdateAsync();
+    await repo.UpdateAsync(item);
 
     var updated = context.Items.First();
     Assert.That(updated.Batch, Is.EqualTo("B2"));
