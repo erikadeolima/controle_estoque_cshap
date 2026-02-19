@@ -1,0 +1,5069 @@
+{
+  "controle_estoque_cshap.dll": {
+    "/workspaces/controle_estoque_cshap/Program.cs": {
+      "Program": {
+        "System.Void Program::<Main>$(System.String[])": {
+          "Lines": {
+            "21": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "33": 0,
+            "34": 0,
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "45": 0,
+            "46": 0,
+            "48": 0,
+            "49": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "71": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "84": 0,
+            "86": 0,
+            "88": 0,
+            "90": 0
+          },
+          "Branches": [
+            {
+              "Line": 78,
+              "Offset": 282,
+              "EndOffset": 284,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 78,
+              "Offset": 282,
+              "EndOffset": 302,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Utils/NameValidation.cs": {
+      "controle_estoque_cshap.Utils.NameValidation": {
+        "System.Boolean controle_estoque_cshap.Utils.NameValidation::HasLeadingOrTrailingSpaces(System.String)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean controle_estoque_cshap.Utils.NameValidation::ContainsOnlyLettersAndSpaces(System.String)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 57,
+              "EndOffset": 8,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 23,
+              "EndOffset": 25,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 23,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 38,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String controle_estoque_cshap.Utils.NameValidation::NormalizeTitleCase(System.String)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        },
+        "System.Void controle_estoque_cshap.Utils.NameValidation::.cctor()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Services/UserService/UserService.cs": {
+      "controle_estoque_cshap.Services.UserService.UserService": {
+        "controle_estoque_cshap.DTOs.UserDto.UserDto controle_estoque_cshap.Services.UserService.UserService::MapToDto(controle_estoque_cshap.Models.User)": {
+          "Lines": {
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0
+          },
+          "Branches": []
+        },
+        "System.Void controle_estoque_cshap.Services.UserService.UserService::.ctor(controle_estoque_cshap.Repositories.UserRepository.IUserRepository)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.UserService.UserService/<CreateAsync>d__4": {
+        "System.Void controle_estoque_cshap.Services.UserService.UserService/<CreateAsync>d__4::MoveNext()": {
+          "Lines": {
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 47,
+              "EndOffset": 65,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 83,
+              "EndOffset": 85,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 83,
+              "EndOffset": 101,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 126,
+              "EndOffset": 128,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 126,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 164,
+              "EndOffset": 182,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 340,
+              "EndOffset": 342,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 340,
+              "EndOffset": 349,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.UserService.UserService/<GetAllAsync>d__2": {
+        "System.Void controle_estoque_cshap.Services.UserService.UserService/<GetAllAsync>d__2::MoveNext()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.UserService.UserService/<GetByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Services.UserService.UserService/<GetByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 157,
+              "EndOffset": 159,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 157,
+              "EndOffset": 172,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Services/ProductService/ProductService.cs": {
+      "controle_estoque_cshap.Services.ProductService.ProductService": {
+        "System.Collections.Generic.List`1<controle_estoque_cshap.DTOs.ProductDto.ProductActiveDto> controle_estoque_cshap.Services.ProductService.ProductService::GetActiveProducts()": {
+          "Lines": {
+            "60": 0,
+            "61": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0
+          },
+          "Branches": []
+        },
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService::.ctor(controle_estoque_cshap.Repositories.ProductRepository.IProductRepository)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<>c": {
+        "controle_estoque_cshap.DTOs.ProductDto.ProductDto controle_estoque_cshap.Services.ProductService.ProductService/<>c::<GetInactiveAsync>b__2_0(controle_estoque_cshap.Models.Product)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.Services.ProductService.ProductService/<>c::<GetByIdAsync>b__3_0(controle_estoque_cshap.Models.Item)": {
+          "Lines": {
+            "56": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.Services.ProductService.ProductService/<>c::<GetBySkuAsync>b__5_0(controle_estoque_cshap.Models.Item)": {
+          "Lines": {
+            "85": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.Services.ProductService.ProductService/<>c::<CreateAsync>b__6_0(controle_estoque_cshap.Models.Item)": {
+          "Lines": {
+            "126": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.Services.ProductService.ProductService/<>c::<UpdateAsync>b__7_0(controle_estoque_cshap.Models.Item)": {
+          "Lines": {
+            "161": 0
+          },
+          "Branches": []
+        },
+        "controle_estoque_cshap.DTOs.ProductDto.ProductDto controle_estoque_cshap.Services.ProductService.ProductService/<>c::<GetLowStockAsync>b__9_0(controle_estoque_cshap.Models.Product)": {
+          "Lines": {
+            "181": 0,
+            "182": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<CreateAsync>d__6": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<CreateAsync>d__6::MoveNext()": {
+          "Lines": {
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "97": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "110": 0,
+            "112": 0,
+            "114": 0,
+            "115": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "127": 0,
+            "128": 0
+          },
+          "Branches": [
+            {
+              "Line": 90,
+              "Offset": 61,
+              "EndOffset": 63,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 90,
+              "Offset": 61,
+              "EndOffset": 74,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 92,
+              "EndOffset": 94,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 92,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 126,
+              "EndOffset": 128,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 126,
+              "EndOffset": 139,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 114,
+              "Offset": 687,
+              "EndOffset": 689,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 114,
+              "Offset": 687,
+              "EndOffset": 696,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<DeleteAsync>d__8": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<DeleteAsync>d__8::MoveNext()": {
+          "Lines": {
+            "165": 0,
+            "166": 0,
+            "168": 0,
+            "169": 0,
+            "171": 0,
+            "173": 0,
+            "175": 0,
+            "176": 0
+          },
+          "Branches": [
+            {
+              "Line": 168,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 190,
+              "EndOffset": 192,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 190,
+              "EndOffset": 204,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 168,
+              "EndOffset": 242,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 247,
+              "EndOffset": 249,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 247,
+              "EndOffset": 256,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<GetByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<GetByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "41": 0,
+            "42": 0,
+            "44": 0,
+            "45": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "57": 0,
+            "58": 0
+          },
+          "Branches": [
+            {
+              "Line": 44,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 164,
+              "EndOffset": 173,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<GetBySkuAsync>d__5": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<GetBySkuAsync>d__5::MoveNext()": {
+          "Lines": {
+            "70": 0,
+            "71": 0,
+            "73": 0,
+            "74": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "86": 0,
+            "87": 0
+          },
+          "Branches": [
+            {
+              "Line": 73,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 164,
+              "EndOffset": 173,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<GetInactiveAsync>d__2": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<GetInactiveAsync>d__2::MoveNext()": {
+          "Lines": {
+            "24": 0,
+            "25": 0,
+            "38": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<GetLowStockAsync>d__9": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<GetLowStockAsync>d__9::MoveNext()": {
+          "Lines": {
+            "178": 0,
+            "179": 0,
+            "191": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ProductService.ProductService/<UpdateAsync>d__7": {
+        "System.Void controle_estoque_cshap.Services.ProductService.ProductService/<UpdateAsync>d__7::MoveNext()": {
+          "Lines": {
+            "130": 0,
+            "131": 0,
+            "133": 0,
+            "134": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "141": 0,
+            "142": 0,
+            "144": 0,
+            "145": 0,
+            "147": 0,
+            "148": 0,
+            "150": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "162": 0,
+            "163": 0
+          },
+          "Branches": [
+            {
+              "Line": 133,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 190,
+              "EndOffset": 192,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 190,
+              "EndOffset": 204,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 168,
+              "EndOffset": 242,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 247,
+              "EndOffset": 249,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 247,
+              "EndOffset": 256,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 136,
+              "Offset": 274,
+              "EndOffset": 276,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 138,
+              "Offset": 297,
+              "EndOffset": 299,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 138,
+              "Offset": 297,
+              "EndOffset": 310,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 136,
+              "Offset": 274,
+              "EndOffset": 339,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 144,
+              "Offset": 363,
+              "EndOffset": 365,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 144,
+              "Offset": 363,
+              "EndOffset": 397,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 421,
+              "EndOffset": 423,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 421,
+              "EndOffset": 460,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Services/MovementService/MovementService.cs": {
+      "controle_estoque_cshap.Services.MovementService.MovementService": {
+        "controle_estoque_cshap.DTOs.MovementDto.MovementDto controle_estoque_cshap.Services.MovementService.MovementService::Map(controle_estoque_cshap.Models.Movement)": {
+          "Lines": {
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0
+          },
+          "Branches": [
+            {
+              "Line": 77,
+              "Offset": 113,
+              "EndOffset": 115,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 113,
+              "EndOffset": 119,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 125,
+              "EndOffset": 127,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 125,
+              "EndOffset": 131,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 137,
+              "EndOffset": 139,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 137,
+              "EndOffset": 145,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 172,
+              "EndOffset": 174,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 172,
+              "EndOffset": 178,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 184,
+              "EndOffset": 186,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 184,
+              "EndOffset": 192,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void controle_estoque_cshap.Services.MovementService.MovementService::.ctor(controle_estoque_cshap.Repositories.MovementRepository.IMovementRepository,controle_estoque_cshap.Repositories.ItemRepository.IItemRepository)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.MovementService.MovementService/<>c": {
+        "controle_estoque_cshap.DTOs.MovementDto.MovementDto controle_estoque_cshap.Services.MovementService.MovementService/<>c::<GetByItemAsync>b__3_0(controle_estoque_cshap.Models.Movement)": {
+          "Lines": {
+            "25": 0
+          },
+          "Branches": []
+        },
+        "controle_estoque_cshap.DTOs.MovementDto.MovementDto controle_estoque_cshap.Services.MovementService.MovementService/<>c::<GetByPeriodAsync>b__4_0(controle_estoque_cshap.Models.Movement)": {
+          "Lines": {
+            "32": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.MovementService.MovementService/<CreateAsync>d__5": {
+        "System.Void controle_estoque_cshap.Services.MovementService.MovementService/<CreateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "50": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "70": 0,
+            "72": 0,
+            "73": 0
+          },
+          "Branches": [
+            {
+              "Line": 39,
+              "Offset": 194,
+              "EndOffset": 196,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 194,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 266,
+              "EndOffset": 268,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 266,
+              "EndOffset": 294,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 324,
+              "EndOffset": 326,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 324,
+              "EndOffset": 352,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 376,
+              "EndOffset": 378,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 376,
+              "EndOffset": 389,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.MovementService.MovementService/<GetByItemAsync>d__3": {
+        "System.Void controle_estoque_cshap.Services.MovementService.MovementService/<GetByItemAsync>d__3::MoveNext()": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.MovementService.MovementService/<GetByPeriodAsync>d__4": {
+        "System.Void controle_estoque_cshap.Services.MovementService.MovementService/<GetByPeriodAsync>d__4::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "33": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Services/ItemService/ItemService.cs": {
+      "controle_estoque_cshap.Services.ItemService.ItemService": {
+        "System.String controle_estoque_cshap.Services.ItemService.ItemService::EscapeCsv(System.String)": {
+          "Lines": {
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "181": 0,
+            "182": 0
+          },
+          "Branches": [
+            {
+              "Line": 178,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 178,
+              "Offset": 9,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.SByte controle_estoque_cshap.Services.ItemService.ItemService::CalculateStatus(System.Int32,System.Nullable`1<System.Int32>)": {
+          "Lines": {
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "189": 0,
+            "190": 0,
+            "192": 0,
+            "193": 0
+          },
+          "Branches": [
+            {
+              "Line": 186,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 186,
+              "Offset": 7,
+              "EndOffset": 13,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 189,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 189,
+              "Offset": 20,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 189,
+              "Offset": 40,
+              "EndOffset": 42,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 189,
+              "Offset": 40,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService::.ctor(controle_estoque_cshap.Repositories.ItemRepository.IItemRepository,controle_estoque_cshap.Repositories.ProductRepository.IProductRepository)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<CreateItemAsync>d__7": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<CreateItemAsync>d__7::MoveNext()": {
+          "Lines": {
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "76": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 61,
+              "EndOffset": 63,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 61,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 53,
+              "Offset": 95,
+              "EndOffset": 97,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 53,
+              "Offset": 95,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 133,
+              "EndOffset": 135,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 133,
+              "EndOffset": 151,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 171,
+              "EndOffset": 205,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 210,
+              "EndOffset": 212,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 210,
+              "EndOffset": 228,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 63,
+              "Offset": 386,
+              "EndOffset": 388,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 63,
+              "Offset": 386,
+              "EndOffset": 395,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 812,
+              "EndOffset": 814,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 812,
+              "EndOffset": 827,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<DeleteItemAsync>d__9": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<DeleteItemAsync>d__9::MoveNext()": {
+          "Lines": {
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "127": 0,
+            "128": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0
+          },
+          "Branches": [
+            {
+              "Line": 124,
+              "Offset": 175,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 124,
+              "Offset": 175,
+              "EndOffset": 184,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 127,
+              "Offset": 204,
+              "EndOffset": 206,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 127,
+              "Offset": 204,
+              "EndOffset": 218,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 127,
+              "Offset": 258,
+              "EndOffset": 260,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 127,
+              "Offset": 258,
+              "EndOffset": 267,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GenerateExpirationReportCsvAsync>d__10": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GenerateExpirationReportCsvAsync>d__10::MoveNext()": {
+          "Lines": {
+            "136": 0,
+            "137": 0,
+            "139": 0,
+            "140": 0,
+            "142": 0,
+            "143": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "152": 0,
+            "153": 0
+          },
+          "Branches": [
+            {
+              "Line": 139,
+              "Offset": 157,
+              "EndOffset": 159,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 139,
+              "Offset": 157,
+              "EndOffset": 175,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 139,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 139,
+              "Offset": 180,
+              "EndOffset": 193,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 145,
+              "Offset": 681,
+              "EndOffset": 244,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 284,
+              "EndOffset": 286,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 284,
+              "EndOffset": 290,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 310,
+              "EndOffset": 312,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 310,
+              "EndOffset": 318,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 145,
+              "Offset": 681,
+              "EndOffset": 686,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GenerateExpiredItemsReportCsvAsync>d__11": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GenerateExpiredItemsReportCsvAsync>d__11::MoveNext()": {
+          "Lines": {
+            "156": 0,
+            "157": 0,
+            "159": 0,
+            "160": 0,
+            "162": 0,
+            "163": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "168": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "173": 0,
+            "174": 0
+          },
+          "Branches": [
+            {
+              "Line": 159,
+              "Offset": 151,
+              "EndOffset": 153,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 159,
+              "Offset": 151,
+              "EndOffset": 169,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 159,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 159,
+              "Offset": 174,
+              "EndOffset": 187,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 165,
+              "Offset": 841,
+              "EndOffset": 238,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 278,
+              "EndOffset": 280,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 278,
+              "EndOffset": 284,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 304,
+              "EndOffset": 306,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 304,
+              "EndOffset": 312,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 355,
+              "EndOffset": 357,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 355,
+              "EndOffset": 370,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 398,
+              "EndOffset": 400,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 168,
+              "Offset": 398,
+              "EndOffset": 412,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 165,
+              "Offset": 841,
+              "EndOffset": 846,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GetAllAsync>d__3": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GetAllAsync>d__3::MoveNext()": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GetByProductIdAsync>d__5": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GetByProductIdAsync>d__5::MoveNext()": {
+          "Lines": {
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GetExpiringItemsAsync>d__6": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GetExpiringItemsAsync>d__6::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<GetItemByIdAsync>d__4": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<GetItemByIdAsync>d__4::MoveNext()": {
+          "Lines": {
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 157,
+              "EndOffset": 159,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 157,
+              "EndOffset": 172,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.ItemService.ItemService/<UpdateItemAsync>d__8": {
+        "System.Void controle_estoque_cshap.Services.ItemService.ItemService/<UpdateItemAsync>d__8::MoveNext()": {
+          "Lines": {
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "88": 0,
+            "89": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "97": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "104": 0,
+            "105": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "112": 0,
+            "113": 0,
+            "115": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0
+          },
+          "Branches": [
+            {
+              "Line": 85,
+              "Offset": 189,
+              "EndOffset": 191,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 189,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 88,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 88,
+              "Offset": 218,
+              "EndOffset": 232,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 88,
+              "Offset": 272,
+              "EndOffset": 274,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 88,
+              "Offset": 272,
+              "EndOffset": 285,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 91,
+              "Offset": 303,
+              "EndOffset": 305,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 326,
+              "EndOffset": 328,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 326,
+              "EndOffset": 344,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 91,
+              "Offset": 303,
+              "EndOffset": 373,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 397,
+              "EndOffset": 399,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 434,
+              "EndOffset": 436,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 434,
+              "EndOffset": 452,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 397,
+              "EndOffset": 490,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 508,
+              "EndOffset": 510,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 531,
+              "EndOffset": 533,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 531,
+              "EndOffset": 549,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 508,
+              "EndOffset": 578,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 843,
+              "EndOffset": 845,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 843,
+              "EndOffset": 858,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Services/CategoryService/CategoryService.cs": {
+      "controle_estoque_cshap.Services.CategoryService.CategoryService": {
+        "System.Void controle_estoque_cshap.Services.CategoryService.CategoryService::.ctor(controle_estoque_cshap.Repositories.CategoryRepository.ICategoryRepository)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.CategoryService.CategoryService/<>c": {
+        "controle_estoque_cshap.DTOs.CategoryDto.CategoryDto controle_estoque_cshap.Services.CategoryService.CategoryService/<>c::<GetAllCategoriesAsync>b__2_0(controle_estoque_cshap.Repositories.CategoryRepository.CategoryWithProductCount)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.CategoryService.CategoryService/<CreateCategoryAsync>d__4": {
+        "System.Void controle_estoque_cshap.Services.CategoryService.CategoryService/<CreateCategoryAsync>d__4::MoveNext()": {
+          "Lines": {
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "65": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 197,
+              "EndOffset": 199,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 197,
+              "EndOffset": 206,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.CategoryService.CategoryService/<GetAllCategoriesAsync>d__2": {
+        "System.Void controle_estoque_cshap.Services.CategoryService.CategoryService/<GetAllCategoriesAsync>d__2::MoveNext()": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "33": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Services.CategoryService.CategoryService/<GetCategoryByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Services.CategoryService.CategoryService/<GetCategoryByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0
+          },
+          "Branches": [
+            {
+              "Line": 39,
+              "Offset": 167,
+              "EndOffset": 169,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 167,
+              "EndOffset": 176,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Services.CategoryService.CategoryService/<UpdateCategoryAsync>d__5": {
+        "System.Void controle_estoque_cshap.Services.CategoryService.CategoryService/<UpdateCategoryAsync>d__5::MoveNext()": {
+          "Lines": {
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "92": 0,
+            "93": 0,
+            "95": 0,
+            "96": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0
+          },
+          "Branches": [
+            {
+              "Line": 80,
+              "Offset": 189,
+              "EndOffset": 191,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 80,
+              "Offset": 189,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 221,
+              "EndOffset": 226,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 89,
+              "Offset": 394,
+              "EndOffset": 396,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 89,
+              "Offset": 394,
+              "EndOffset": 425,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 89,
+              "Offset": 430,
+              "EndOffset": 432,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 89,
+              "Offset": 430,
+              "EndOffset": 439,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 221,
+              "EndOffset": 472,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 95,
+              "Offset": 495,
+              "EndOffset": 497,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 95,
+              "Offset": 495,
+              "EndOffset": 520,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/UserRepository/UserRepository.cs": {
+      "controle_estoque_cshap.Repositories.UserRepository.UserRepository": {
+        "System.Void controle_estoque_cshap.Repositories.UserRepository.UserRepository::.ctor(controle_estoque_cshap.Data.AppDbContext)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.UserRepository.UserRepository/<CreateAsync>d__5": {
+        "System.Void controle_estoque_cshap.Repositories.UserRepository.UserRepository/<CreateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetAllAsync>d__2": {
+        "System.Void controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetAllAsync>d__2::MoveNext()": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetByEmailAsync>d__4": {
+        "System.Void controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetByEmailAsync>d__4::MoveNext()": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Repositories.UserRepository.UserRepository/<GetByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/ProductRepository/ProductRepository.cs": {
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository::.ctor(controle_estoque_cshap.Data.AppDbContext)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<CreateAsync>d__6": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<CreateAsync>d__6::MoveNext()": {
+          "Lines": {
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetActiveAsync>d__4": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetActiveAsync>d__4::MoveNext()": {
+          "Lines": {
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetBySkuAsync>d__5": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetBySkuAsync>d__5::MoveNext()": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetInactiveAsync>d__2": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetInactiveAsync>d__2::MoveNext()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetLowStockAsync>d__8": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<GetLowStockAsync>d__8::MoveNext()": {
+          "Lines": {
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<UpdateAsync>d__7": {
+        "System.Void controle_estoque_cshap.Repositories.ProductRepository.ProductRepository/<UpdateAsync>d__7::MoveNext()": {
+          "Lines": {
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/MovementRepository/MovementRepository.cs": {
+      "controle_estoque_cshap.Repositories.MovementRepository.MovementRepository": {
+        "System.Void controle_estoque_cshap.Repositories.MovementRepository.MovementRepository::.ctor(controle_estoque_cshap.Data.AppDbContext)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<AddAsync>d__4": {
+        "System.Void controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<AddAsync>d__4::MoveNext()": {
+          "Lines": {
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<CreateAsync>d__5": {
+        "System.Void controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<CreateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<GetByItemAsync>d__2": {
+        "System.Void controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<GetByItemAsync>d__2::MoveNext()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<GetByPeriodAsync>d__3": {
+        "System.Void controle_estoque_cshap.Repositories.MovementRepository.MovementRepository/<GetByPeriodAsync>d__3::MoveNext()": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/ItemRepository/IItemRepository.cs": {
+      "controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData": {
+        "System.Int32 controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_ItemId()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_Batch()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_Quantity()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_Location()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_ExpirationDate()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_ProductName()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_ProductSku()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.Repositories.ItemRepository.ExpirationReportData::get_CategoryName()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/ItemRepository/ItemRepository.cs": {
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository::.ctor(controle_estoque_cshap.Data.AppDbContext)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<CreateAsync>d__9": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<CreateAsync>d__9::MoveNext()": {
+          "Lines": {
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<DeleteAsync>d__11": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<DeleteAsync>d__11::MoveNext()": {
+          "Lines": {
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetAllAsync>d__2": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetAllAsync>d__2::MoveNext()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByIdAsync>d__3": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByIdAsync>d__3::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByIdForUpdateAsync>d__4": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByIdForUpdateAsync>d__4::MoveNext()": {
+          "Lines": {
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByProductIdAsync>d__5": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetByProductIdAsync>d__5::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpirationReportAsync>d__7": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpirationReportAsync>d__7::MoveNext()": {
+          "Lines": {
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "97": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpiredItemsReportAsync>d__8": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpiredItemsReportAsync>d__8::MoveNext()": {
+          "Lines": {
+            "100": 0,
+            "101": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "130": 0,
+            "131": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpiringItemsAsync>d__6": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<GetExpiringItemsAsync>d__6::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<UpdateAsync>d__10": {
+        "System.Void controle_estoque_cshap.Repositories.ItemRepository.ItemRepository/<UpdateAsync>d__10::MoveNext()": {
+          "Lines": {
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/CategoryRepository/CategoryRepository.cs": {
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository::.ctor(controle_estoque_cshap.Data.AppDbContext)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<CreateCategoryAsync>d__6": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<CreateCategoryAsync>d__6::MoveNext()": {
+          "Lines": {
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetAllWithProductCountAsync>d__3": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetAllWithProductCountAsync>d__3::MoveNext()": {
+          "Lines": {
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetByIdWithProductCountAsync>d__4": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetByIdWithProductCountAsync>d__4::MoveNext()": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetCategoryByIdForUpdateAsync>d__2": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetCategoryByIdForUpdateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetCategoryByNameAsync>d__5": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<GetCategoryByNameAsync>d__5::MoveNext()": {
+          "Lines": {
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<UpdateCategoryAsync>d__7": {
+        "System.Void controle_estoque_cshap.Repositories.CategoryRepository.CategoryRepository/<UpdateCategoryAsync>d__7::MoveNext()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Repositories/CategoryRepository/CategoryWithProductCount.cs": {
+      "controle_estoque_cshap.Repositories.CategoryRepository.CategoryWithProductCount": {
+        "controle_estoque_cshap.Models.Category controle_estoque_cshap.Repositories.CategoryRepository.CategoryWithProductCount::get_Category()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/UserDto/UserCreateDto.cs": {
+      "controle_estoque_cshap.DTOs.UserDto.UserCreateDto": {
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserCreateDto::get_Name()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserCreateDto::get_Email()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserCreateDto::get_Profile()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.UserDto.UserCreateDto/<Validate>d__12": {
+        "System.Boolean controle_estoque_cshap.DTOs.UserDto.UserCreateDto/<Validate>d__12::MoveNext()": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": [
+            {
+              "Line": 14,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 73,
+              "EndOffset": 123,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 141,
+              "EndOffset": 143,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 141,
+              "EndOffset": 191,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 209,
+              "EndOffset": 211,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 209,
+              "EndOffset": 259,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/UserDto/UserDto.cs": {
+      "controle_estoque_cshap.DTOs.UserDto.UserDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.UserDto.UserDto::get_IdUser()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserDto::get_Name()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserDto::get_Email()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.UserDto.UserDto::get_Profile()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ProductDto/ProductActiveDto.cs": {
+      "controle_estoque_cshap.DTOs.ProductDto.ProductActiveDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductActiveDto::get_ProductId()": {
+          "Lines": {
+            "7": 1
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductActiveDto::get_Name()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ProductDto/ProductCreateDto.cs": {
+      "controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto": {
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto::get_Sku()": {
+          "Lines": {
+            "10": 8
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto::get_Name()": {
+          "Lines": {
+            "11": 8
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto::get_CategoryId()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto::get_MinimumQuantity()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto> controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto::get_Items()": {
+          "Lines": {
+            "14": 10
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto/<Validate>d__20": {
+        "System.Boolean controle_estoque_cshap.DTOs.ProductDto.ProductCreateDto/<Validate>d__20::MoveNext()": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 82,
+              "EndOffset": 84,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 82,
+              "EndOffset": 132,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 150,
+              "EndOffset": 200,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 219,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 219,
+              "EndOffset": 269,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 290,
+              "EndOffset": 292,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 290,
+              "EndOffset": 340,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ProductDto/ProductDto.cs": {
+      "controle_estoque_cshap.DTOs.ProductDto.ProductDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_ProductId()": {
+          "Lines": {
+            "6": 12
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_Sku()": {
+          "Lines": {
+            "8": 13
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_Name()": {
+          "Lines": {
+            "10": 14
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.SByte> controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_Status()": {
+          "Lines": {
+            "12": 13
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_MinimumQuantity()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_CreationDate()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_CategoryId()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ProductDto.ProductDto::get_QuantityTotal()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ProductDto/ProductUpdateDto.cs": {
+      "controle_estoque_cshap.DTOs.ProductDto.ProductUpdateDto": {
+        "System.String controle_estoque_cshap.DTOs.ProductDto.ProductUpdateDto::get_Name()": {
+          "Lines": {
+            "5": 3
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> controle_estoque_cshap.DTOs.ProductDto.ProductUpdateDto::get_CategoryId()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> controle_estoque_cshap.DTOs.ProductDto.ProductUpdateDto::get_MinimumQuantity()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/MovementDto/CreateMovementDto.cs": {
+      "controle_estoque_cshap.DTOs.MovementDto.CreateMovementDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.CreateMovementDto::get_ItemId()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.CreateMovementDto::get_UserId()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.CreateMovementDto::get_Quantity()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.MovementDto.CreateMovementDto::get_Type()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/MovementDto/MovementDto.cs": {
+      "controle_estoque_cshap.DTOs.MovementDto.MovementDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_MovementId()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_Date()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_Type()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_QuantityMoved()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_PreviousQuantity()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_NewQuantity()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_ItemId()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_ProductName()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_UserId()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.MovementDto.MovementDto::get_UserName()": {
+          "Lines": {
+            "23": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ItemDto/ExpirationReportDto.cs": {
+      "controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_ItemId()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_Batch()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_Quantity()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_Location()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_ExpirationDate()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_ProductName()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_ProductSku()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_CategoryName()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_Status()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ExpirationReportDto::get_DaysUntilExpiration()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ItemDto/ItemCreateDto.cs": {
+      "controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto::get_ProductId()": {
+          "Lines": {
+            "9": 2
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto::get_Batch()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto::get_Quantity()": {
+          "Lines": {
+            "13": 1
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto::get_ExpirationDate()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto::get_Location()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto/<Validate>d__20": {
+        "System.Boolean controle_estoque_cshap.DTOs.ItemDto.ItemCreateDto/<Validate>d__20::MoveNext()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": [
+            {
+              "Line": 21,
+              "Offset": 82,
+              "EndOffset": 84,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 82,
+              "EndOffset": 132,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 148,
+              "EndOffset": 150,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 148,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 216,
+              "EndOffset": 218,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 216,
+              "EndOffset": 266,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 286,
+              "EndOffset": 288,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 286,
+              "EndOffset": 320,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 325,
+              "EndOffset": 327,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 325,
+              "EndOffset": 375,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ItemDto/ItemDto.cs": {
+      "controle_estoque_cshap.DTOs.ItemDto.ItemDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_ItemId()": {
+          "Lines": {
+            "5": 1
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_ProductId()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_ProductName()": {
+          "Lines": {
+            "7": 1
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_Batch()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_Quantity()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_ExpirationDate()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_Location()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.SByte> controle_estoque_cshap.DTOs.ItemDto.ItemDto::get_Status()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "controle_estoque_cshap.DTOs.ItemDto.ItemDto controle_estoque_cshap.DTOs.ItemDto.ItemDto::FromModel(controle_estoque_cshap.Models.Item)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 40,
+              "EndOffset": 42,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 40,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 52,
+              "EndOffset": 54,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 52,
+              "EndOffset": 60,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/ItemDto/ItemUpdateDto.cs": {
+      "controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto": {
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto::get_Batch()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto::get_ExpirationDate()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto::get_Location()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto/<Validate>d__12": {
+        "System.Boolean controle_estoque_cshap.DTOs.ItemDto.ItemUpdateDto/<Validate>d__12::MoveNext()": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 81,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 102,
+              "EndOffset": 104,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 81,
+              "EndOffset": 120,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 102,
+              "EndOffset": 120,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 137,
+              "EndOffset": 139,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 137,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 185,
+              "EndOffset": 187,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 185,
+              "EndOffset": 205,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 208,
+              "EndOffset": 210,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 208,
+              "EndOffset": 258,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 277,
+              "EndOffset": 279,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 277,
+              "EndOffset": 310,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 315,
+              "EndOffset": 317,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 315,
+              "EndOffset": 365,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 376,
+              "EndOffset": 378,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 376,
+              "EndOffset": 396,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 401,
+              "EndOffset": 403,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 401,
+              "EndOffset": 451,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/CategoryDto/CategoryCreateDto.cs": {
+      "controle_estoque_cshap.DTOs.CategoryDto.CategoryCreateDto": {
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryCreateDto::get_Name()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryCreateDto::get_Description()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.CategoryDto.CategoryCreateDto/<Validate>d__8": {
+        "System.Boolean controle_estoque_cshap.DTOs.CategoryDto.CategoryCreateDto/<Validate>d__8::MoveNext()": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 73,
+              "EndOffset": 124,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 142,
+              "EndOffset": 144,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 142,
+              "EndOffset": 176,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 197,
+              "EndOffset": 199,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 197,
+              "EndOffset": 231,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/CategoryDto/CategoryDto.cs": {
+      "controle_estoque_cshap.DTOs.CategoryDto.CategoryDto": {
+        "System.Int32 controle_estoque_cshap.DTOs.CategoryDto.CategoryDto::get_CategoryId()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryDto::get_Name()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryDto::get_Description()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> controle_estoque_cshap.DTOs.CategoryDto.CategoryDto::get_CreationDate()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 controle_estoque_cshap.DTOs.CategoryDto.CategoryDto::get_TotalProducts()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/DTOs/CategoryDto/CategoryUpdateDto.cs": {
+      "controle_estoque_cshap.DTOs.CategoryDto.CategoryUpdateDto": {
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryUpdateDto::get_Name()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String controle_estoque_cshap.DTOs.CategoryDto.CategoryUpdateDto::get_Description()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.DTOs.CategoryDto.CategoryUpdateDto/<Validate>d__8": {
+        "System.Boolean controle_estoque_cshap.DTOs.CategoryDto.CategoryUpdateDto/<Validate>d__8::MoveNext()": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 111,
+              "EndOffset": 113,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 111,
+              "EndOffset": 124,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 127,
+              "EndOffset": 129,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 127,
+              "EndOffset": 161,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 169,
+              "EndOffset": 171,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 190,
+              "EndOffset": 192,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 190,
+              "EndOffset": 224,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 247,
+              "EndOffset": 249,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 247,
+              "EndOffset": 281,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 169,
+              "EndOffset": 282,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Controllers/CategoryController.cs": {
+      "controle_estoque_cshap.Controllers.CategoryController": {
+        "System.Void controle_estoque_cshap.Controllers.CategoryController::.ctor(controle_estoque_cshap.Services.CategoryService.ICategoryService,Microsoft.Extensions.Logging.ILogger`1<controle_estoque_cshap.Controllers.CategoryController>)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.CategoryController/<Create>d__5": {
+        "System.Void controle_estoque_cshap.Controllers.CategoryController/<Create>d__5::MoveNext()": {
+          "Lines": {
+            "78": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "85": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "92": 0
+          },
+          "Branches": [
+            {
+              "Line": 82,
+              "Offset": 173,
+              "EndOffset": 175,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 82,
+              "Offset": 173,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.CategoryController/<GetAll>d__3": {
+        "System.Void controle_estoque_cshap.Controllers.CategoryController/<GetAll>d__3::MoveNext()": {
+          "Lines": {
+            "31": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.CategoryController/<GetById>d__4": {
+        "System.Void controle_estoque_cshap.Controllers.CategoryController/<GetById>d__4::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "54": 0,
+            "55": 0,
+            "57": 0,
+            "58": 0,
+            "60": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "67": 0
+          },
+          "Branches": [
+            {
+              "Line": 57,
+              "Offset": 173,
+              "EndOffset": 175,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 57,
+              "Offset": 173,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.CategoryController/<Update>d__6": {
+        "System.Void controle_estoque_cshap.Controllers.CategoryController/<Update>d__6::MoveNext()": {
+          "Lines": {
+            "104": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "111": 0,
+            "112": 0,
+            "114": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "121": 0
+          },
+          "Branches": [
+            {
+              "Line": 108,
+              "Offset": 172,
+              "EndOffset": 174,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 108,
+              "Offset": 172,
+              "EndOffset": 201,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 111,
+              "Offset": 214,
+              "EndOffset": 216,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 111,
+              "Offset": 214,
+              "EndOffset": 240,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Controllers/ItemController.cs": {
+      "controle_estoque_cshap.Controllers.ItemController": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController::.ctor(controle_estoque_cshap.Services.ItemService.IItemService,Microsoft.Extensions.Logging.ILogger`1<controle_estoque_cshap.Controllers.ItemController>)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<Create>d__7": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<Create>d__7::MoveNext()": {
+          "Lines": {
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "125": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "133": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "145": 0
+          },
+          "Branches": [
+            {
+              "Line": 122,
+              "Offset": 29,
+              "EndOffset": 31,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 122,
+              "Offset": 29,
+              "EndOffset": 63,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 130,
+              "Offset": 240,
+              "EndOffset": 242,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 130,
+              "Offset": 240,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetAll>d__3": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetAll>d__3::MoveNext()": {
+          "Lines": {
+            "31": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetById>d__4": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetById>d__4::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "66": 0
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 173,
+              "EndOffset": 175,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 173,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetByProduct>d__5": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetByProduct>d__5::MoveNext()": {
+          "Lines": {
+            "75": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "86": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetExpirationReport>d__10": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetExpirationReport>d__10::MoveNext()": {
+          "Lines": {
+            "218": 0,
+            "219": 0,
+            "220": 0,
+            "223": 0,
+            "224": 0,
+            "226": 0,
+            "227": 0,
+            "229": 0,
+            "230": 0,
+            "232": 0,
+            "234": 0,
+            "235": 0,
+            "236": 0,
+            "237": 0,
+            "239": 0
+          },
+          "Branches": [
+            {
+              "Line": 219,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 219,
+              "Offset": 26,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 226,
+              "Offset": 216,
+              "EndOffset": 218,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 226,
+              "Offset": 216,
+              "EndOffset": 245,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetExpiredItemsReport>d__11": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetExpiredItemsReport>d__11::MoveNext()": {
+          "Lines": {
+            "250": 0,
+            "252": 0,
+            "253": 0,
+            "255": 0,
+            "256": 0,
+            "258": 0,
+            "259": 0,
+            "261": 0,
+            "263": 0,
+            "264": 0,
+            "265": 0,
+            "266": 0,
+            "268": 0
+          },
+          "Branches": [
+            {
+              "Line": 255,
+              "Offset": 169,
+              "EndOffset": 171,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 255,
+              "Offset": 169,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<GetExpiring>d__6": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<GetExpiring>d__6::MoveNext()": {
+          "Lines": {
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "110": 0
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 97,
+              "Offset": 26,
+              "EndOffset": 60,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<Inactivate>d__9": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<Inactivate>d__9::MoveNext()": {
+          "Lines": {
+            "190": 0,
+            "192": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "197": 0,
+            "198": 0,
+            "200": 0,
+            "202": 0,
+            "203": 0,
+            "204": 0,
+            "205": 0,
+            "207": 0
+          },
+          "Branches": [
+            {
+              "Line": 194,
+              "Offset": 166,
+              "EndOffset": 168,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 194,
+              "Offset": 166,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 197,
+              "Offset": 208,
+              "EndOffset": 210,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 197,
+              "Offset": 208,
+              "EndOffset": 234,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ItemController/<Update>d__8": {
+        "System.Void controle_estoque_cshap.Controllers.ItemController/<Update>d__8::MoveNext()": {
+          "Lines": {
+            "156": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "161": 0,
+            "163": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "168": 0,
+            "170": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "175": 0,
+            "176": 0,
+            "177": 0,
+            "178": 0,
+            "180": 0
+          },
+          "Branches": [
+            {
+              "Line": 160,
+              "Offset": 179,
+              "EndOffset": 181,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 160,
+              "Offset": 179,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Controllers/MovementController.cs": {
+      "controle_estoque_cshap.Controllers.MovementController": {
+        "System.Void controle_estoque_cshap.Controllers.MovementController::.ctor(controle_estoque_cshap.Services.MovementService.IMovementService)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.MovementController/<Create>d__4": {
+        "System.Void controle_estoque_cshap.Controllers.MovementController/<Create>d__4::MoveNext()": {
+          "Lines": {
+            "49": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.MovementController/<GetByItem>d__2": {
+        "System.Void controle_estoque_cshap.Controllers.MovementController/<GetByItem>d__2::MoveNext()": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 157,
+              "EndOffset": 159,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 157,
+              "EndOffset": 175,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 180,
+              "EndOffset": 196,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.MovementController/<GetByPeriod>d__3": {
+        "System.Void controle_estoque_cshap.Controllers.MovementController/<GetByPeriod>d__3::MoveNext()": {
+          "Lines": {
+            "39": 0,
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": [
+            {
+              "Line": 42,
+              "Offset": 163,
+              "EndOffset": 165,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 163,
+              "EndOffset": 181,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 186,
+              "EndOffset": 188,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 186,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Controllers/ProductController.cs": {
+      "controle_estoque_cshap.Controllers.ProductController": {
+        "Microsoft.AspNetCore.Mvc.ActionResult`1<System.Collections.Generic.IEnumerable`1<controle_estoque_cshap.DTOs.ProductDto.ProductActiveDto>> controle_estoque_cshap.Controllers.ProductController::GetActiveProducts()": {
+          "Lines": {
+            "80": 3,
+            "82": 3,
+            "83": 3,
+            "84": 2,
+            "85": 1,
+            "86": 1,
+            "89": 1,
+            "91": 1,
+            "92": 1,
+            "93": 1,
+            "95": 3
+          },
+          "Branches": [
+            {
+              "Line": 84,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 84,
+              "Offset": 15,
+              "EndOffset": 28,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 84,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 84,
+              "Offset": 31,
+              "EndOffset": 58,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void controle_estoque_cshap.Controllers.ProductController::.ctor(controle_estoque_cshap.Services.ProductService.IProductService,controle_estoque_cshap.Services.ItemService.IItemService)": {
+          "Lines": {
+            "18": 27,
+            "19": 27,
+            "20": 27,
+            "21": 27,
+            "22": 27
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<Create>d__7": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<Create>d__7::MoveNext()": {
+          "Lines": {
+            "129": 4,
+            "131": 4,
+            "132": 4,
+            "134": 3,
+            "135": 1,
+            "137": 2,
+            "138": 1,
+            "139": 5,
+            "140": 1,
+            "141": 1,
+            "142": 1,
+            "143": 1,
+            "144": 1,
+            "146": 2,
+            "147": 2,
+            "148": 2,
+            "149": 2,
+            "150": 2,
+            "152": 1,
+            "153": 1,
+            "154": 1,
+            "155": 1,
+            "156": 1,
+            "157": 1,
+            "158": 1,
+            "160": 4
+          },
+          "Branches": [
+            {
+              "Line": 134,
+              "Offset": 185,
+              "EndOffset": 187,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 134,
+              "Offset": 185,
+              "EndOffset": 219,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 137,
+              "Offset": 230,
+              "EndOffset": 232,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 137,
+              "Offset": 230,
+              "EndOffset": 253,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 137,
+              "Offset": 258,
+              "EndOffset": 263,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 139,
+              "Offset": 476,
+              "EndOffset": 301,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 139,
+              "Offset": 476,
+              "EndOffset": 481,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 137,
+              "Offset": 258,
+              "EndOffset": 519,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<Delete>d__9": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<Delete>d__9::MoveNext()": {
+          "Lines": {
+            "198": 3,
+            "200": 3,
+            "201": 3,
+            "203": 2,
+            "204": 1,
+            "206": 1,
+            "208": 1,
+            "209": 1,
+            "210": 1,
+            "211": 1,
+            "212": 1,
+            "213": 1,
+            "214": 1,
+            "216": 3
+          },
+          "Branches": [
+            {
+              "Line": 203,
+              "Offset": 166,
+              "EndOffset": 168,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 203,
+              "Offset": 166,
+              "EndOffset": 192,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<GetById>d__4": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<GetById>d__4::MoveNext()": {
+          "Lines": {
+            "56": 4,
+            "58": 4,
+            "59": 4,
+            "61": 3,
+            "62": 2,
+            "63": 2,
+            "66": 1,
+            "68": 1,
+            "69": 1,
+            "70": 1,
+            "72": 4
+          },
+          "Branches": [
+            {
+              "Line": 61,
+              "Offset": 166,
+              "EndOffset": 168,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 61,
+              "Offset": 188,
+              "EndOffset": 190,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 188,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 61,
+              "Offset": 166,
+              "EndOffset": 240,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 61,
+              "Offset": 245,
+              "EndOffset": 247,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 61,
+              "Offset": 245,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<GetBySkuAsync>d__6": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<GetBySkuAsync>d__6::MoveNext()": {
+          "Lines": {
+            "104": 4,
+            "106": 4,
+            "107": 4,
+            "109": 3,
+            "110": 2,
+            "111": 2,
+            "113": 1,
+            "115": 1,
+            "116": 1,
+            "117": 1,
+            "118": 1,
+            "119": 1,
+            "120": 1,
+            "121": 1,
+            "123": 4
+          },
+          "Branches": [
+            {
+              "Line": 109,
+              "Offset": 166,
+              "EndOffset": 168,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 109,
+              "Offset": 188,
+              "EndOffset": 190,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 188,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 109,
+              "Offset": 166,
+              "EndOffset": 240,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 109,
+              "Offset": 245,
+              "EndOffset": 247,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 109,
+              "Offset": 245,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<GetInactive>d__3": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<GetInactive>d__3::MoveNext()": {
+          "Lines": {
+            "31": 3,
+            "33": 3,
+            "34": 3,
+            "35": 2,
+            "36": 1,
+            "37": 1,
+            "40": 1,
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "46": 3
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 167,
+              "EndOffset": 169,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 35,
+              "Offset": 167,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<GetLowStock>d__10": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<GetLowStock>d__10::MoveNext()": {
+          "Lines": {
+            "220": 3,
+            "222": 3,
+            "223": 3,
+            "225": 2,
+            "226": 1,
+            "228": 1,
+            "230": 1,
+            "231": 1,
+            "232": 1,
+            "233": 1,
+            "234": 1,
+            "235": 1,
+            "236": 1,
+            "238": 3
+          },
+          "Branches": [
+            {
+              "Line": 225,
+              "Offset": 160,
+              "EndOffset": 162,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 225,
+              "Offset": 160,
+              "EndOffset": 178,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 225,
+              "Offset": 183,
+              "EndOffset": 185,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 225,
+              "Offset": 183,
+              "EndOffset": 209,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.ProductController/<Update>d__8": {
+        "System.Void controle_estoque_cshap.Controllers.ProductController/<Update>d__8::MoveNext()": {
+          "Lines": {
+            "171": 3,
+            "173": 3,
+            "174": 3,
+            "176": 2,
+            "177": 1,
+            "179": 1,
+            "181": 1,
+            "182": 1,
+            "183": 1,
+            "184": 1,
+            "185": 1,
+            "186": 1,
+            "187": 1,
+            "189": 3
+          },
+          "Branches": [
+            {
+              "Line": 176,
+              "Offset": 179,
+              "EndOffset": 181,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 176,
+              "Offset": 179,
+              "EndOffset": 210,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/workspaces/controle_estoque_cshap/Controllers/UserController.cs": {
+      "controle_estoque_cshap.Controllers.UserController": {
+        "System.Void controle_estoque_cshap.Controllers.UserController::.ctor(controle_estoque_cshap.Services.UserService.IUserService,Microsoft.Extensions.Logging.ILogger`1<controle_estoque_cshap.Controllers.UserController>)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.UserController/<Create>d__5": {
+        "System.Void controle_estoque_cshap.Controllers.UserController/<Create>d__5::MoveNext()": {
+          "Lines": {
+            "77": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "84": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0
+          },
+          "Branches": [
+            {
+              "Line": 81,
+              "Offset": 173,
+              "EndOffset": 175,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 173,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "controle_estoque_cshap.Controllers.UserController/<GetAll>d__3": {
+        "System.Void controle_estoque_cshap.Controllers.UserController/<GetAll>d__3::MoveNext()": {
+          "Lines": {
+            "31": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0
+          },
+          "Branches": []
+        }
+      },
+      "controle_estoque_cshap.Controllers.UserController/<GetById>d__4": {
+        "System.Void controle_estoque_cshap.Controllers.UserController/<GetById>d__4::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "66": 0
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 173,
+              "EndOffset": 175,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 173,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

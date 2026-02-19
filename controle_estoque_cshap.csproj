@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="controle_estoque_cshap.Tests/**/*.cs" />
+    <Content Remove="controle_estoque_cshap.Tests/**" />
+    <None Remove="controle_estoque_cshap.Tests/**" />
+    <EmbeddedResource Remove="controle_estoque_cshap.Tests/**" />
   </ItemGroup>
 
   <ItemGroup>
