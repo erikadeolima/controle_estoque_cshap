@@ -205,4 +205,65 @@ public class ItemController : ControllerBase
       return StatusCode(500, new { message = "Erro ao excluir item." });
     }
   }
+
+  /// <summary>
+  /// Generates a CSV report of items expiring within the specified number of days.
+  /// Uses JOIN across Item, Product, and Category tables.
+  /// </summary>
+  [HttpGet("reports/expiration")]
+  [ProducesResponseType(typeof(FileResult), 200)]
+  [ProducesResponseType(404)]
+  [ProducesResponseType(500)]
+  public async Task<IActionResult> GetExpirationReport([FromQuery] int days = 7)
+  {
+    if (days < 1)
+      return BadRequest(new { message = "days deve ser maior ou igual a 1." });
+
+    try
+    {
+      var csv = await _itemService.GenerateExpirationReportCsvAsync(days);
+
+      if (string.IsNullOrEmpty(csv))
+        return NotFound(new { message = "Nenhum item proximo a vencer encontrado." });
+
+      var fileName = $"relatorio_expiracao_{DateTime.UtcNow:yyyyMMdd_HHmmss}.csv";
+      var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
+
+      return File(bytes, "text/csv", fileName);
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "Erro ao gerar relatorio de expiracao.");
+      return StatusCode(500, new { message = "Erro ao gerar relatorio de expiracao." });
+    }
+  }
+
+  /// <summary>
+  /// Generates a CSV report of items that have already expired.
+  /// Uses JOIN across Item, Product, and Category tables.
+  /// </summary>
+  [HttpGet("reports/expired")]
+  [ProducesResponseType(typeof(FileResult), 200)]
+  [ProducesResponseType(404)]
+  [ProducesResponseType(500)]
+  public async Task<IActionResult> GetExpiredItemsReport()
+  {
+    try
+    {
+      var csv = await _itemService.GenerateExpiredItemsReportCsvAsync();
+
+      if (string.IsNullOrEmpty(csv))
+        return NotFound(new { message = "Nenhum item vencido encontrado." });
+
+      var fileName = $"relatorio_vencidos_{DateTime.UtcNow:yyyyMMdd_HHmmss}.csv";
+      var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
+
+      return File(bytes, "text/csv", fileName);
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "Erro ao gerar relatorio de itens vencidos.");
+      return StatusCode(500, new { message = "Erro ao gerar relatorio de itens vencidos." });
+    }
+  }
 }

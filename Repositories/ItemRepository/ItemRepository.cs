@@ -60,6 +60,76 @@ public class ItemRepository : IItemRepository
         .ToListAsync();
   }
 
+  public async Task<IEnumerable<ExpirationReportData>> GetExpirationReportAsync(int daysToWarning)
+  {
+    var today = DateTime.UtcNow.Date;
+    var warningDate = today.AddDays(daysToWarning);
+
+    // Itens que vencem nos próximos N dias
+    var expiringItems = await _context.Items
+        .AsNoTracking()
+        .Where(i => i.ExpirationDate.HasValue &&
+                    i.ExpirationDate.Value.Date > today &&
+                    i.ExpirationDate.Value.Date <= warningDate &&
+                    i.Quantity > 0)
+        .Join(_context.Products,
+              item => item.ProductId,
+              product => product.ProductId,
+              (item, product) => new { item, product })
+        .Join(_context.Categories,
+              ip => ip.product.CategoryId,
+              category => category.CategoryId,
+              (ip, category) => new ExpirationReportData
+              {
+                ItemId = ip.item.ItemId,
+                Batch = ip.item.Batch,
+                Quantity = ip.item.Quantity,
+                Location = ip.item.Location ?? "N/A",
+                ExpirationDate = ip.item.ExpirationDate,
+                ProductName = ip.product.Name,
+                ProductSku = ip.product.Sku,
+                CategoryName = category.Name
+              })
+        .OrderBy(r => r.ExpirationDate)
+        .ToListAsync();
+
+    return expiringItems;
+  }
+
+  public async Task<IEnumerable<ExpirationReportData>> GetExpiredItemsReportAsync()
+  {
+    var today = DateTime.UtcNow.Date;
+
+    // Itens já vencidos
+    var expiredItems = await _context.Items
+        .AsNoTracking()
+        .Where(i => i.ExpirationDate.HasValue &&
+                    i.ExpirationDate.Value.Date < today &&
+                    i.Quantity > 0)
+        .Join(_context.Products,
+              item => item.ProductId,
+              product => product.ProductId,
+              (item, product) => new { item, product })
+        .Join(_context.Categories,
+              ip => ip.product.CategoryId,
+              category => category.CategoryId,
+              (ip, category) => new ExpirationReportData
+              {
+                ItemId = ip.item.ItemId,
+                Batch = ip.item.Batch,
+                Quantity = ip.item.Quantity,
+                Location = ip.item.Location ?? "N/A",
+                ExpirationDate = ip.item.ExpirationDate,
+                ProductName = ip.product.Name,
+                ProductSku = ip.product.Sku,
+                CategoryName = category.Name
+              })
+        .OrderBy(r => r.ExpirationDate)
+        .ToListAsync();
+
+    return expiredItems;
+  }
+
   public async Task<Item> CreateAsync(Item item)
   {
     _context.Items.Add(item);
@@ -67,11 +137,11 @@ public class ItemRepository : IItemRepository
     return item;
   }
 
-  public async Task UpdateAsync()
-  {
+  public async Task UpdateAsync(Item item)
+{
+    _context.Items.Update(item);
     await _context.SaveChangesAsync();
-  }
-
+}
   public async Task DeleteAsync(Item item)
   {
     _context.Items.Remove(item);

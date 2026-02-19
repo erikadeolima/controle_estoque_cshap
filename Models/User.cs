@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace controle_estoque_cshap.Models;
 
+[ExcludeFromCodeCoverage]
 public partial class User
 {
     public int IdUser { get; set; }

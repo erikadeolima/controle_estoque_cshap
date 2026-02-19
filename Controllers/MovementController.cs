@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using controle_estoque_cshap.DTOs.MovementDto;
 using controle_estoque_cshap.Services.MovementService;
+using controle_estoque_cshap.DTOs.MovementDto;
+
 
 namespace controle_estoque_cshap.Controllers;
 
@@ -18,68 +19,43 @@ public class MovementController : ControllerBase
         _movementService = movementService;
     }
 
-    /// <summary>
-    /// Movements by item
-    /// </summary>
-    [HttpGet("items/{itemId:int}/movements")]
-    [ProducesResponseType(typeof(IEnumerable<MovementDto>), 200)]
-    [ProducesResponseType(404)]
-    [ProducesResponseType(500)]
-    public async Task<ActionResult<IEnumerable<MovementDto>>> GetByItem(int itemId)
+    // GET /api/items/{itemId}/movements
+    [HttpGet("items/{itemId}/movements")]
+    public async Task<IActionResult> GetByItem(int itemId)
     {
-        try
-        {
-            var movements = await _movementService.GetByItemAsync(itemId);
+        var result = await _movementService.GetByItemAsync(itemId);
 
-            if (movements == null || movements.Count == 0)
-                return NotFound(new { message = "Nenhuma movimentação encontrada para este item." });
+        if (result == null || result.Count == 0)
+            return NotFound();
 
-            return Ok(movements);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new
-            {
-                message = "Erro ao buscar movimentações por item.",
-                detail = ex.Message
-            });
-        }
+        return Ok(result);
     }
 
-    /// <summary>
-    /// Movements by period
-    /// </summary>
+    // GET /api/movements?startDate=X&endDate=Y
     [HttpGet("movements")]
-    [ProducesResponseType(typeof(IEnumerable<MovementDto>), 200)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(404)]
-    [ProducesResponseType(500)]
-    public async Task<ActionResult<IEnumerable<MovementDto>>> GetByPeriod(
+    public async Task<IActionResult> GetByPeriod(
         [FromQuery] DateTime startDate,
         [FromQuery] DateTime endDate)
     {
+        var result = await _movementService.GetByPeriodAsync(startDate, endDate);
+
+        if (result == null || result.Count == 0)
+            return NotFound();
+
+        return Ok(result);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateMovementDto dto)
+    {
         try
         {
-            if (startDate == default || endDate == default)
-                return BadRequest(new
-                {
-                    message = "Parâmetros startDate e endDate são obrigatórios."
-                });
-
-            var movements = await _movementService.GetByPeriodAsync(startDate, endDate);
-
-            if (movements == null || movements.Count == 0)
-                return NotFound(new { message = "Nenhuma movimentação encontrada no período informado." });
-
-            return Ok(movements);
+            var result = await _movementService.CreateAsync(dto);
+            return Ok(result);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new
-            {
-                message = "Erro ao buscar movimentações por período.",
-                detail = ex.Message
-            });
+            return BadRequest(new { message = ex.Message });
         }
     }
+
 }

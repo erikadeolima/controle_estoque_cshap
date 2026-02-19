@@ -13,4 +13,6 @@ public interface IItemService
   Task<ItemDto?> CreateItemAsync(ItemCreateDto dto);
   Task<ItemDto?> UpdateItemAsync(int id, ItemUpdateDto dto);
   Task<ItemDeleteResult> DeleteItemAsync(int id);
+  Task<string> GenerateExpirationReportCsvAsync(int daysToWarning);
+  Task<string> GenerateExpiredItemsReportCsvAsync();
 }

@@ -37,10 +37,27 @@ public class MovementRepository : IMovementRepository
                 .ThenInclude(i => i.Product)
             .Include(m => m.User)
             .Where(m =>
-                m.Date.HasValue &&
-                m.Date.Value >= startDate &&
-                m.Date.Value <= endDate)
+                m.Date >= startDate &&
+                m.Date <= endDate)
             .OrderByDescending(m => m.Date)
             .ToListAsync();
     }
+    public async Task AddAsync(Movement movement)
+    {
+        _context.Movements.Add(movement);
+        await _context.SaveChangesAsync();
+    }
+    public async Task<Movement> CreateAsync(Movement movement)
+    {
+        _context.Movements.Add(movement);
+        await _context.SaveChangesAsync();
+
+        return await _context.Movements
+            .Include(m => m.Item)
+                .ThenInclude(i => i.Product)
+            .Include(m => m.User)
+            .FirstAsync(m => m.MovementId == movement.MovementId);
+    }
+
+
 }
