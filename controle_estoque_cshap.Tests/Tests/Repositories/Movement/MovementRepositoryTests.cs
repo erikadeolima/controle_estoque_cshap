@@ -35,11 +35,22 @@ public class MovementRepositoryTests
             Profile = "Admin"
         };
 
+        var product = new Product
+        {
+            ProductId = 1,
+            Name = "Produto Teste",
+            Sku = "SKU-01",
+            CategoryId = 1,
+            MinimumQuantity = 1,
+            Status = 1
+        };
+
         var item1 = new Item
         {
             ItemId = 1,
             Quantity = 10,
             ProductId = 1,
+            Product = product,
             Batch = "Lote-01"
         };
 
@@ -48,10 +59,12 @@ public class MovementRepositoryTests
             ItemId = 2,
             Quantity = 5,
             ProductId = 1,
+            Product = product,
             Batch = "Lote-02"
         };
 
         context.Users.Add(user);
+        context.Products.Add(product);
         context.Items.AddRange(item1, item2);
 
         var movements = new List<Movement>
@@ -107,19 +120,31 @@ public class MovementRepositoryTests
             Profile = "Admin"
         };
 
+        var product = new Product
+        {
+            ProductId = 1,
+            Name = "Produto Teste",
+            Sku = "SKU-01",
+            CategoryId = 1,
+            MinimumQuantity = 1,
+            Status = 1
+        };
+
         var item = new Item
         {
             ItemId = 1,
             Quantity = 10,
             ProductId = 1,
+            Product = product,
             Batch = "Lote-01"
         };
 
         context.Users.Add(user);
+        context.Products.Add(product);
         context.Items.Add(item);
 
         var start = new DateTime(2025, 1, 10);
-        var end   = new DateTime(2025, 1, 20);
+        var end = new DateTime(2025, 1, 20);
 
         var movements = new List<Movement>
         {
@@ -159,5 +184,5 @@ public class MovementRepositoryTests
         Assert.Single(result);
         Assert.Equal(1, result[0].MovementId);
     }
-    
+
 }
