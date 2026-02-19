@@ -1,30 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-bash .devcontainer/postStart.sh
+# Wait for MySQL to be ready
+echo "Waiting for MySQL to be ready..."
+for i in $(seq 1 30); do
+  if mysqladmin ping -h db -u root -prootpassword --silent >/dev/null 2>&1; then
+    echo "MySQL is ready!"
+    break
+  fi
+  sleep 1
+done
 
-DB_NAME=$(grep -oP 'Database=\K[^;" ]+' appsettings.json | head -n 1 || true)
-DB_USER=$(grep -oP 'User=\K[^;" ]+' appsettings.json | head -n 1 || true)
-DB_PASS=$(grep -oP 'Password=\K[^;" ]+' appsettings.json | head -n 1 || true)
-
-DB_NAME=${DB_NAME:-controle_estoque}
-DB_USER=${DB_USER:-erikalima}
-DB_PASS=${DB_PASS:-erikalima}
-
-sudo mysql -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 
-sudo mysql -e "CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASS}';" 
-sudo mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost'; FLUSH PRIVILEGES;"
-
+# Install dotnet-ef if not already available
 if ! command -v dotnet-ef >/dev/null 2>&1; then
   dotnet tool install --global dotnet-ef
 fi
 
 export PATH="$PATH:$HOME/.dotnet/tools"
 
+# Restore and build
 dotnet restore
 
+# Run migrations
 dotnet ef database update
 
-if [ -f Database/Scripts/seed_data.sql ]; then
-  sudo mysql "${DB_NAME}" < Database/Scripts/seed_data.sql
+# Seed data if exists
+SEED_FILE="Database/Scripts/seed_data.sql"
+if [ -f "$SEED_FILE" ]; then
+  echo "Applying seed data from $SEED_FILE..."
+  mysql -h db -u root -prootpassword controle_estoque < "$SEED_FILE" || echo "Warning: Seed data may have failed"
+  echo "Seed data applied!"
+else
+  echo "Warning: Seed file not found at $SEED_FILE"
 fi

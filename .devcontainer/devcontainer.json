@@ -1,11 +1,10 @@
 {
   "name": "controle-estoque",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/controle_estoque_cshap",
   "remoteUser": "vscode",
   "postCreateCommand": "bash .devcontainer/postCreate.sh",
-  "postStartCommand": "bash .devcontainer/postStart.sh",
   "forwardPorts": [3306, 5000, 5001],
   "customizations": {
     "vscode": {
