@@ -78,4 +78,19 @@ public class CategoryRepositoryTests
     var updated = context.Categories.First();
     Assert.That(updated.Name, Is.EqualTo("Bebidas Geladas"));
   }
+
+  [Test]
+  public async Task GetCategoryByIdForUpdateAsync_ReturnsCategoryForUpdate()
+  {
+    await using var context = TestDbContextFactory.Create(nameof(GetCategoryByIdForUpdateAsync_ReturnsCategoryForUpdate));
+    var category = new Category { Name = "Bebidas" };
+    context.Categories.Add(category);
+    await context.SaveChangesAsync();
+
+    var repo = new CategoryRepository(context);
+    var result = await repo.GetCategoryByIdForUpdateAsync(category.CategoryId);
+
+    Assert.That(result, Is.Not.Null);
+    Assert.That(result.Name, Is.EqualTo("Bebidas"));
+  }
 }

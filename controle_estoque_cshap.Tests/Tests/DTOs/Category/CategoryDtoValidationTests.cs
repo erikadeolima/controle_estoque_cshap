@@ -59,6 +59,16 @@ public class CategoryDtoValidationTests
   }
 
   [Test]
+  public void CategoryUpdateDto_ReturnsError_WhenNameHasNumbers()
+  {
+    var dto = new CategoryUpdateDto { Name = "Lanche1" };
+
+    var results = Validate(dto);
+
+    Assert.That(results.Any(r => r.ErrorMessage == "Name deve conter apenas letras e espacos."), Is.True);
+  }
+
+  [Test]
   public void CategoryUpdateDto_PassesValidation_WhenValidNameProvided()
   {
     var dto = new CategoryUpdateDto { Name = "Lanches" };
