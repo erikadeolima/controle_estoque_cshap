@@ -7,6 +7,7 @@ using NUnit.Framework;
 using controle_estoque_cshap.Controllers;
 using controle_estoque_cshap.DTOs.ProductDto;
 using controle_estoque_cshap.Services.ProductService;
+using controle_estoque_cshap.Services.ItemService;
 
 namespace controle_estoque_cshap.Tests;
 
@@ -16,10 +17,11 @@ public class ProductControllerTests
   public async Task GetInactive_ReturnsOk_WhenFound()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     var products = new List<ProductDto> { new() { ProductId = 1, Name = "Inativo", Status = 0 } };
     service.Setup(s => s.GetInactiveAsync()).ReturnsAsync(products);
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetInactive();
 
@@ -30,9 +32,10 @@ public class ProductControllerTests
   public async Task GetInactive_ReturnsNotFound_WhenNull()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetInactiveAsync()).ReturnsAsync((IEnumerable<ProductDto>)null!);
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetInactive();
 
@@ -43,9 +46,10 @@ public class ProductControllerTests
   public async Task GetInactive_ReturnsServerError_OnException()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetInactiveAsync()).ThrowsAsync(new InvalidOperationException("boom"));
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetInactive();
 
@@ -58,9 +62,10 @@ public class ProductControllerTests
   public async Task GetById_ReturnsNotFound_WhenMissing()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetByIdAsync(10)).ReturnsAsync((ProductDto?)null);
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetById(10);
 
@@ -71,9 +76,10 @@ public class ProductControllerTests
   public async Task GetById_ReturnsNotFound_WhenInactive()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetByIdAsync(2)).ReturnsAsync(new ProductDto { ProductId = 2, Status = 0 });
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetById(2);
 
@@ -84,10 +90,11 @@ public class ProductControllerTests
   public async Task GetById_ReturnsOk_WhenActive()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     var dto = new ProductDto { ProductId = 3, Status = 1 };
     service.Setup(s => s.GetByIdAsync(3)).ReturnsAsync(dto);
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = await controller.GetById(3);
 
@@ -98,9 +105,10 @@ public class ProductControllerTests
   public void GetActiveProducts_ReturnsNotFound_WhenEmpty()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetActiveProducts()).Returns(new List<ProductActiveDto>());
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = controller.GetActiveProducts();
 
@@ -111,12 +119,13 @@ public class ProductControllerTests
   public void GetActiveProducts_ReturnsOk_WhenFound()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetActiveProducts()).Returns(new List<ProductActiveDto>
     {
       new() { ProductId = 1, Name = "Ativo" }
     });
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = controller.GetActiveProducts();
 
@@ -127,9 +136,10 @@ public class ProductControllerTests
   public void GetActiveProducts_ReturnsServerError_OnException()
   {
     var service = new Mock<IProductService>();
+    var itemService = new Mock<IItemService>();
     service.Setup(s => s.GetActiveProducts()).Throws(new InvalidOperationException("boom"));
 
-    var controller = new ProductController(service.Object);
+    var controller = new ProductController(service.Object, itemService.Object);
 
     var result = controller.GetActiveProducts();
 

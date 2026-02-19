@@ -15,7 +15,7 @@ namespace controle_estoque_cshap.Tests.Services;
 public class ProductServiceTests
 {
     [Fact]
-    public async Task GetActiveProducts_ShouldReturnOnlyActiveProducts()
+    public void GetActiveProducts_ShouldReturnOnlyActiveProducts()
     {
         // Arrange
         var mockRepository = new Mock<IProductRepository>();
@@ -54,6 +54,6 @@ public class ProductServiceTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
-        
+
     }
 }
