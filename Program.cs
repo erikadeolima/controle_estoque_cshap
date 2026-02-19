@@ -9,6 +9,8 @@ using controle_estoque_cshap.Services.CategoryService;
 
 using controle_estoque_cshap.Repositories.ItemRepository;
 using controle_estoque_cshap.Services.ItemService;
+using controle_estoque_cshap.Repositories.MovementRepository;
+using controle_estoque_cshap.Services.MovementService;
 
 using controle_estoque_cshap.Repositories.UserRepository;
 using controle_estoque_cshap.Services.UserService;
@@ -36,6 +38,9 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IMovementRepository, MovementRepository>();
+builder.Services.AddScoped<IMovementService, MovementService>();
+
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -52,8 +57,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 34));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion)
+    options.UseMySql(
+        connectionString,
+        serverVersion,
+        mySqlOptions =>
+        {
+            mySqlOptions.EnableRetryOnFailure();
+        }
+    )
 );
+
 
 var app = builder.Build();
 

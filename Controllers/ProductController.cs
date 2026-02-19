@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using controle_estoque_cshap.DTOs.ProductDto;
 using controle_estoque_cshap.Services.ProductService;
+using controle_estoque_cshap.Services.ItemService;
 
 namespace controle_estoque_cshap.Controllers;
 
@@ -12,10 +13,12 @@ namespace controle_estoque_cshap.Controllers;
 public class ProductController : ControllerBase
 {
   private readonly IProductService _productService;
+  private readonly IItemService _itemService;
 
-  public ProductController(IProductService productService)
+  public ProductController(IProductService productService, IItemService itemService)
   {
     _productService = productService;
+    _itemService = itemService;
   }
 
   /// <summary>
@@ -43,7 +46,7 @@ public class ProductController : ControllerBase
   }
 
   /// <summary>
-  /// Returns a product by id.
+  /// Returns the products actives.
   /// </summary>
   [HttpGet("{id:int}")]
   [ProducesResponseType(typeof(ProductDto), 200)]
@@ -67,6 +70,9 @@ public class ProductController : ControllerBase
       return StatusCode(500, new { message = "Erro ao obter produto.", detail = ex.Message });
     }
   }
+  /// <summary>
+  /// Returns a product by id.
+  /// </summary>
   [HttpGet("active")]
     [ProducesResponseType(typeof(IEnumerable<ProductActiveDto>), 200)]
     [ProducesResponseType(500)]
@@ -87,4 +93,149 @@ public class ProductController : ControllerBase
             return StatusCode(500, new { message = "Erro ao obter produtos ativos.", detail = ex.Message });
         }
     }
+  /// <summary>
+  /// Returns a sku.
+  /// </summary>
+  [HttpGet("by-sku/{sku}")]
+  [ProducesResponseType(typeof(ProductDto), 200)]
+  [ProducesResponseType(404)]
+  [ProducesResponseType(500)]
+  public async Task<ActionResult<ProductDto>> GetBySkuAsync(string sku)
+  {
+    try
+    {
+      var product = await _productService.GetBySkuAsync(sku);
+      
+      if (product == null || product.Status == 0)
+      {
+        return NotFound(new { message = "Produto não encontrado"});
+      }
+      return Ok(product);
+    }
+    catch (Exception ex)
+    {
+      return StatusCode(500, new
+      {
+        message = "Erro ao buscar produto por SKU.",
+        detail = ex.Message
+      });
+    }
+  }
+  [HttpPost]
+  [ProducesResponseType(typeof(ProductDto), 201)]
+  [ProducesResponseType(400)]
+  [ProducesResponseType(500)]
+public async Task<ActionResult<ProductDto>> Create([FromBody] ProductCreateDto dto)
+{
+    try
+    {
+        var createdProduct = await _productService.CreateAsync(dto);
+
+        if (createdProduct == null)
+            return BadRequest(new { message = "Não foi possível criar o produto" });
+
+        if (dto.Items != null && dto.Items.Count > 0)
+        {
+            foreach (var item in dto.Items)
+            {
+                item.ProductId = createdProduct.ProductId;
+                await _itemService.CreateItemAsync(item);
+            }
+        }
+
+        return CreatedAtAction(
+            nameof(GetById),
+            new { id = createdProduct.ProductId },
+            createdProduct
+        );
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new
+        {
+            message = "Erro ao criar o produto.",
+            detail = ex.Message
+        });
+    }
+  }
+   /// <summary>
+  /// Returns 
+  /// </summary>
+[HttpPut("{id:int}")]
+[ProducesResponseType(typeof(ProductDto), 200)]
+[ProducesResponseType(404)]
+[ProducesResponseType(500)]
+public async Task<ActionResult<ProductDto>> Update(
+    int id,
+    [FromBody] ProductUpdateDto dto)
+{
+    try
+    {
+        var product = await _productService.UpdateAsync(id, dto);
+
+        if (product == null)
+            return NotFound(new { message = "Produto não encontrado." });
+
+        return Ok(product);
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new
+        {
+            message = "Erro ao atualizar produto.",
+            detail = ex.Message
+        });
+    }
+}
+  /// <summary>
+  /// Returns delete.
+  /// </summary>
+[HttpDelete("{id:int}")]
+[ProducesResponseType(204)]
+[ProducesResponseType(404)]
+[ProducesResponseType(500)]
+public async Task<IActionResult> Delete(int id)
+{
+    try
+    {
+        var deleted = await _productService.DeleteAsync(id);
+
+        if (!deleted)
+            return NotFound(new { message = "Produto não encontrado." });
+
+        return NoContent();
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new
+        {
+            message = "Erro ao excluir produto.",
+            detail = ex.Message
+        });
+    }
+}
+
+[HttpGet("low-stock")]
+public async Task<IActionResult> GetLowStock()
+{
+    try
+    {
+        var products = await _productService.GetLowStockAsync();
+
+        if (products == null || !products.Any())
+            return NotFound(new { message = "Nenhum produto com baixo estoque encontrado." });
+
+        return Ok(products);
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new
+        {
+            message = "Erro ao obter produtos com baixo estoque.",
+            detail = ex.Message
+        });
+    }
+}
+
+
 }

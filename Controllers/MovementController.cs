@@ -45,17 +45,17 @@ public class MovementController : ControllerBase
         return Ok(result);
     }
     [HttpPost]
-public async Task<IActionResult> Create(CreateMovementDto dto)
-{
-    try
+    public async Task<IActionResult> Create(CreateMovementDto dto)
     {
-        var result = await _movementService.CreateAsync(dto);
-        return Ok(result);
+        try
+        {
+            var result = await _movementService.CreateAsync(dto);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
-    catch (Exception ex)
-    {
-        return BadRequest(new { message = ex.Message });
-    }
-}
 
 }
