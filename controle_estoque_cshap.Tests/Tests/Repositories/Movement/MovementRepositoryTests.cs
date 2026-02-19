@@ -185,4 +185,129 @@ public class MovementRepositoryTests
         Assert.Equal(1, result[0].MovementId);
     }
 
+    [Fact]
+    public async Task AddAsync_ShouldPersistMovement()
+    {
+        // Arrange
+        var context = CreateContext();
+
+        var user = new User
+        {
+            IdUser = 1,
+            Name = "Usuário Teste",
+            Email = "teste@testando.com",
+            Profile = "Admin"
+        };
+
+        var product = new Product
+        {
+            ProductId = 1,
+            Name = "Produto Teste",
+            Sku = "SKU-01",
+            CategoryId = 1,
+            MinimumQuantity = 1,
+            Status = 1
+        };
+
+        var item = new Item
+        {
+            ItemId = 1,
+            Quantity = 10,
+            ProductId = 1,
+            Product = product,
+            Batch = "Lote-01"
+        };
+
+        context.Users.Add(user);
+        context.Products.Add(product);
+        context.Items.Add(item);
+        await context.SaveChangesAsync();
+
+        var repository = new MovementRepository(context);
+
+        var movement = new Movement
+        {
+            ItemId = 1,
+            UserId = 1,
+            QuantityMoved = 2,
+            Type = "IN",
+            Date = new DateTime(2025, 2, 1),
+            PreviousQuantity = 10,
+            NewQuantity = 12
+        };
+
+        // Act
+        await repository.AddAsync(movement);
+
+        // Assert
+        var saved = await context.Movements.SingleAsync();
+        Assert.Equal(1, saved.ItemId);
+        Assert.Equal(1, saved.UserId);
+        Assert.Equal(2, saved.QuantityMoved);
+        Assert.Equal("IN", saved.Type);
+    }
+
+    [Fact]
+    public async Task CreateAsync_ShouldReturnMovementWithIncludes()
+    {
+        // Arrange
+        var context = CreateContext();
+
+        var user = new User
+        {
+            IdUser = 1,
+            Name = "Usuário Teste",
+            Email = "teste@testando.com",
+            Profile = "Admin"
+        };
+
+        var product = new Product
+        {
+            ProductId = 1,
+            Name = "Produto Teste",
+            Sku = "SKU-01",
+            CategoryId = 1,
+            MinimumQuantity = 1,
+            Status = 1
+        };
+
+        var item = new Item
+        {
+            ItemId = 1,
+            Quantity = 10,
+            ProductId = 1,
+            Product = product,
+            Batch = "Lote-01"
+        };
+
+        context.Users.Add(user);
+        context.Products.Add(product);
+        context.Items.Add(item);
+        await context.SaveChangesAsync();
+
+        var repository = new MovementRepository(context);
+
+        var movement = new Movement
+        {
+            ItemId = 1,
+            UserId = 1,
+            QuantityMoved = 3,
+            Type = "OUT",
+            Date = new DateTime(2025, 2, 2),
+            PreviousQuantity = 10,
+            NewQuantity = 7
+        };
+
+        // Act
+        var created = await repository.CreateAsync(movement);
+
+        // Assert
+        Assert.True(created.MovementId > 0);
+        Assert.Equal(1, created.ItemId);
+        Assert.Equal(1, created.UserId);
+        Assert.NotNull(created.Item);
+        Assert.NotNull(created.User);
+        Assert.NotNull(created.Item.Product);
+    }
+
 }
