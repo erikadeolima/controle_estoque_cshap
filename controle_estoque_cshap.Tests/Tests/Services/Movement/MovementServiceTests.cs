@@ -10,7 +10,6 @@ using controle_estoque_cshap.Repositories.MovementRepository;
 using controle_estoque_cshap.Repositories.ItemRepository;
 using controle_estoque_cshap.Services.MovementService;
 
-
 namespace controle_estoque_cshap.Tests.Services;
 
 public class MovementServiceTests
@@ -70,5 +69,73 @@ public class MovementServiceTests
         Assert.Equal("Produto Teste", movement.ProductName);
         Assert.Equal("Usuário Teste", movement.UserName);
     }
-}
 
+    [Fact]
+    public async Task CreateAsync_ShouldCreateMovementAndUpdateItemQuantity()
+    {
+        // Arrange
+        var mockMovementRepository = new Mock<IMovementRepository>();
+        var mockItemRepository = new Mock<IItemRepository>();
+
+        var dto = new CreateMovementDto
+        {
+            ItemId = 1,
+            Quantity = 5,
+            Type = "IN",
+            UserId = 1
+        };
+
+        var item = new Item
+        {
+            ItemId = 1,
+            Quantity = 10,
+            ProductId = 1
+        };
+
+        mockItemRepository
+            .Setup(r => r.GetByIdForUpdateAsync(dto.ItemId))
+            .ReturnsAsync(item);
+
+        mockItemRepository
+            .Setup(r => r.GetByIdAsync(dto.ItemId))
+            .ReturnsAsync(item);
+
+        mockMovementRepository
+            .Setup(r => r.CreateAsync(It.IsAny<Movement>()))
+            .ReturnsAsync(new Movement
+            {
+                MovementId = 1,
+                ItemId = 1,
+                QuantityMoved = 5,
+                PreviousQuantity = 10,
+                NewQuantity = 15,
+                Type = "IN",
+                Date = DateTime.Now
+            });
+
+        mockItemRepository
+            .Setup(r => r.UpdateAsync(It.IsAny<Item>()))
+            .Returns(Task.CompletedTask);
+
+        var service = new MovementService(
+            mockMovementRepository.Object,
+            mockItemRepository.Object
+        );
+
+        // Act
+        var result = await service.CreateAsync(dto);
+
+        // Assert
+        Assert.NotNull(result);
+
+        mockMovementRepository.Verify(
+            r => r.CreateAsync(It.IsAny<Movement>()),
+            Times.Once
+        );
+
+        mockItemRepository.Verify(
+            r => r.UpdateAsync(It.IsAny<Item>()),
+            Times.Once
+        );
+    }
+}
